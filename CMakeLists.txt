@@ -4,6 +4,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(SPEECH_RECOGNITION)
 
+# set "build" as a directory for executable files
 set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)
 
+# add "src" directory to be used in compilation
 add_subdirectory(src)

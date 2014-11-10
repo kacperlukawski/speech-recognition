@@ -5,4 +5,4 @@ add_library(
         raw_data/FrequencySample.cpp
 )
 
-target_include_directories (Speech PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Speech PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

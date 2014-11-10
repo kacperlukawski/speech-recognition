@@ -4,6 +4,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(SPEECH_RECOGNITION)
 
+# enable c++11 standard
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 # set "build" as a directory for executable files
 set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)
 

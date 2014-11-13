@@ -8,4 +8,4 @@ add_executable(
 )
 
 # connect "Main" executable with "Speech" library
-target_link_libraries (Main LINK_PUBLIC Speech)
+target_link_libraries(Main LINK_PUBLIC Speech)

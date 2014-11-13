@@ -16,12 +16,13 @@ namespace speech {
         namespace transform {
 
             /**
-             * This is an interface for all transforms which converts raw signal
-             * into frequency domain.
-             */
-            template <typename FrameType>
+            * This is an interface for all transforms which converts raw signal
+            * into frequency domain.
+            */
+            template<typename FrameType>
             class IFrequencyTransform {
                 virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector) = 0;
+
                 virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector) = 0;
             };
 

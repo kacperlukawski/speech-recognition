@@ -1,12 +1,21 @@
 #include <iostream>
 
+#include "speech/raw_data/WaveFileDataSource.h"
+
+using speech::raw_data::WaveFileDataSource;
+
 #include "speech/raw_data/DataSample.h"
 
+/**
+ * This is an entry point of the application. It allows user to select the data source used
+ * to get an input data, choose the methods of signal transformation into frequency domain
+ * and spelling transcription.
+ *
+ * @todo create a logic
+ */
 int main(int argc, char** argv) {
-    for (int i = 0; i < 1000000; i++) {
-        signed char *tmp = new signed char[2];
-        speech::raw_data::DataSample<signed char> *ds = new speech::raw_data::DataSample<signed char>(2, tmp);
-    }
+
+    WaveFileDataSource<signed char> * sourceFilePtr = new WaveFileDataSource<signed char>(nullptr, "lorem ipsum");
 
     std::cout << "Hello world!" << std::endl;
 

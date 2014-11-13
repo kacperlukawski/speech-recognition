@@ -6,3 +6,4 @@ speech::raw_data::DataSource<FrameType>::DataSource(IFrequencyTransform<FrameTyp
     frequencyDomainTransform = _frequencyDomainTransform;
 }
 
+template class speech::raw_data::DataSource<signed char>;

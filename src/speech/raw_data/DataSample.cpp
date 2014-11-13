@@ -11,4 +11,4 @@ speech::raw_data::DataSample<FrameType>::~DataSample() {
     delete values;
 }
 
-speech::raw_data::DataSample<signed char> tmp(0, nullptr);
+template class speech::raw_data::DataSample<signed char>;

@@ -5,10 +5,8 @@
 
 using std::list;
 
-#include "transform/IFrequencyTransform.h"
 #include "DataSample.h"
 
-using speech::raw_data::transform::IFrequencyTransform;
 using speech::raw_data::DataSample;
 
 namespace speech {
@@ -25,9 +23,8 @@ namespace speech {
         class DataSource {
         protected:
             list<DataSample<FrameType>> *samples;
-            IFrequencyTransform<FrameType> *frequencyDomainTransform;
         public:
-            DataSource(IFrequencyTransform<FrameType> *_frequencyDomainTransform);
+            DataSource();
         };
 
     }

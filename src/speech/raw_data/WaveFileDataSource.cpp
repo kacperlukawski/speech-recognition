@@ -1,8 +1,8 @@
 #include "WaveFileDataSource.h"
 
 template<typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(IFrequencyTransform<FrameType> *_frequencyDomainTransform, string _fileName)
-        : DataSource<FrameType>(_frequencyDomainTransform) {
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName)
+        : DataSource<FrameType>() {
     fileName = _fileName;
 }
 

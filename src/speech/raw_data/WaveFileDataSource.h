@@ -24,7 +24,7 @@ namespace speech {
         protected:
             string fileName;
         public:
-            WaveFileDataSource(IFrequencyTransform<FrameType> *_frequencyDomainTransform, string _fileName);
+            WaveFileDataSource(string _fileName);
         };
 
     }

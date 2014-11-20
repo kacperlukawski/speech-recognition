@@ -7,15 +7,19 @@ speech::clustering::KMeans::KMeans(int _k, int _dim) : k(_k), dimension(_dim) {
     }
 }
 
+speech::clustering::KMeans::~KMeans() {
+    delete[] centroids;
+}
+
 /**
  * @todo prepare an implementation of the K-Means
  *
  * 1. randomly choose k centroids from given vectors' set
- * 2. in each iteration assing all vectors into the nearest centroid
+ * 2. in each iteration assign all vectors into the nearest centroid
  * 3. update each centroid to be a mean of the all vectors belonging to this particular group
  * 4. stop when nothing changed in an iteration or after maximum number of iterations
  */
-void speech::clustering::KMeans::fit(double **vectors, int *labels) {
+void speech::clustering::KMeans::fit(std::list<double *> vectors, int *labels) {
 
 }
 

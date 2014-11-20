@@ -1,6 +1,8 @@
 #ifndef ICLUSTERINGMETHOD_H
 #define ICLUSTERINGMETHOD_H
 
+#include <list>
+
 namespace speech {
 
     namespace clustering {
@@ -9,7 +11,7 @@ namespace speech {
          * This is an interface for all clustering methods used for phonemes labeling
          */
         class IClusteringMethod {
-            virtual void fit(double **vectors, int *labels) = 0;
+            virtual void fit(std::list<double *> vectors, int *labels) = 0;
 
             virtual int predict(double *vector) = 0;
         };

@@ -22,7 +22,9 @@ namespace speech {
         public:
             KMeans(int _k, int _dim);
 
-            virtual void fit(double **vectors, int *labels);
+            ~KMeans();
+
+            virtual void fit(std::list<double *> vectors, int *labels);
 
             virtual int predict(double *vector);
         };

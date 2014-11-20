@@ -1,4 +1,5 @@
 #include <iostream>
+#include <list>
 
 #include "speech/raw_data/WaveFileDataSource.h"
 
@@ -20,7 +21,6 @@ using speech::clustering::KMeans;
 * @todo create a logic
 */
 int main(int argc, char **argv) {
-
     WaveFileDataSource<signed char> *sourceFilePtr = new WaveFileDataSource<signed char>("lorem ipsum");
 
     KMeans *kMeansClusteringPtr = new KMeans(2, 2);

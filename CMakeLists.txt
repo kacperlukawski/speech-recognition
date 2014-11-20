@@ -10,5 +10,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 # set "build" as a directory for executable files
 set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)
 
+enable_testing()
+
 # add "src" directory to be used in compilation
 add_subdirectory(src)
+
+# add "tests" directory
+add_subdirectory(lib/gtest-1.7.0)
+add_subdirectory(tests)

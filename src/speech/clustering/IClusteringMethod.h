@@ -9,8 +9,9 @@ namespace speech {
          * This is an interface for all clustering methods used for phonemes labeling
          */
         class IClusteringMethod {
-            virtual void fit(double ** vectors, int * labels) = 0;
-            virtual int predict(double * vector) = 0;
+            virtual void fit(double **vectors, int *labels) = 0;
+
+            virtual int predict(double *vector) = 0;
         };
 
     }

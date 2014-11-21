@@ -10,23 +10,24 @@ using speech::clustering::KMeans;
  */
 TEST(KMeans, XORTest) {
     // it is impossible to use KMeans for XOR problem
+    // (vectors [0.0, 0.0] and [1.0, 1.0] are not the closest ones)
     // this test was only created to be some kind of an example
     // how to write a test of other things
-
-    std::list<double *> vectors(4);
+    std::vector<double *> vectors;
     vectors.push_back(new double[2]{0.0, 0.0});
     vectors.push_back(new double[2]{0.0, 1.0});
     vectors.push_back(new double[2]{1.0, 0.0});
     vectors.push_back(new double[2]{1.0, 1.0});
 
+    std::vector<int> labels;
+
     KMeans *kMeansPtr = new KMeans(2, 2);
-    kMeansPtr->fit(vectors, nullptr);
+    kMeansPtr->fit(vectors, labels);
 
     int zeroVectorLabel = kMeansPtr->predict(new double[2]{0.0, 0.0});
     int firstVectorLabel = kMeansPtr->predict(new double[2]{0.0, 1.0});
     int twoVectorLabel = kMeansPtr->predict(new double[2]{1.0, 0.0});
     int threeVectorLabel = kMeansPtr->predict(new double[2]{1.0, 1.0});
-
 
     // ASSERT_EQ(zeroVectorLabel, threeVectorLabel);
     // ASSERT_EQ(firstVectorLabel, twoVectorLabel);

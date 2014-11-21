@@ -16,7 +16,7 @@ namespace speech {
         private:
             int k; // number of clusters
             int dimension; // single vector dimension
-            double **centroids;
+            std::vector<double *>* centroids;
 
             inline double distance(double *v1, double *v2);
         public:
@@ -24,7 +24,7 @@ namespace speech {
 
             ~KMeans();
 
-            virtual void fit(std::list<double *> vectors, int *labels);
+            virtual void fit(std::vector<double *> vectors, std::vector<int> labels);
 
             virtual int predict(double *vector);
         };

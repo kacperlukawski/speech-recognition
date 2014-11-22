@@ -22,12 +22,17 @@ TEST(KMeans, XORTest) {
     std::vector<int> labels;
 
     KMeans *kMeansPtr = new KMeans(2, 2);
+
+    // std::cout << *kMeansPtr;
+
     kMeansPtr->fit(vectors, labels);
 
     int zeroVectorLabel = kMeansPtr->predict(new double[2]{0.0, 0.0});
     int firstVectorLabel = kMeansPtr->predict(new double[2]{0.0, 1.0});
     int twoVectorLabel = kMeansPtr->predict(new double[2]{1.0, 0.0});
     int threeVectorLabel = kMeansPtr->predict(new double[2]{1.0, 1.0});
+
+    // std::cout << *kMeansPtr;
 
     // ASSERT_EQ(zeroVectorLabel, threeVectorLabel);
     // ASSERT_EQ(firstVectorLabel, twoVectorLabel);
@@ -44,6 +49,7 @@ TEST(KMeans, KCentroidsTest) {
     // to find K clusters and the data is properly
     // arranged, we should get all K clusters
     // @todo prepare the data set and proper tests
+
 }
 
 TEST(KMeans, RandomDataDistribution) {
@@ -51,4 +57,26 @@ TEST(KMeans, RandomDataDistribution) {
     // data set - KMeans should stop with exactly same clusters
     // when whole model stabilizes
     // @todo prepare the data set and proper tests
+}
+
+TEST(KMeans, SimpleCase) {
+    std::vector<double *> leftSideVectors;
+    leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
+    leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
+
+    std::vector<double *> rightSideVectors;
+    leftSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
+    leftSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+
+    std::vector<double *> vectors;
+    vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
+    vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
+
+    std::vector<int> labels;
+
+    KMeans *kMeansPtr = new KMeans(2, 3);
+    kMeansPtr->fit(vectors, labels);
+
+    std::cout << *kMeansPtr;
+
 }

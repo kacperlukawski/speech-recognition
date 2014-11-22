@@ -11,6 +11,7 @@ namespace speech {
          * This is an interface for all clustering methods used for phonemes labeling
          */
         class IClusteringMethod {
+        public:
             virtual void fit(std::vector<double *> vectors, std::vector<int> labels) = 0;
 
             virtual int predict(double *vector) = 0;

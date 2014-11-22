@@ -3,6 +3,8 @@
 
 #include "IClusteringMethod.h"
 
+#include <ostream>
+
 namespace speech {
 
     namespace clustering {
@@ -14,6 +16,9 @@ namespace speech {
          */
         class KMeans : public IClusteringMethod {
         private:
+            const unsigned int MAX_ITERATIONS = 100000;
+            const double EPS = 10e-8;
+
             int k; // number of clusters
             int dimension; // single vector dimension
             std::vector<double *>* centroids;
@@ -27,6 +32,8 @@ namespace speech {
             virtual void fit(std::vector<double *> vectors, std::vector<int> labels);
 
             virtual int predict(double *vector);
+
+            friend std::ostream& operator<< (std::ostream&, const speech::clustering::KMeans&);
         };
 
     }

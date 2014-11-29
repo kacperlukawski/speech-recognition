@@ -1,4 +1,5 @@
 #include "KMeans.h"
+#include "exception/TooLessVectorsException.h"
 
 #include <iostream>
 #include <cmath>
@@ -29,8 +30,7 @@ void speech::clustering::KMeans::fit(std::vector<double *> vectors, std::vector<
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
         // current dataset is not enough to create K clusters
-        // @todo throw an exception
-        return;
+        throw speech::clustering::exception::TooLessVectorsException();
     }
 
     // @todo change a way of choosing initial centroids to be random
@@ -67,7 +67,7 @@ void speech::clustering::KMeans::fit(std::vector<double *> vectors, std::vector<
         // number of centroids is not enough
         // probably the initial collection of vectors
         // contains many duplicates
-        // @todo throw an exception
+        throw speech::clustering::exception::TooLessVectorsException();
     }
 
     for (int iteration = 0; iteration < MAX_ITERATIONS; ++iteration) {

@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "../src/speech/clustering/KMeans.h"
+#include "../src/speech/clustering/exception/TooLessVectorsException.h"
 
 using speech::clustering::KMeans;
 
@@ -23,16 +24,12 @@ TEST(KMeans, XORTest) {
 
     KMeans *kMeansPtr = new KMeans(2, 2);
 
-    // std::cout << *kMeansPtr;
-
     kMeansPtr->fit(vectors, labels);
 
     int zeroVectorLabel = kMeansPtr->predict(new double[2]{0.0, 0.0});
     int firstVectorLabel = kMeansPtr->predict(new double[2]{0.0, 1.0});
     int twoVectorLabel = kMeansPtr->predict(new double[2]{1.0, 0.0});
     int threeVectorLabel = kMeansPtr->predict(new double[2]{1.0, 1.0});
-
-    // std::cout << *kMeansPtr;
 
     // ASSERT_EQ(zeroVectorLabel, threeVectorLabel);
     // ASSERT_EQ(firstVectorLabel, twoVectorLabel);
@@ -48,8 +45,17 @@ TEST(KMeans, KCentroidsTest) {
     // is proper - whenever we set up the KMeans method
     // to find K clusters and the data is properly
     // arranged, we should get all K clusters
-    // @todo prepare the data set and proper tests
+    std::vector<double *> vectors;
+    vectors.push_back(new double[2]{0.0, 0.0});
+    vectors.push_back(new double[2]{0.0, 1.0});
+    vectors.push_back(new double[2]{1.0, 0.0});
+    vectors.push_back(new double[2]{1.0, 1.0});
 
+    std::vector<int> labels;
+
+    KMeans *kMeansPtr = new KMeans(5, 2);
+
+    ASSERT_THROW(kMeansPtr->fit(vectors, labels), speech::clustering::exception::TooLessVectorsException);
 }
 
 TEST(KMeans, RandomDataDistribution) {

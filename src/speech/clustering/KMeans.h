@@ -15,17 +15,11 @@ namespace speech {
          * @see http://en.wikipedia.org/wiki/K-means_clustering
          */
         class KMeans : public IClusteringMethod {
-        private:
+        public:
             const unsigned int MAX_ITERATIONS = 100000;
             const double EPS = 10e-8;
 
-            int k; // number of clusters
-            int dimension; // single vector dimension
-            std::vector<double *>* centroids;
-
-            inline double distance(double *v1, double *v2);
-        public:
-            KMeans(int _k, int _dim);
+            KMeans(unsigned int _k, unsigned int _dim);
 
             ~KMeans();
 
@@ -33,7 +27,17 @@ namespace speech {
 
             virtual int predict(double *vector);
 
-            friend std::ostream& operator<< (std::ostream&, const speech::clustering::KMeans&);
+            friend std::istream& operator>> (std::istream& in, speech::clustering::KMeans& kMeans);
+
+            friend std::ostream& operator<< (std::ostream& out, const speech::clustering::KMeans& kMeans);
+        protected:
+
+        private:
+            unsigned int k; // number of clusters
+            unsigned int dimension; // single vector dimension
+            std::vector<double *>* centroids;
+
+            inline double distance(double *v1, double *v2);
         };
 
     }

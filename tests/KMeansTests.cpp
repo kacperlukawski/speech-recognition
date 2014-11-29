@@ -1,3 +1,6 @@
+#include <string>
+#include <fstream>
+
 #include "gtest/gtest.h"
 
 #include "../src/speech/clustering/KMeans.h"
@@ -71,8 +74,8 @@ TEST(KMeans, SimpleCase) {
     leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
 
     std::vector<double *> rightSideVectors;
-    leftSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
-    leftSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+    rightSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
+    rightSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
 
     std::vector<double *> vectors;
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
@@ -83,6 +86,44 @@ TEST(KMeans, SimpleCase) {
     KMeans *kMeansPtr = new KMeans(2, 3);
     kMeansPtr->fit(vectors, labels);
 
-    std::cout << *kMeansPtr;
+    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), kMeansPtr->predict(leftSideVectors[1]));
+    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansPtr->predict(rightSideVectors[1]));
+    ASSERT_NE(kMeansPtr->predict(leftSideVectors[0]), kMeansPtr->predict(rightSideVectors[0]));
+    ASSERT_NE(kMeansPtr->predict(leftSideVectors[0]), kMeansPtr->predict(rightSideVectors[1]));
+}
 
+TEST(KMeans, StreamOperators) {
+    std::vector<double *> leftSideVectors;
+    leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
+    leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
+
+    std::vector<double *> rightSideVectors;
+    rightSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
+    rightSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+
+    std::vector<double *> vectors;
+    vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
+    vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
+
+    std::vector<int> labels;
+
+    KMeans *kMeansPtr = new KMeans(2, 3);
+    kMeansPtr->fit(vectors, labels);
+
+    const std::string modelFileName = "kmeans_model.dat";
+
+    std::ofstream outputFileStream(modelFileName);
+    outputFileStream << *kMeansPtr;
+    outputFileStream.close();
+
+    KMeans *kMeansClonePtr = new KMeans(0, 0);
+
+    std::ifstream inputFileStream(modelFileName);
+    inputFileStream >> *kMeansClonePtr;
+    inputFileStream.close();
+
+    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), kMeansClonePtr->predict(leftSideVectors[0]));
+    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[1]), kMeansClonePtr->predict(leftSideVectors[1]));
+    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansClonePtr->predict(rightSideVectors[0]));
+    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansClonePtr->predict(rightSideVectors[1]));
 }

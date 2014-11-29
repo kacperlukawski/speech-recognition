@@ -5,7 +5,7 @@
 #include <cmath>
 #include <map>
 
-speech::clustering::KMeans::KMeans(int _k, int _dim) : k(_k), dimension(_dim) {
+speech::clustering::KMeans::KMeans(unsigned int _k, unsigned int _dim) : k(_k), dimension(_dim) {
     centroids = new std::vector<double*>();
 }
 
@@ -152,26 +152,45 @@ namespace speech {
     namespace clustering {
 
         /**
-         * @todo implement the operator
+         * Load the KMeans class instance from given input stream
+         *
+         * @return the same stream as was given
          */
-        std::ostream& operator<< (std::ostream& out, const speech::clustering::KMeans& kMeans) {
-            out << "KMeans clustering: \n"
-                << "------------------------\n"
-                << "Centroids: \n";
+        std::istream& operator>> (std::istream& in, speech::clustering::KMeans& kMeans) {
+            unsigned long centroidsNb = 0;
 
-            std::vector<double *>::const_iterator centroidsIt;
-            for (centroidsIt = kMeans.centroids->begin(); centroidsIt != kMeans.centroids->end(); ++centroidsIt) {
-                out << "\t[ ";
+            in.read((char *) &kMeans.k, sizeof(unsigned int));
+            in.read((char *) &kMeans.dimension, sizeof(unsigned int));
+            in.read((char *) &centroidsNb, sizeof(unsigned long));
 
-                for (int i = 0; i < kMeans.dimension; ++i) {
-                    out << (*centroidsIt)[i]
-                        << " ";
-                }
+            unsigned int singleVectorSize = sizeof(double) * kMeans.dimension;
 
-                out << "]\n";
+            for (int i = 0; i < centroidsNb; ++i) {
+                double* currentVector = new double[kMeans.dimension];
+                in.read((char *) currentVector, singleVectorSize);
+                kMeans.centroids->push_back(currentVector);
             }
 
-            out << "\n";
+            return in;
+        }
+
+        /**
+         * Save the instance of KMeans class into given output stream
+         *
+         * @return the same stream as was given
+         */
+        std::ostream& operator<< (std::ostream& out, const speech::clustering::KMeans& kMeans) {
+            unsigned int singleVectorSize = sizeof(double) * kMeans.dimension;
+            unsigned long centroidsNb = kMeans.centroids->size();
+
+            out.write((char const *) &kMeans.k, sizeof(unsigned int));
+            out.write((char const *) &kMeans.dimension, sizeof(unsigned int));
+            out.write((char const *) &centroidsNb, sizeof(unsigned long));
+
+            std::vector<double *>::const_iterator it;
+            for (it = kMeans.centroids->begin(); it != kMeans.centroids->end(); ++it) {
+                out.write((char const *)(*it), singleVectorSize);
+            }
 
             return out;
         }

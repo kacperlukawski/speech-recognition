@@ -17,7 +17,11 @@ namespace speech {
         public:
             FrequencySample(int _size, double *_amplitude, double *_phase);
 
-            ~FrequencySample();
+            virtual ~FrequencySample();
+
+            int getSize();
+            double* getAmplitude();
+            double* getPhase();
         };
 
     }

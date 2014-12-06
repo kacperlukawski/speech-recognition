@@ -3,12 +3,27 @@
 template<typename FrameType>
 speech::raw_data::DataSample<FrameType>::DataSample(int _size, FrameType *_values) {
     size = _size;
-    values = _values;
+    this->values = _values;
 }
 
 template<typename FrameType>
 speech::raw_data::DataSample<FrameType>::~DataSample() {
-    delete values;
+    // @TODO
+    //  delete values;
 }
 
-template class speech::raw_data::DataSample<signed char>;
+template<typename FrameType>
+int speech::raw_data::DataSample<FrameType>::getSize() {
+    return this->size;
+}
+
+template<typename FrameType>
+FrameType *speech::raw_data::DataSample<FrameType>::getValues() {
+    return values;
+}
+
+template
+class speech::raw_data::DataSample<unsigned char>;
+
+template
+class speech::raw_data::DataSample<short int>;

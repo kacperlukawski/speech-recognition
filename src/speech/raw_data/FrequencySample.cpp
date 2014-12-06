@@ -9,6 +9,29 @@ speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size, double 
 
 template<typename FrameType>
 speech::raw_data::FrequencySample<FrameType>::~FrequencySample() {
-    delete amplitude;
-    delete phase;
+    // @TODO
+//    if (amplitude != nullptr) {
+//        delete amplitude;
+//    }
+//    if (phase != nullptr) {
+//        delete phase;
+//    }
 }
+
+template<typename FrameType>
+int speech::raw_data::FrequencySample<FrameType>::getSize() {
+    return size;
+}
+
+template<typename FrameType>
+double *speech::raw_data::FrequencySample<FrameType>::getAmplitude() {
+    return amplitude;
+}
+
+template<typename FrameType>
+double *speech::raw_data::FrequencySample<FrameType>::getPhase() {
+    return phase;
+}
+
+template
+class speech::raw_data::FrequencySample<short>;

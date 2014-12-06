@@ -1,5 +1,5 @@
 #ifndef DATASAMPLE_H
-#define DATASAMPLE_H 1
+#define DATASAMPLE_H
 
 namespace speech {
 
@@ -16,8 +16,11 @@ namespace speech {
             FrameType *values;
         public:
             DataSample(int _size, FrameType *_values);
+            // @TODO add copy constructor
+            virtual ~DataSample();
 
-            ~DataSample();
+            int getSize();
+            FrameType* getValues();
         };
 
     }

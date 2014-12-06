@@ -21,7 +21,7 @@ using speech::clustering::KMeans;
 * @todo create a logic
 */
 int main(int argc, char **argv) {
-    WaveFileDataSource<signed char> *sourceFilePtr = new WaveFileDataSource<signed char>("lorem ipsum");
+    WaveFileDataSource<unsigned char> *sourceFilePtr = new WaveFileDataSource<unsigned char>("lorem ipsum");
 
     KMeans *kMeansClusteringPtr = new KMeans(2, 2);
 

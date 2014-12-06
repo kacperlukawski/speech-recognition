@@ -3,8 +3,8 @@ add_library(
     Speech
         raw_data/DataSample.cpp
         raw_data/FrequencySample.cpp
-        raw_data/DataSource.cpp
         raw_data/WaveFileDataSource.cpp
+        raw_data/DataSource.cpp
         clustering/KMeans.cpp
 )
 

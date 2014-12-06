@@ -6,6 +6,7 @@ add_library(
         raw_data/DataSource.cpp
         raw_data/WaveFileDataSource.cpp
         clustering/KMeans.cpp
+        spelling/HMM.cpp
 )
 
 target_include_directories(Speech PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

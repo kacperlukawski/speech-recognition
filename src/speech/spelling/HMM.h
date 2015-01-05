@@ -21,7 +21,7 @@ namespace speech {
 
             virtual ~HMM();
 
-            virtual void fit(std::vector<int> phonems, std::string spelling);
+            virtual void fit(std::vector<int> phonems, const std::string& spelling);
 
             virtual std::string predict(std::vector<int> phonems);
 

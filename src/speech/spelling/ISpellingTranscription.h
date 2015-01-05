@@ -14,7 +14,7 @@ namespace speech {
          */
         class ISpellingTranscription {
         public:
-            virtual void fit(std::vector<int> phonems, std::string spelling) = 0;
+            virtual void fit(std::vector<int> phonems, const std::string& spelling) = 0;
 
             virtual std::string predict(std::vector<int> phonems) = 0;
         };

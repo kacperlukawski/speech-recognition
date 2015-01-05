@@ -62,14 +62,15 @@ speech::spelling::HMM::~HMM() {
 * Add next example of the training data - connections
 * between sequence of phonems and sequence of letters.
 */
-void speech::spelling::HMM::fit(std::vector<int> phonems, std::string spelling) {
+void speech::spelling::HMM::fit(std::vector<int> phonems, const std::string& spelling) {
     if (phonems.size() != spelling.length()) {
         // @todo it is necessary to adjust the spelling somehow by duplicating some of the letters - some phonems last longer than another
         return;
     }
 
     // increase the number of the starting states
-    stateCount->at(stateToIndex(spelling[0])) = stateCount->at(stateToIndex(spelling[0])) + 1.0;
+    int startStateIndex = stateToIndex(spelling[0]);
+    stateCount->at(startStateIndex) = stateCount->at(startStateIndex) + 1.0;
 
     // increase number of emissions
     int stateIndex = 0;
@@ -207,6 +208,9 @@ int speech::spelling::HMM::observationToIndex(const int &observation) {
     return (int) std::distance(observations->begin(), elementPosIt);
 }
 
+/**
+* Create matrices of probabilities by normalization
+*/
 void speech::spelling::HMM::actualizeProbabilityDistributions() {
     for (int i = 0; i < numberOfStates; ++i) {
         pi->at(i) = stateCount->at(i) / (sum(*stateCount) + EPS);

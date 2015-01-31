@@ -19,8 +19,6 @@ namespace speech {
             
             HMM(std::istream& in);
 
-            virtual void fit(int *phonemes, string spelling);
-
             HMM(const std::vector<int>& _observations, const std::vector<char>& _states);
 
             HMM(int _numberOfObservations, const std::vector<char>& _states);

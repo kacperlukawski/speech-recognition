@@ -119,7 +119,7 @@ TEST(KMeans, Serialization) {
     KMeans *kMeansPtr = new KMeans(2, 3);
     kMeansPtr->fit(vectors, labels);
 
-    HMM *hmmPtr = new HMM();
+    HMM *hmmPtr = new HMM(2, 3);
 
     LanguageModel *languageModel = new LanguageModel(kMeansPtr, hmmPtr);
 

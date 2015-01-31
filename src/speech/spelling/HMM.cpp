@@ -1,8 +1,5 @@
 #include "HMM.h"
 
-speech::spelling::HMM::HMM() {
-}
-
 //
 // @todo implement loading the model
 //

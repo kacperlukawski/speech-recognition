@@ -18,17 +18,24 @@ using speech::clustering::KMeans;
 
 using speech::spelling::ISpellingTranscription;
 
-/**
-* This is an entry point of the application. It allows user to select the data source used
-* to get an input data, choose the methods of signal transformation into frequency domain
-* and spelling transcription.
-*
-* @todo create a logic
-*/
+#include "speech/LanguageModel.h"
+
+using speech::LanguageModel;
+
+//
+// This is an entry point of the application. It allows user to select the data source used
+// to get an input data, choose the methods of signal transformation into frequency domain
+// and a spelling transcription.
+//
+// @todo create a logic
+//
 int main(int argc, char **argv) {
     WaveFileDataSource<signed char> *dataSourcePtr = new WaveFileDataSource<signed char>("lorem ipsum");
     IClusteringMethod *clusteringMethodPtr = new KMeans(2, 2);
     ISpellingTranscription *spellingMethodPtr = nullptr;
+
+    LanguageModel *languageModel = new LanguageModel(clusteringMethodPtr, spellingMethodPtr);
+    std::cout << *languageModel;
 
     // for each sample from the source file transform it into frequency domain
     // and try to cluster it to one of the groups - number of the groups should

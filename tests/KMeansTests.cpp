@@ -8,6 +8,15 @@
 
 using speech::clustering::KMeans;
 
+#include "../src/speech/spelling/HMM.h"
+
+using speech::spelling::HMM;
+
+#include "../src/speech/LanguageModel.h"
+#include "../src/speech/exception/NullptrSerializationException.h"
+
+using speech::LanguageModel;
+
 /**
  * KMeans - test case
  * XORTest - test name
@@ -92,7 +101,7 @@ TEST(KMeans, SimpleCase) {
     ASSERT_NE(kMeansPtr->predict(leftSideVectors[0]), kMeansPtr->predict(rightSideVectors[1]));
 }
 
-TEST(KMeans, StreamOperators) {
+TEST(KMeans, Serialization) {
     std::vector<double *> leftSideVectors;
     leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
     leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
@@ -110,20 +119,32 @@ TEST(KMeans, StreamOperators) {
     KMeans *kMeansPtr = new KMeans(2, 3);
     kMeansPtr->fit(vectors, labels);
 
+    HMM *hmmPtr = new HMM();
+
+    LanguageModel *languageModel = new LanguageModel(kMeansPtr, hmmPtr);
+
     const std::string modelFileName = "kmeans_model.dat";
 
-    std::ofstream outputFileStream(modelFileName);
-    outputFileStream << *kMeansPtr;
-    outputFileStream.close();
+    try {
+        std::ofstream outputFileStream(modelFileName);
+        languageModel->serialize(outputFileStream);
+        outputFileStream.close();
 
-    KMeans *kMeansClonePtr = new KMeans(0, 0);
+        std::ifstream inputFileStream(modelFileName);
+        LanguageModel *languageModelUnserialized = new LanguageModel(inputFileStream);
+        inputFileStream.close();
 
-    std::ifstream inputFileStream(modelFileName);
-    inputFileStream >> *kMeansClonePtr;
-    inputFileStream.close();
+        speech::clustering::IClusteringMethod* clusteringMethod = languageModelUnserialized->getClusteringMethod();
+        speech::spelling::ISpellingTranscription* spellingTranscription = languageModelUnserialized->getSpellingTranscription();
 
-    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), kMeansClonePtr->predict(leftSideVectors[0]));
-    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[1]), kMeansClonePtr->predict(leftSideVectors[1]));
-    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansClonePtr->predict(rightSideVectors[0]));
-    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansClonePtr->predict(rightSideVectors[1]));
+        ASSERT_NE(clusteringMethod, nullptr);
+        ASSERT_NE(spellingTranscription, nullptr);
+
+        ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), clusteringMethod->predict(leftSideVectors[0]));
+        ASSERT_EQ(kMeansPtr->predict(leftSideVectors[1]), clusteringMethod->predict(leftSideVectors[1]));
+        ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), clusteringMethod->predict(rightSideVectors[0]));
+        ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), clusteringMethod->predict(rightSideVectors[1]));
+    } catch (speech::exception::NullptrSerializationException& ex) {
+        FAIL();
+    }
 }

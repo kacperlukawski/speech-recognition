@@ -3,9 +3,8 @@
 
 #include "../IStreamSerializable.h"
 
+#include <vector>
 #include <string>
-
-using std::string;
 
 namespace speech {
 
@@ -17,9 +16,9 @@ namespace speech {
         //
         class ISpellingTranscription : public IStreamSerializable {
         public:
-            virtual void fit(int *phonemes, string spelling) = 0;
+            virtual void fit(std::vector<int> phonems, const std::string& spelling) = 0;
 
-            virtual string predict(int *phonemes) = 0;
+            virtual std::string predict(std::vector<int> phonems) = 0;
 
             virtual void serialize(std::ostream &out) const = 0;
         };

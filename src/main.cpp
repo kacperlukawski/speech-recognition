@@ -14,9 +14,12 @@ using speech::raw_data::WaveFileDataSource;
 using speech::clustering::IClusteringMethod;
 using speech::clustering::KMeans;
 
-#include "speech/spelling/ISpellingTranscription.h"
+#include "speech/spelling/HMM.h"
 
 using speech::spelling::ISpellingTranscription;
+using speech::spelling::HMM;
+
+#include <vector>
 
 #include "speech/LanguageModel.h"
 
@@ -30,9 +33,32 @@ using speech::LanguageModel;
 // @todo create a logic
 //
 int main(int argc, char **argv) {
+    const int singleDataVectorDimension = 10;
+    const int numberOfPhonems = 4;
+    const int numberOfLetters = 4;
+
     WaveFileDataSource<signed char> *dataSourcePtr = new WaveFileDataSource<signed char>("lorem ipsum");
-    IClusteringMethod *clusteringMethodPtr = new KMeans(2, 2);
-    ISpellingTranscription *spellingMethodPtr = nullptr;
+    IClusteringMethod *clusteringMethodPtr = new KMeans(numberOfPhonems, singleDataVectorDimension);
+    ISpellingTranscription *spellingMethodPtr = new HMM(numberOfPhonems, numberOfLetters);
+
+    std::vector<int> observations(4);
+    observations.at(0) = 0;
+    observations.at(1) = 1;
+    observations.at(2) = 2;
+    observations.at(3) = 0;
+
+    spellingMethodPtr->fit(observations, std::string("abca"));
+
+    std::cout << spellingMethodPtr->predict(observations) << std::endl;
+
+    observations.at(0) = 1;
+    observations.at(1) = 3;
+    observations.at(2) = 0;
+    observations.at(3) = 0;
+
+    spellingMethodPtr->fit(observations, std::string("bdaa"));
+
+    std::cout << spellingMethodPtr->predict(observations) << std::endl;
 
     LanguageModel *languageModel = new LanguageModel(clusteringMethodPtr, spellingMethodPtr);
     std::cout << *languageModel;

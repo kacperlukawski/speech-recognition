@@ -8,6 +8,7 @@ add_library(
         raw_data/WaveFileDataSource.cpp
         clustering/KMeans.cpp
         spelling/HMM.cpp
+        spelling/SpellingAdjuster.cpp
 )
 
 target_include_directories(Speech PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

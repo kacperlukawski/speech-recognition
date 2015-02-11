@@ -4,7 +4,41 @@
 // @todo implement loading the model
 //
 speech::spelling::HMM::HMM(std::istream &in) {
+    in.read((char *) &numberOfObservations, sizeof(numberOfObservations));
+    in.read((char *) &numberOfStates, sizeof(numberOfStates));
 
+    observations = new std::vector<int>(numberOfObservations);
+    states = new std::vector<char>(numberOfStates);
+
+    for (int i = 0; i < numberOfObservations; i++) {
+        in.read((char *) &observations->at(i), sizeof(int));
+    }
+
+    for (int i = 0; i < numberOfStates; i++) {
+        in.read((char *) &states->at(i), sizeof(char));
+    }
+
+    transmission = new arma::mat(numberOfStates, numberOfStates); // at(fromState, toState)
+    emission = new arma::mat(numberOfStates, numberOfObservations); // at(state, observation)
+    pi = new arma::vec(numberOfStates);
+
+    in.read((char *) transmission->memptr(), transmission->n_elem * sizeof(double));
+    in.read((char *) emission->memptr(), emission->n_elem * sizeof(double));
+
+    for (int i = 0; i < numberOfStates; i++) {
+        in.read((char *) &pi->at(i), sizeof(double));
+    }
+
+    stateToStateCount = new arma::mat(numberOfStates, numberOfStates);
+    stateToObservationCount = new arma::mat(numberOfStates, numberOfObservations);
+    stateCount = new arma::vec(numberOfStates);
+
+    in.read((char *) stateToObservationCount->memptr(), stateToObservationCount->n_elem * sizeof(double));
+    in.read((char *) stateToStateCount->memptr(), stateToStateCount->n_elem * sizeof(double));
+
+    for (int i = 0; i < numberOfStates; i++) {
+        in.read((char *) &stateCount->at(i), sizeof(double));
+    }
 }
 
 speech::spelling::HMM::HMM(int _numberOfObservations, int _numberOfStates)
@@ -186,6 +220,8 @@ std::string speech::spelling::HMM::predict(std::vector<int> phonems) {
 /**
 * Convert given character into index taken from
 * the states collection.
+*
+* @todo add throwing an exception when the state is not present in the set of states
 */
 int speech::spelling::HMM::stateToIndex(const char &state) {
     auto elementPosIt = std::find(states->begin(), states->end(), state);
@@ -201,6 +237,8 @@ int speech::spelling::HMM::stateToIndex(const char &state) {
 * into internal index. It will be mostly the same,
 * but in some cases it is necessary to label the data
 * another way.
+*
+* @todo add throwing an exception when observation is not present in observations set
 */
 int speech::spelling::HMM::observationToIndex(const int &observation) {
     auto elementPosIt = std::find(observations->begin(), observations->end(), observation);
@@ -213,17 +251,19 @@ int speech::spelling::HMM::observationToIndex(const int &observation) {
 
 /**
 * Create matrices of probabilities by normalization
+*
+* @todo check if the provided algorithm is correct (rows are not used when the cols should be)
 */
 void speech::spelling::HMM::actualizeProbabilityDistributions() {
     for (int i = 0; i < numberOfStates; ++i) {
         pi->at(i) = stateCount->at(i) / (sum(*stateCount) + EPS);
     }
 
-    for (int i = 0; i < numberOfStates; ++i) {
+    for (int i = 0; i < numberOfObservations; ++i) {
         emission->unsafe_col(i) = stateToObservationCount->unsafe_col(i) / (sum(stateToObservationCount->unsafe_col(i)) + EPS);
     }
 
-    for (int i = 0; i < numberOfStates; ++i) {
+    for (int i = 0; i < numberOfObservations; ++i) {
         transmission->unsafe_col(i) = stateToStateCount->unsafe_col(i) / (sum(stateToStateCount->unsafe_col(i)) + EPS);
     }
 }
@@ -233,6 +273,32 @@ void speech::spelling::HMM::actualizeProbabilityDistributions() {
 //
 void speech::spelling::HMM::serialize(std::ostream &out) const {
     uint32_t typeIdentifier = TYPE_IDENTIFIER;
-    out.write((char const *) &typeIdentifier, sizeof(typeIdentifier));
 
+    out.write((char const *) &typeIdentifier, sizeof(typeIdentifier));
+    out.write((char const *) &numberOfObservations, sizeof(numberOfObservations));
+    out.write((char const *) &numberOfStates, sizeof(numberOfStates));
+
+    for (int i = 0; i < numberOfObservations; i++) {
+        out.write((char const *) &observations->at(i), sizeof(int));
+    }
+
+    for (int i = 0; i < numberOfStates; i++) {
+        out.write((char const *) &states->at(i), sizeof(char));
+    }
+
+    out.write((char const *) transmission->memptr(), transmission->n_elem * sizeof(double));
+    out.write((char const *) emission->memptr(), emission->n_elem * sizeof(double));
+
+    for (int i = 0; i < numberOfStates; i++) {
+//    arma::vec *pi; // initial state distribution
+        out.write((char const *) &pi->at(i), sizeof(double));
+    }
+
+    out.write((char const *) stateToObservationCount->memptr(), stateToObservationCount->n_elem * sizeof(double));
+    out.write((char const *) stateToStateCount->memptr(), stateToStateCount->n_elem * sizeof(double));
+
+    for (int i = 0; i < numberOfStates; i++) {
+        //    arma::vec *stateCount; // numbers of occurences of each state as a first state in a sequence
+        out.write((char const *) &stateCount->at(i), sizeof(double));
+    }
 }

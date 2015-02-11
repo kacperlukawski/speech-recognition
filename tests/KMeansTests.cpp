@@ -8,6 +8,15 @@
 
 using speech::clustering::KMeans;
 
+#include "../src/speech/spelling/HMM.h"
+
+using speech::spelling::HMM;
+
+#include "../src/speech/LanguageModel.h"
+#include "../src/speech/exception/NullptrSerializationException.h"
+
+using speech::LanguageModel;
+
 /**
  * KMeans - test case
  * XORTest - test name
@@ -92,7 +101,10 @@ TEST(KMeans, SimpleCase) {
     ASSERT_NE(kMeansPtr->predict(leftSideVectors[0]), kMeansPtr->predict(rightSideVectors[1]));
 }
 
-TEST(KMeans, StreamOperators) {
+//
+// @todo extend the test to prepare a sequence of vectors, cluster them and run spelling transcription (check if the results returned by unserialized copy are the same)
+//
+TEST(KMeans, Serialization) {
     std::vector<double *> leftSideVectors;
     leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
     leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
@@ -110,20 +122,57 @@ TEST(KMeans, StreamOperators) {
     KMeans *kMeansPtr = new KMeans(2, 3);
     kMeansPtr->fit(vectors, labels);
 
+    std::vector<int> leftLeftWordPhonems;
+    leftLeftWordPhonems.push_back(kMeansPtr->predict(leftSideVectors[0]));
+    leftLeftWordPhonems.push_back(kMeansPtr->predict(leftSideVectors[1]));
+
+    std::vector<int> leftRightWordPhonems;
+    leftRightWordPhonems.push_back(kMeansPtr->predict(leftSideVectors[0]));
+    leftRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
+
+    std::vector<int> rightLeftWordPhonems;
+    rightLeftWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
+    rightLeftWordPhonems.push_back(kMeansPtr->predict(leftSideVectors[0]));
+
+    std::vector<int> rightRightWordPhonems;
+    rightRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
+    rightRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
+
+    HMM *hmmPtr = new HMM(2, 3);
+    hmmPtr->fit(leftLeftWordPhonems, "aa");
+    hmmPtr->fit(leftRightWordPhonems, "ab");
+    hmmPtr->fit(rightLeftWordPhonems, "ba");
+    hmmPtr->fit(rightRightWordPhonems, "bb");
+
+    LanguageModel *languageModel = new LanguageModel(kMeansPtr, hmmPtr);
+
     const std::string modelFileName = "kmeans_model.dat";
 
-    std::ofstream outputFileStream(modelFileName);
-    outputFileStream << *kMeansPtr;
-    outputFileStream.close();
+    try {
+        std::ofstream outputFileStream(modelFileName);
+        languageModel->serialize(outputFileStream);
+        outputFileStream.close();
 
-    KMeans *kMeansClonePtr = new KMeans(0, 0);
+        std::ifstream inputFileStream(modelFileName);
+        LanguageModel *languageModelUnserialized = new LanguageModel(inputFileStream);
+        inputFileStream.close();
 
-    std::ifstream inputFileStream(modelFileName);
-    inputFileStream >> *kMeansClonePtr;
-    inputFileStream.close();
+        speech::clustering::IClusteringMethod* clusteringMethod = languageModelUnserialized->getClusteringMethod();
+        speech::spelling::ISpellingTranscription* spellingTranscription = languageModelUnserialized->getSpellingTranscription();
 
-    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), kMeansClonePtr->predict(leftSideVectors[0]));
-    ASSERT_EQ(kMeansPtr->predict(leftSideVectors[1]), kMeansClonePtr->predict(leftSideVectors[1]));
-    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansClonePtr->predict(rightSideVectors[0]));
-    ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansClonePtr->predict(rightSideVectors[1]));
+        ASSERT_NE(clusteringMethod, nullptr);
+        ASSERT_NE(spellingTranscription, nullptr);
+
+        ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), clusteringMethod->predict(leftSideVectors[0]));
+        ASSERT_EQ(kMeansPtr->predict(leftSideVectors[1]), clusteringMethod->predict(leftSideVectors[1]));
+        ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), clusteringMethod->predict(rightSideVectors[0]));
+        ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), clusteringMethod->predict(rightSideVectors[1]));
+
+        ASSERT_STREQ(hmmPtr->predict(leftLeftWordPhonems).c_str(), spellingTranscription->predict(leftLeftWordPhonems).c_str());
+        ASSERT_STREQ(hmmPtr->predict(leftRightWordPhonems).c_str(), spellingTranscription->predict(leftRightWordPhonems).c_str());
+        ASSERT_STREQ(hmmPtr->predict(rightLeftWordPhonems).c_str(), spellingTranscription->predict(rightLeftWordPhonems).c_str());
+        ASSERT_STREQ(hmmPtr->predict(rightRightWordPhonems).c_str(), spellingTranscription->predict(rightRightWordPhonems).c_str());
+    } catch (speech::exception::NullptrSerializationException& ex) {
+        FAIL();
+    }
 }

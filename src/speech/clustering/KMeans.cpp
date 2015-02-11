@@ -5,7 +5,25 @@
 #include <cmath>
 #include <map>
 
-speech::clustering::KMeans::KMeans(unsigned int _k, unsigned int _dim) : k(_k), dimension(_dim) {
+speech::clustering::KMeans::KMeans(std::istream &in) {
+    unsigned long centroidsNb = 0;
+
+    in.read((char *) &k, sizeof(k));
+    in.read((char *) &dimension, sizeof(dimension));
+    in.read((char *) &centroidsNb, sizeof(centroidsNb));
+
+    unsigned int singleVectorSize = sizeof(double) * dimension;
+
+    centroids = new std::vector<double*>(centroidsNb);
+    for (int i = 0; i < centroidsNb; i++) {
+        double * vector = new double[dimension];
+        in.read((char *) vector, singleVectorSize);
+        (*centroids)[i] = vector;
+    }
+}
+
+speech::clustering::KMeans::KMeans(unsigned int _k, unsigned int _dim)
+        : k(_k), dimension(_dim) {
     centroids = new std::vector<double*>();
 }
 
@@ -18,14 +36,14 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
-/**
- * @todo prepare an implementation of the K-Means
- *
- * 1. randomly choose k centroids from given vectors' set
- * 2. in each iteration assign all vectors into the nearest centroid
- * 3. update each centroid to be a mean of the all vectors belonging to this particular group
- * 4. stop when nothing changed in an iteration or after maximum number of iterations
- */
+//
+// @todo prepare an implementation of the K-Means
+//
+// 1. Randomly choose k centroids from given vectors' set
+// 2. In each iteration assign all vectors into the nearest centroid
+// 3. Update each centroid to be a mean of the all vectors belonging to this particular group
+// 4. Stop when nothing changed in an iteration or after maximum number of iterations
+//
 void speech::clustering::KMeans::fit(std::vector<double *> vectors, std::vector<int> labels) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
@@ -133,6 +151,26 @@ int speech::clustering::KMeans::predict(double *vector) {
     return argmin;
 }
 
+//
+// Save the instance of KMeans class into given output stream
+//
+void speech::clustering::KMeans::serialize(std::ostream &out) const {
+    uint32_t typeIdentifier = TYPE_IDENTIFIER;
+    out.write((char const *) &typeIdentifier, sizeof(typeIdentifier));
+
+    unsigned int singleVectorSize = sizeof(double) * dimension;
+    unsigned long centroidsNb = centroids->size();
+
+    out.write((char const *) &k, sizeof(unsigned int));
+    out.write((char const *) &dimension, sizeof(unsigned int));
+    out.write((char const *) &centroidsNb, sizeof(unsigned long));
+
+    std::vector<double *>::const_iterator it;
+    for (it = centroids->begin(); it != centroids->end(); ++it) {
+        out.write((char const *)(*it), singleVectorSize);
+    }
+}
+
 /**
  * Calculate Euclidean distance of two given vectors
  *
@@ -145,56 +183,4 @@ double speech::clustering::KMeans::distance(double *v1, double *v2) {
     }
 
     return sqrt(sum);
-}
-
-namespace speech {
-
-    namespace clustering {
-
-        /**
-         * Load the KMeans class instance from given input stream
-         *
-         * @return the same stream as was given
-         */
-        std::istream& operator>> (std::istream& in, speech::clustering::KMeans& kMeans) {
-            unsigned long centroidsNb = 0;
-
-            in.read((char *) &kMeans.k, sizeof(unsigned int));
-            in.read((char *) &kMeans.dimension, sizeof(unsigned int));
-            in.read((char *) &centroidsNb, sizeof(unsigned long));
-
-            unsigned int singleVectorSize = sizeof(double) * kMeans.dimension;
-
-            for (int i = 0; i < centroidsNb; ++i) {
-                double* currentVector = new double[kMeans.dimension];
-                in.read((char *) currentVector, singleVectorSize);
-                kMeans.centroids->push_back(currentVector);
-            }
-
-            return in;
-        }
-
-        /**
-         * Save the instance of KMeans class into given output stream
-         *
-         * @return the same stream as was given
-         */
-        std::ostream& operator<< (std::ostream& out, const speech::clustering::KMeans& kMeans) {
-            unsigned int singleVectorSize = sizeof(double) * kMeans.dimension;
-            unsigned long centroidsNb = kMeans.centroids->size();
-
-            out.write((char const *) &kMeans.k, sizeof(unsigned int));
-            out.write((char const *) &kMeans.dimension, sizeof(unsigned int));
-            out.write((char const *) &centroidsNb, sizeof(unsigned long));
-
-            std::vector<double *>::const_iterator it;
-            for (it = kMeans.centroids->begin(); it != kMeans.centroids->end(); ++it) {
-                out.write((char const *)(*it), singleVectorSize);
-            }
-
-            return out;
-        }
-
-    }
-
 }

@@ -12,9 +12,9 @@ set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)
 
 enable_testing()
 
-# add "src" directory to be used in compilation
-add_subdirectory(src)
-
-# add "tests" directory
+# add all libraries
 add_subdirectory(lib/gtest-1.7.0)
+
+# add directories to be used in compilation
 add_subdirectory(tests)
+add_subdirectory(src)

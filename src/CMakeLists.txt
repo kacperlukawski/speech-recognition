@@ -1,4 +1,4 @@
-# parse the subdirectory "speech"
+# parse the subdirectories
 add_subdirectory(speech)
 
 # add the executable "Main"

@@ -1,5 +1,11 @@
 #include "FastFourierTransform.h"
 #include <cmath>
+#include <limits>
+
+template<typename FrameType>
+speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
+    MAX_VALUE = std::numeric_limits<FrameType>::max();
+}
 
 template<typename FrameType>
 FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
@@ -7,37 +13,39 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
     valarray<complex<double>> comp(vector.getSize());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(((double) values[i]), 0.0);
+        comp[i] = complex<double>(((double) values[i]) / MAX_VALUE, 0.0);
     }
 
     fft(comp);
 
-    double amplitude[vector.getSize()];
-    double phase[vector.getSize()];
+    double *amplitude = new double[vector.getSize()];
+    double *phase = new double[vector.getSize()];
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        amplitude[i] = comp[i].real();
-        phase[i] = comp[i].imag();
+        amplitude[i] = comp[i].real() * MAX_VALUE;
+        phase[i] = comp[i].imag() * MAX_VALUE;
     }
 
     return FrequencySample<FrameType>(vector.getSize(), amplitude, phase);
 }
+
 template<typename FrameType>
 DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::reverseTransform(FrequencySample<FrameType> vector) {
-    double* amplitude = vector.getAmplitude();
-    double* phase = vector.getPhase();
+    double *amplitude = vector.getAmplitude();
+    double *phase = vector.getPhase();
+
     valarray<complex<double>> comp(vector.getSize());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(amplitude[i], phase[i]);
+        comp[i] = complex<double>(amplitude[i] / MAX_VALUE, phase[i] / MAX_VALUE);
     }
 
     ifft(comp);
 
-    FrameType values[vector.getSize()];
+    FrameType *values = new FrameType[vector.getSize()];
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        values[i] = (FrameType) comp[i].real();
+        values[i] = (FrameType) (comp[i].real() * MAX_VALUE);
     }
 
     return DataSample<FrameType>(vector.getSize(), values);
@@ -60,7 +68,7 @@ void speech::transform::FastFourierTransform<FrameType>::fft(valarray<complex<do
 
     // combine
     for (size_t k = 0; k < N / 2; ++k) {
-        complex<double> t = std::polar(1.0, -2 * M_PI * k / N) * odd[k];
+        complex<double> t = std::polar(1.0, -2.0 * M_PI * k / N) * odd[k];
         x[k] = even[k] + t;
         x[k + N / 2] = even[k] - t;
     }
@@ -83,4 +91,9 @@ void speech::transform::FastFourierTransform<FrameType>::ifft(valarray<complex<d
     x /= x.size();
 }
 
-template class speech::transform::FastFourierTransform<short>;
+template
+class speech::transform::FastFourierTransform<short>;
+
+template
+class speech::transform::FastFourierTransform<unsigned char>;
+

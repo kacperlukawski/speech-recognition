@@ -22,13 +22,19 @@ namespace speech {
         class FastFourierTransform : public IFrequencyTransform<FrameType> {
 
         public:
+            FastFourierTransform();
+
             virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector);
 
             virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector);
 
         protected:
             void fft(valarray<complex<double >> &x);
+
             void ifft(valarray<complex<double>> &x);
+
+        private:
+            int MAX_VALUE;
         };
 
     }

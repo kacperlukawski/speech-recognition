@@ -48,7 +48,7 @@ namespace speech {
             string fileName;
         private:
             wav_header* meta_data;
-            const unsigned short int BUFFER_SIZE = 512;
+            const unsigned short int BUFFER_SIZE = 4;
             FILE *file;
 
             void readFromFile();

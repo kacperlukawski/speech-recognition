@@ -99,7 +99,7 @@ speech::spelling::HMM::~HMM() {
 * Add next example of the training data - connections
 * between sequence of phonems and sequence of letters.
 */
-void speech::spelling::HMM::fit(std::vector<int> phonems, const std::string& spelling) {
+void speech::spelling::HMM::fit(std::vector<int> &phonems, const std::string &spelling) {
     if (phonems.size() != spelling.length()) {
         // @todo it is necessary to adjust the spelling somehow by duplicating some of the letters - some phonems last longer than another
         return;

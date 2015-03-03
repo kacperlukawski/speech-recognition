@@ -20,6 +20,7 @@ using speech::spelling::ISpellingTranscription;
 using speech::spelling::HMM;
 
 #include <vector>
+#include <clustering/exception/TooLessVectorsException.h>
 
 #include "speech/LanguageModel.h"
 
@@ -33,41 +34,62 @@ using speech::LanguageModel;
 // @todo create a logic
 //
 int main(int argc, char **argv) {
-    const int singleDataVectorDimension = 10;
-    const int numberOfPhonems = 4;
-    const int numberOfLetters = 4;
+    const int singleDataVectorDimension = 10;   // dimension of the vector describing single sample
+    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
+    const int numberOfLetters = 4;              // number of symbols used in the spelling transcription
 
-    WaveFileDataSource<signed char> *dataSourcePtr = new WaveFileDataSource<signed char>("lorem ipsum");
+    std::vector<double *> vectors;              // list of vectors produced by all data sources
+    std::vector<int> labels;                    // list of labels can be empty if used clustering method
+    // uses unsupervised learning, i.e. KMeans
+
+    std::vector<const char *> dataSources;
+    dataSources.push_back("file_1.wav");        // @todo: list should be more dynamic, but it's not necessary now
+
+    std::vector<std::string> transcriptions;
+    transcriptions.push_back("text one");       // @todo: as above
+
+    for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
+        WaveFileDataSource<signed char> *dataSourcePtr = new WaveFileDataSource<signed char>(*it);
+
+        // @todo: add each vector produced by the data source into vectors
+        // vectors.push_back(vector);
+
+        delete dataSourcePtr;
+    }
+
     IClusteringMethod *clusteringMethodPtr = new KMeans(numberOfPhonems, singleDataVectorDimension);
     ISpellingTranscription *spellingMethodPtr = new HMM(numberOfPhonems, numberOfLetters);
 
-    std::vector<int> observations(4);
-    observations.at(0) = 0;
-    observations.at(1) = 1;
-    observations.at(2) = 2;
-    observations.at(3) = 0;
+    try {
+        clusteringMethodPtr->fit(vectors, labels);
 
-    spellingMethodPtr->fit(observations, std::string("abca"));
+        int dataSourcesSize = dataSources.size();
+        for (int i = 0; i < dataSourcesSize; i++) {
+            const char *fileName = dataSources.at(i);
+            std::string &transcription = transcriptions.at(i);
 
-    std::cout << spellingMethodPtr->predict(observations) << std::endl;
+            WaveFileDataSource<signed char> *dataSourcePtr = new WaveFileDataSource<signed char>(fileName);
 
-    observations.at(0) = 1;
-    observations.at(1) = 3;
-    observations.at(2) = 0;
-    observations.at(3) = 0;
+            std::vector<int> predictedLabels;
+            // @todo: iterate through all vectors from current data source, classify them using cllusteringMethod and add them into predictedLabels
 
-    spellingMethodPtr->fit(observations, std::string("bdaa"));
+            spellingMethodPtr->fit(predictedLabels, transcription);
 
-    std::cout << spellingMethodPtr->predict(observations) << std::endl;
+            delete dataSourcePtr;
+        }
 
-    LanguageModel *languageModel = new LanguageModel(clusteringMethodPtr, spellingMethodPtr);
-    std::cout << *languageModel;
+        LanguageModel languageModel(clusteringMethodPtr, spellingMethodPtr);
+        // @todo store a model into a file to be loaded and used for classification purposes
 
-    // for each sample from the source file transform it into frequency domain
-    // and try to cluster it to one of the groups - number of the groups should
-    // be defined as a number of phonems which we're trying to recognize
-    // then use sequencies of phonems to receive the most probable spelling
-    // of the words
+        // the model is fitted and can be used to transcript another data sources (validation)
+        // @todo: add a validation
+    } catch (speech::clustering::exception::TooLessVectorsException &ex) {
+        std::cerr << "You need to provide at least " << numberOfPhonems
+                << " vectors to perform the clustering" << std::endl;
+    }
+
+    delete clusteringMethodPtr;
+    delete spellingMethodPtr;
 
     return 0;
 }

@@ -27,7 +27,7 @@ namespace speech {
 
             virtual ~KMeans();
 
-            virtual void fit(std::vector<double *> vectors, std::vector<int> labels);
+            virtual void fit(std::vector<double *> &vectors, std::vector<int> &labels);
 
             virtual int predict(double *vector);
 

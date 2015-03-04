@@ -2,6 +2,7 @@
 #define HMM_H
 
 #include "ISpellingTranscription.h"
+#include "SpellingAdjuster.h"
 
 #include <armadillo>
 #include <valarray>
@@ -43,6 +44,7 @@ namespace speech {
             arma::mat *stateToObservationCount; // numbers of emissions between each state and observation
             arma::mat *stateToStateCount; // numbers of transmitions between each pair of states
             arma::vec *stateCount; // numbers of occurences of each state as a first state in a sequence
+            SpellingAdjuster spellingAdjuster; // adjust the length of the word to given value
 
             inline int stateToIndex(const char &state);
 

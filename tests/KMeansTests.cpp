@@ -102,7 +102,9 @@ TEST(KMeans, SimpleCase) {
 }
 
 //
-// @todo extend the test to prepare a sequence of vectors, cluster them and run spelling transcription (check if the results returned by unserialized copy are the same)
+// @todo extend the test to prepare a sequence of vectors, cluster
+// them and run spelling transcription (check if the results
+// returned by unserialized copy are the same)
 //
 TEST(KMeans, Serialization) {
     std::vector<double *> leftSideVectors;

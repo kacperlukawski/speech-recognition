@@ -14,7 +14,7 @@ namespace speech {
         //
         class IClusteringMethod : public IStreamSerializable {
         public:
-            virtual void fit(std::vector<double *> vectors, std::vector<int> labels) = 0;
+            virtual void fit(std::vector<double *> &vectors, std::vector<int> &labels) = 0;
 
             virtual int predict(double *vector) = 0;
 

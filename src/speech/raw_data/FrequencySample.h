@@ -1,6 +1,8 @@
 #ifndef FREQUENCYSAMPLE_H
 #define FREQUENCYSAMPLE_H
 
+#include <memory>
+
 namespace speech {
 
     namespace raw_data {
@@ -12,16 +14,16 @@ namespace speech {
         class FrequencySample {
         protected:
             int size;
-            double *amplitude;
-            double *phase;
+            std::shared_ptr<double> amplitude;
+            std::shared_ptr<double> phase;
         public:
-            FrequencySample(int _size, double *_amplitude, double *_phase);
+            FrequencySample(int _size, std::shared_ptr<double> _amplitude, std::shared_ptr<double> _phase);
 
             virtual ~FrequencySample();
 
             int getSize();
-            double* getAmplitude();
-            double* getPhase();
+            std::shared_ptr<double> getAmplitude();
+            std::shared_ptr<double> getPhase();
         };
 
     }

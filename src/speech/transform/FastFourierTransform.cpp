@@ -9,21 +9,21 @@ speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
 
 template<typename FrameType>
 FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
-    FrameType *values = vector.getValues();
+    std::shared_ptr<FrameType> values = vector.getValues();
     valarray<complex<double>> comp(vector.getSize());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(((double) values[i]) / MAX_VALUE, 0.0);
+        comp[i] = complex<double>(((double) values.get()[i]) / MAX_VALUE, 0.0);
     }
 
     fft(comp);
 
-    double *amplitude = new double[vector.getSize()];
-    double *phase = new double[vector.getSize()];
+    std::shared_ptr<double> amplitude(new double[vector.getSize()], std::default_delete<double[]>());
+    std::shared_ptr<double> phase(new double[vector.getSize()], std::default_delete<double[]>());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        amplitude[i] = comp[i].real() * MAX_VALUE;
-        phase[i] = comp[i].imag() * MAX_VALUE;
+        amplitude.get()[i] = comp[i].real() * MAX_VALUE;
+        phase.get()[i] = comp[i].imag() * MAX_VALUE;
     }
 
     return FrequencySample<FrameType>(vector.getSize(), amplitude, phase);
@@ -31,21 +31,21 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
 
 template<typename FrameType>
 DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::reverseTransform(FrequencySample<FrameType> vector) {
-    double *amplitude = vector.getAmplitude();
-    double *phase = vector.getPhase();
+    std::shared_ptr<double> amplitude = vector.getAmplitude();
+    std::shared_ptr<double> phase = vector.getPhase();
 
     valarray<complex<double>> comp(vector.getSize());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(amplitude[i] / MAX_VALUE, phase[i] / MAX_VALUE);
+        comp[i] = complex<double>(amplitude.get()[i] / MAX_VALUE, phase.get()[i] / MAX_VALUE);
     }
 
     ifft(comp);
 
-    FrameType *values = new FrameType[vector.getSize()];
+    std::shared_ptr<FrameType> values(new FrameType[vector.getSize()], std::default_delete<FrameType[]>());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        values[i] = (FrameType) (comp[i].real() * MAX_VALUE);
+        values.get()[i] = (FrameType) (comp[i].real() * MAX_VALUE);
     }
 
     return DataSample<FrameType>(vector.getSize(), values);

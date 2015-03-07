@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include "WaveFileDataSource.h"
 #include <iostream>
+#include <memory>
 
 template<typename FrameType>
 speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName)
@@ -11,15 +12,17 @@ speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _file
     readFromFile();
 }
 
-template <typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header* _meta_data) {
-    this->meta_data = _meta_data;
+template<typename FrameType>
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data) {
+    meta_data = new wav_header;
+    memcpy(meta_data, &_meta_data, sizeof(*meta_data));
 }
 
 template<typename FrameType>
 speech::raw_data::WaveFileDataSource<FrameType>::~WaveFileDataSource() {
-    delete meta_data;
-    delete file;
+    if (meta_data != nullptr) {
+        delete meta_data;
+    }
 }
 
 template<typename FrameType>
@@ -34,14 +37,14 @@ void speech::raw_data::WaveFileDataSource<FrameType>::saveToFile(string _fileNam
     fwrite(meta_data, 1, sizeof(*meta_data), outfile);
 
     for (auto it = this->getSamplesIteratorBegin(); it != this->getSamplesIteratorEnd(); ++it) {
-        fwrite(it->getValues(), 1, it->getSize(), outfile);
+        fwrite(it->getValues().get(), 1, it->getSize(), outfile);
     }
     fclose(outfile);
 }
 
 template<typename FrameType>
 void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile() {
-    file = fopen(fileName.c_str(), "rb");
+    FILE *file = fopen(fileName.c_str(), "rb");
 
     if (file == NULL) {
         throw std::runtime_error(strerror(errno));
@@ -49,15 +52,17 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile() {
 
     fread(meta_data, 1, sizeof(*meta_data), file);
 
-    FrameType* buffer;
     int numberOfRead = 0;
 
     while (!feof(file)) {
-        buffer = new FrameType[BUFFER_SIZE];
-        numberOfRead = fread(buffer, 1, BUFFER_SIZE, file);
+        std::shared_ptr<FrameType> buffer(new FrameType[BUFFER_SIZE], std::default_delete<FrameType[]>());
+        numberOfRead = fread(buffer.get(), 1, BUFFER_SIZE, file);
 
         this->samples->push_back(DataSample<FrameType>(numberOfRead, buffer));
+        buffer.reset();
     }
+
+    fclose(file);
 }
 
 template

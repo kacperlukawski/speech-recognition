@@ -2,12 +2,12 @@
 
 template<typename FrameType>
 speech::raw_data::DataSource<FrameType>::DataSource() {
-    samples = new list<DataSample<FrameType>>();
+    samples = std::make_shared<list<DataSample<FrameType>>>();
 }
 
 template<typename FrameType>
 speech::raw_data::DataSource<FrameType>::~DataSource() {
-    delete samples;
+    samples.reset();
 }
 
 template<typename FrameType>

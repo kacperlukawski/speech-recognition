@@ -1,7 +1,8 @@
 #include "FrequencySample.h"
 
 template<typename FrameType>
-speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size, double *_amplitude, double *_phase) {
+speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size,
+        std::shared_ptr<double> _amplitude, std::shared_ptr<double> _phase) {
     size = _size;
     amplitude = _amplitude;
     phase = _phase;
@@ -9,13 +10,8 @@ speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size, double 
 
 template<typename FrameType>
 speech::raw_data::FrequencySample<FrameType>::~FrequencySample() {
-    // @TODO
-//    if (amplitude != nullptr) {
-//        delete amplitude;
-//    }
-//    if (phase != nullptr) {
-//        delete phase;
-//    }
+    amplitude.reset();
+    phase.reset();
 }
 
 template<typename FrameType>
@@ -24,14 +20,17 @@ int speech::raw_data::FrequencySample<FrameType>::getSize() {
 }
 
 template<typename FrameType>
-double *speech::raw_data::FrequencySample<FrameType>::getAmplitude() {
+std::shared_ptr<double> speech::raw_data::FrequencySample<FrameType>::getAmplitude() {
     return amplitude;
 }
 
 template<typename FrameType>
-double *speech::raw_data::FrequencySample<FrameType>::getPhase() {
+std::shared_ptr<double> speech::raw_data::FrequencySample<FrameType>::getPhase() {
     return phase;
 }
 
 template
 class speech::raw_data::FrequencySample<short>;
+
+template
+class speech::raw_data::FrequencySample<unsigned char>;

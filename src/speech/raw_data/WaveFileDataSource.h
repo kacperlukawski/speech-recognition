@@ -25,31 +25,33 @@ namespace speech {
             short int bits_per_sample;
             char subchunk2_id[4];
             int subchunk2_size;
-        } ;
+        };
 
         /**
         * This class represents the data source which reads the signal
         * from standard WAV file
-        *
-        * @todo implement file handling
         *
         * @todo because wave file can have more than one channel (stereo is probably the most common format nowadays), we need to have a way to convert it into one signal - the transform should work only on one stream, while stereo has actually two independent streams of the data
         */
         template<typename FrameType>
         class WaveFileDataSource : public DataSource<FrameType> {
         public:
-            WaveFileDataSource(wav_header* _meta_data);
+            WaveFileDataSource(wav_header _meta_data);
+
             WaveFileDataSource(string _fileName);
+
             virtual ~WaveFileDataSource();
+
             void saveToFile(string _fileName);
+
             virtual wav_header getMetaData();
 
         protected:
             string fileName;
         private:
-            wav_header* meta_data;
+            wav_header *meta_data;
             const unsigned short int BUFFER_SIZE = 4;
-            FILE *file;
+            //FILE *file;
 
             void readFromFile();
         };

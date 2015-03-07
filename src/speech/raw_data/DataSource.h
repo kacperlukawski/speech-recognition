@@ -2,6 +2,7 @@
 #define DATASOURCE_H
 
 #include <list>
+#include <memory>
 #include "DataSample.h"
 
 using std::list;
@@ -19,7 +20,7 @@ namespace speech {
         template<typename FrameType>
         class DataSource {
         protected:
-            list<DataSample<FrameType>> *samples;
+            std::shared_ptr<list<DataSample<FrameType>>> samples;
         public:
             DataSource();
             virtual ~DataSource();

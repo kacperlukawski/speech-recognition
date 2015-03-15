@@ -11,7 +11,7 @@ speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _file
     this->fileName = _fileName;
     meta_data = new wav_header;
     readFromFile(true);
-    // showFileInfo();
+    showFileInfo();
 }
 
 template<typename FrameType>

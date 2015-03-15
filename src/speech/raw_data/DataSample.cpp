@@ -1,14 +1,28 @@
 #include "DataSample.h"
 
 template<typename FrameType>
-speech::raw_data::DataSample<FrameType>::DataSample(int _size, FrameType *_values) {
+speech::raw_data::DataSample<FrameType>::DataSample(int _size, std::shared_ptr<FrameType> _values) {
     size = _size;
-    values = _values;
+    this->values = _values;
 }
 
 template<typename FrameType>
 speech::raw_data::DataSample<FrameType>::~DataSample() {
-    delete values;
+    this->values.reset();
 }
 
-template class speech::raw_data::DataSample<signed char>;
+template<typename FrameType>
+int speech::raw_data::DataSample<FrameType>::getSize() {
+    return this->size;
+}
+
+template<typename FrameType>
+std::shared_ptr<FrameType> speech::raw_data::DataSample<FrameType>::getValues() {
+    return values;
+}
+
+template
+class speech::raw_data::DataSample<unsigned char>;
+
+template
+class speech::raw_data::DataSample<short int>;

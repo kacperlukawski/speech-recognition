@@ -19,7 +19,7 @@ namespace speech {
             static const uint32_t TYPE_IDENTIFIER = 0x00000001;
 
             const unsigned int MAX_ITERATIONS = 100000;
-            const double EPS = 10e-8;
+            const double EPS = 10e-18;
 
             KMeans(std::istream& in);
 

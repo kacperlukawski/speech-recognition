@@ -5,6 +5,8 @@
 #include "DataSource.h"
 
 using std::string;
+using std::shared_ptr;
+using std::pair;
 
 namespace speech {
 
@@ -37,23 +39,21 @@ namespace speech {
         class WaveFileDataSource : public DataSource<FrameType> {
         public:
             WaveFileDataSource(wav_header _meta_data);
-
             WaveFileDataSource(string _fileName);
-
             virtual ~WaveFileDataSource();
-
             void saveToFile(string _fileName);
-
             virtual wav_header getMetaData();
 
         protected:
             string fileName;
         private:
             wav_header *meta_data;
-            const unsigned short int BUFFER_SIZE = 4;
-            //FILE *file;
 
-            void readFromFile();
+            void readFromFile(bool convertToMono);
+            unsigned short int getBufferSize();
+            void showFileInfo();
+            pair<shared_ptr<FrameType>, int> convertSamplesToMono(shared_ptr<FrameType> buffer,
+                    int bufferSize, int num_channels);
         };
     }
 

@@ -20,10 +20,14 @@ using speech::spelling::ISpellingTranscription;
 using speech::spelling::HMM;
 
 #include <vector>
+#include <clustering/exception/TooLessVectorsException.h>
 
 #include "speech/LanguageModel.h"
+#include "speech/transform/IFrequencyTransform.h"
+#include "speech/transform/FastFourierTransform.h"
 
 using speech::LanguageModel;
+using namespace speech::transform;
 
 //
 // This is an entry point of the application. It allows user to select the data source used
@@ -33,41 +37,122 @@ using speech::LanguageModel;
 // @todo create a logic
 //
 int main(int argc, char **argv) {
-    const int singleDataVectorDimension = 10;
-    const int numberOfPhonems = 4;
-    const int numberOfLetters = 4;
+    const int singleDataVectorDimension = 1024;   // dimension of the vector describing single sample
+    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
+    const int numberOfLetters = 10;              // number of symbols used in the spelling transcription
 
-    WaveFileDataSource<signed char> *dataSourcePtr = new WaveFileDataSource<signed char>("lorem ipsum");
+    std::vector<std::shared_ptr<double>> tmp;
+    std::vector<double *> vectors;              // list of vectors produced by all data sources
+    std::vector<int> labels;                    // list of labels can be empty if used clustering method
+    // uses unsupervised learning, i.e. KMeans
+
+    std::vector<const char *> dataSources;
+    dataSources.push_back("/home/szymon/Pulpit/linda.wav");        // @todo: list should be more dynamic, but it's not necessary now
+
+    std::vector<std::string> transcriptions;
+    transcriptions.push_back("wypierdalac");
+
+    std::vector<char> letters;
+    for (auto it = transcriptions.begin(); it != transcriptions.end(); it++) {
+        int length = (*it).size();
+        for (int i = 0; i < length; i++) {
+            char letter = (*it)[i];
+            auto pos = std::find(letters.begin(), letters.end(), letter);
+            if (pos != letters.end()) {
+                continue;
+            }
+
+            letters.push_back(letter);
+        }
+    }
+
+    IFrequencyTransform<short> *fft = new FastFourierTransform<short>();
+
+    for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
+        WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(*it);
+
+        auto begin = dataSourcePtr->getSamplesIteratorBegin();
+        auto end = dataSourcePtr->getSamplesIteratorEnd();
+
+        for (auto innerIt = begin; innerIt != end; innerIt++) {
+            std::shared_ptr<double> a = fft->transform(*innerIt).getAmplitude();
+            tmp.push_back(a);
+            vectors.push_back(a.get());
+        }
+
+        delete dataSourcePtr;
+    }
+
+//    for (auto it = vectors.begin(); it != vectors.end(); it++) {
+//        for (int pos = 0; pos < 100; pos++) {
+//            std::cout << (*it)[pos] << " ";
+//        }
+//        std::cout << std::endl;
+//    }
+
     IClusteringMethod *clusteringMethodPtr = new KMeans(numberOfPhonems, singleDataVectorDimension);
-    ISpellingTranscription *spellingMethodPtr = new HMM(numberOfPhonems, numberOfLetters);
+    ISpellingTranscription *spellingMethodPtr = new HMM(numberOfPhonems, letters);
 
-    std::vector<int> observations(4);
-    observations.at(0) = 0;
-    observations.at(1) = 1;
-    observations.at(2) = 2;
-    observations.at(3) = 0;
+    try {
+        clusteringMethodPtr->fit(vectors, labels);
 
-    spellingMethodPtr->fit(observations, std::string("abca"));
+        int dataSourcesSize = dataSources.size();
+        for (int i = 0; i < dataSourcesSize; i++) {
+            const char *fileName = dataSources.at(i);
+            std::string &transcription = transcriptions.at(i);
 
-    std::cout << spellingMethodPtr->predict(observations) << std::endl;
+            WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(fileName);
 
-    observations.at(0) = 1;
-    observations.at(1) = 3;
-    observations.at(2) = 0;
-    observations.at(3) = 0;
+            auto begin = dataSourcePtr->getSamplesIteratorBegin();
+            auto end = dataSourcePtr->getSamplesIteratorEnd();
 
-    spellingMethodPtr->fit(observations, std::string("bdaa"));
+            std::vector<int> predictedLabels;
+            for (auto innerIt = begin; innerIt != end; innerIt++) {
+                FrequencySample<short> frequencySample = fft->transform(*innerIt);
+                double *vector = frequencySample.getAmplitude().get();
+                int label = clusteringMethodPtr->predict(vector);
+                predictedLabels.push_back(label);
+            }
 
-    std::cout << spellingMethodPtr->predict(observations) << std::endl;
+            spellingMethodPtr->fit(predictedLabels, transcription);
 
-    LanguageModel *languageModel = new LanguageModel(clusteringMethodPtr, spellingMethodPtr);
-    std::cout << *languageModel;
+            delete dataSourcePtr;
+        }
 
-    // for each sample from the source file transform it into frequency domain
-    // and try to cluster it to one of the groups - number of the groups should
-    // be defined as a number of phonems which we're trying to recognize
-    // then use sequencies of phonems to receive the most probable spelling
-    // of the words
+        LanguageModel languageModel(clusteringMethodPtr, spellingMethodPtr);
+
+        for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
+            WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(*it);
+
+            auto begin = dataSourcePtr->getSamplesIteratorBegin();
+            auto end = dataSourcePtr->getSamplesIteratorEnd();
+
+            std::vector<int> predictedLabels;
+            for (auto innerIt = begin; innerIt != end; innerIt++) {
+                FrequencySample<short> frequencySample = fft->transform(*innerIt);
+                double *vector = frequencySample.getAmplitude().get();
+                int label = clusteringMethodPtr->predict(vector);
+                predictedLabels.push_back(label);
+            }
+
+            std::cout << "predicted: " << spellingMethodPtr->predict(predictedLabels) << std::endl;
+
+            delete dataSourcePtr;
+        }
+
+        //std::cout << languageModel;
+        // @todo store a model into a file to be loaded and used for classification purposes
+
+        // the model is fitted and can be used to transcript another data sources (validation)
+        // @todo: add a validation
+    } catch (speech::clustering::exception::TooLessVectorsException &ex) {
+        std::cerr << "You need to provide at least " << numberOfPhonems
+                << " vectors to perform the clustering" << std::endl;
+    }
+
+    delete fft;
+    delete clusteringMethodPtr;
+    delete spellingMethodPtr;
 
     return 0;
 }

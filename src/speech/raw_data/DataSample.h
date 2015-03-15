@@ -1,5 +1,7 @@
 #ifndef DATASAMPLE_H
-#define DATASAMPLE_H 1
+#define DATASAMPLE_H
+
+#include <memory>
 
 namespace speech {
 
@@ -13,11 +15,13 @@ namespace speech {
         class DataSample {
         protected:
             int size;
-            FrameType *values;
+            std::shared_ptr<FrameType> values;
         public:
-            DataSample(int _size, FrameType *_values);
+            DataSample(int _size, std::shared_ptr<FrameType> _values);
+            virtual ~DataSample();
 
-            ~DataSample();
+            int getSize();
+            std::shared_ptr<FrameType> getValues();
         };
 
     }

@@ -9,31 +9,37 @@ namespace speech {
 
     namespace clustering {
 
-        /**
-         * This is an implementation of KMeans algorithm.
-         *
-         * @see http://en.wikipedia.org/wiki/K-means_clustering
-         */
+        //
+        // This is an implementation of KMeans algorithm.
+        //
+        // @see http://en.wikipedia.org/wiki/K-means_clustering
+        //
         class KMeans : public IClusteringMethod {
-        private:
+        public:
+            static const uint32_t TYPE_IDENTIFIER = 0x00000001;
+
             const unsigned int MAX_ITERATIONS = 100000;
             const double EPS = 10e-8;
 
-            int k; // number of clusters
-            int dimension; // single vector dimension
-            std::vector<double *>* centroids;
+            KMeans(std::istream& in);
 
-            inline double distance(double *v1, double *v2);
-        public:
-            KMeans(int _k, int _dim);
+            KMeans(unsigned int _k, unsigned int _dim);
 
-            ~KMeans();
+            virtual ~KMeans();
 
             virtual void fit(std::vector<double *> vectors, std::vector<int> labels);
 
             virtual int predict(double *vector);
 
-            friend std::ostream& operator<< (std::ostream&, const speech::clustering::KMeans&);
+            virtual void serialize(std::ostream &out) const;
+        protected:
+
+        private:
+            unsigned int k; // number of clusters
+            unsigned int dimension; // single vector dimension
+            std::vector<double *> *centroids;
+
+            inline double distance(double *v1, double *v2);
         };
 
     }

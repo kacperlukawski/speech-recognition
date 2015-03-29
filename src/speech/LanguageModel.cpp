@@ -33,6 +33,7 @@ speech::LanguageModel::LanguageModel(clustering::IClusteringMethod *clusteringMe
         : clusteringMethod(clusteringMethod), spellingTranscription(spellingTranscription) {
 }
 
+
 //
 // This method saves the model into given stream. It works in the following way:
 // 1. Saves the type of the clustering method (uint32_t)

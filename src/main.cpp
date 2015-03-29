@@ -29,6 +29,12 @@ using speech::spelling::HMM;
 using speech::LanguageModel;
 using namespace speech::transform;
 
+#include "speech/vectorizer/IVectorizer.h"
+#include "speech/vectorizer/MaxFrequencyVectorizer.h"
+
+using speech::vectorizer::IVectorizer;
+using speech::vectorizer::MaxFrequencyVectorizer;
+
 //
 // This is an entry point of the application. It allows user to select the data source used
 // to get an input data, choose the methods of signal transformation into frequency domain
@@ -37,9 +43,9 @@ using namespace speech::transform;
 // @todo create a logic
 //
 int main(int argc, char **argv) {
-    const int singleDataVectorDimension = 1024;   // dimension of the vector describing single sample
-    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
-    const int numberOfLetters = 10;              // number of symbols used in the spelling transcription
+    const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
+    const int numberOfPhonems = 6;              // number of clusters used by the clustering method
+//    const int numberOfLetters = 10;              // number of symbols used in the spelling transcription
 
     std::vector<std::shared_ptr<double>> tmp;
     std::vector<double *> vectors;              // list of vectors produced by all data sources
@@ -47,7 +53,7 @@ int main(int argc, char **argv) {
     // uses unsupervised learning, i.e. KMeans
 
     std::vector<const char *> dataSources;
-    dataSources.push_back("/home/szymon/Pulpit/linda.wav");        // @todo: list should be more dynamic, but it's not necessary now
+    dataSources.push_back("/home/kacper/voice/linda.wav");        // @todo: list should be more dynamic, but it's not necessary now
 
     std::vector<std::string> transcriptions;
     transcriptions.push_back("wypierdalac");
@@ -62,11 +68,16 @@ int main(int argc, char **argv) {
                 continue;
             }
 
+            std::cout << letter << " ";
+
             letters.push_back(letter);
         }
     }
 
+    std::cout << std::endl;
+
     IFrequencyTransform<short> *fft = new FastFourierTransform<short>();
+    IVectorizer<short> *vectorizer = new MaxFrequencyVectorizer<short>(singleDataVectorDimension / 4);
 
     for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
         WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(*it);
@@ -75,13 +86,35 @@ int main(int argc, char **argv) {
         auto end = dataSourcePtr->getSamplesIteratorEnd();
 
         for (auto innerIt = begin; innerIt != end; innerIt++) {
-            std::shared_ptr<double> a = fft->transform(*innerIt).getAmplitude();
-            tmp.push_back(a);
-            vectors.push_back(a.get());
+            FrequencySample<short> frequencySample = fft->transform(*innerIt);
+            std::vector<double> vector = vectorizer->vectorize(frequencySample);
+
+//            std::cout << "vector(" << vector.size() << "): ";
+//            for (auto it = vector.begin(); it != vector.end(); it++) {
+//                std::cout << *it << " ";
+//            }
+//            std::cout << "\n";
+
+            double *rawDataVector = new double[singleDataVectorDimension];
+            for (int i = 0; i < singleDataVectorDimension; i++) {
+                double value = 0.0;
+                if (i < vector.size()) {
+                    value = vector.at(i);
+                }
+
+                rawDataVector[i] = value;
+            }
+
+            vectors.push_back(rawDataVector);
+
+//            std::shared_ptr<double> a = frequencySample.getAmplitude();
+//            tmp.push_back(a);
+//            vectors.push_back(a.get());
         }
 
         delete dataSourcePtr;
     }
+
 
 //    for (auto it = vectors.begin(); it != vectors.end(); it++) {
 //        for (int pos = 0; pos < 100; pos++) {
@@ -109,10 +142,31 @@ int main(int argc, char **argv) {
             std::vector<int> predictedLabels;
             for (auto innerIt = begin; innerIt != end; innerIt++) {
                 FrequencySample<short> frequencySample = fft->transform(*innerIt);
-                double *vector = frequencySample.getAmplitude().get();
-                int label = clusteringMethodPtr->predict(vector);
+                std::vector<double> vector = vectorizer->vectorize(frequencySample);
+
+//            std::cout << "vector(" << vector.size() << "): ";
+//            for (auto it = vector.begin(); it != vector.end(); it++) {
+//                std::cout << *it << " ";
+//            }
+//            std::cout << "\n";
+
+                double *rawDataVector = new double[singleDataVectorDimension];
+                for (int i = 0; i < singleDataVectorDimension; i++) {
+                    double value = 0.0;
+                    if (i < vector.size()) {
+                        value = vector.at(i);
+                    }
+
+                    rawDataVector[i] = value;
+                }
+
+                int label = clusteringMethodPtr->predict(rawDataVector);
                 predictedLabels.push_back(label);
+
+                std::cout << label;
             }
+
+            std::cout << std::endl;
 
             spellingMethodPtr->fit(predictedLabels, transcription);
 
@@ -130,8 +184,19 @@ int main(int argc, char **argv) {
             std::vector<int> predictedLabels;
             for (auto innerIt = begin; innerIt != end; innerIt++) {
                 FrequencySample<short> frequencySample = fft->transform(*innerIt);
-                double *vector = frequencySample.getAmplitude().get();
-                int label = clusteringMethodPtr->predict(vector);
+                std::vector<double> vector = vectorizer->vectorize(frequencySample);
+
+                double *rawDataVector = new double[singleDataVectorDimension];
+                for (int i = 0; i < singleDataVectorDimension; i++) {
+                    double value = 0.0;
+                    if (i < vector.size()) {
+                        value = vector.at(i);
+                    }
+
+                    rawDataVector[i] = value;
+                }
+
+                int label = clusteringMethodPtr->predict(rawDataVector);
                 predictedLabels.push_back(label);
             }
 

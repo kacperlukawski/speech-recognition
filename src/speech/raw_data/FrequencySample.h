@@ -19,10 +19,14 @@ namespace speech {
         public:
             FrequencySample(int _size, std::shared_ptr<double> _amplitude, std::shared_ptr<double> _phase);
 
+            FrequencySample(const FrequencySample<FrameType> &ref);
+
             virtual ~FrequencySample();
 
-            int getSize();
+            int getSize() const;
+
             std::shared_ptr<double> getAmplitude();
+
             std::shared_ptr<double> getPhase();
         };
 

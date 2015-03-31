@@ -1,6 +1,9 @@
 #ifndef LANGUAGEMODEL_H
 #define LANGUAGEMODEL_H
 
+#include <vector>
+#include <string>
+
 #include "IStreamSerializable.h"
 #include "exception/NullptrSerializationException.h"
 

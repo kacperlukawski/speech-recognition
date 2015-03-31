@@ -11,7 +11,7 @@ speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _file
     this->fileName = _fileName;
     meta_data = new wav_header;
     readFromFile(true);
-    showFileInfo();
+//    showFileInfo();
 }
 
 template<typename FrameType>
@@ -129,7 +129,7 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 template<typename FrameType>
 unsigned short int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
     int bits_for_sixteen_ms = meta_data->bits_per_sample*meta_data->sample_rate*0.016;
-    int buffer_size = 1024; // bits_for_sixteen_ms - (bits_for_sixteen_ms % meta_data->bits_per_sample);
+    int buffer_size = 1024;//bits_for_sixteen_ms - (bits_for_sixteen_ms % meta_data->bits_per_sample);
     return buffer_size;
 }
 

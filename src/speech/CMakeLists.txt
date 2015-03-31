@@ -10,6 +10,6 @@ add_library(
         spelling/HMM.cpp
         spelling/SpellingAdjuster.cpp
         transform/FastFourierTransform.cpp
-)
+raw_data/filtering/IFilter.h raw_data/filtering/MaxFrequenciesFilter.cpp raw_data/filtering/MaxFrequenciesFilter.h vectorizer/IVectorizer.h vectorizer/MaxFrequencyVectorizer.cpp vectorizer/MaxFrequencyVectorizer.h)
 
 target_include_directories(Speech PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

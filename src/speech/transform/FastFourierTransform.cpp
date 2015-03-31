@@ -22,8 +22,8 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
     std::shared_ptr<double> phase(new double[vector.getSize()], std::default_delete<double[]>());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        amplitude.get()[i] = comp[i].real() * MAX_VALUE;
-        phase.get()[i] = comp[i].imag() * MAX_VALUE;
+        amplitude.get()[i] = calculateAmplitude(comp[i]);
+        phase.get()[i] = calculatePhase(comp[i]);
     }
 
     return FrequencySample<FrameType>(vector.getSize(), amplitude, phase);
@@ -37,7 +37,7 @@ DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::revers
     valarray<complex<double>> comp(vector.getSize());
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(amplitude.get()[i] / MAX_VALUE, phase.get()[i] / MAX_VALUE);
+        comp[i] = calculateSignal(amplitude.get()[i], phase.get()[i]);
     }
 
     ifft(comp);

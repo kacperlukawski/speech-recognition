@@ -267,9 +267,9 @@ void speech::spelling::HMM::actualizeProbabilityDistributions() {
         transmission->unsafe_col(i) = stateToStateCount->unsafe_col(i) / (sum(stateToStateCount->unsafe_col(i)) + EPS);
     }
 
-    std::cout << *stateCount;
-    std::cout << *stateToObservationCount;
-    std::cout << *stateToStateCount;
+//    std::cout << *stateCount;
+//    std::cout << *stateToObservationCount;
+//    std::cout << *stateToStateCount;
 }
 
 //

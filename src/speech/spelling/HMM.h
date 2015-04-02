@@ -6,7 +6,10 @@
 
 #include <armadillo>
 #include <valarray>
+#include <memory>
 #include <string>
+
+using std::shared_ptr;
 
 namespace speech {
 
@@ -36,14 +39,14 @@ namespace speech {
             int numberOfStates; // N
             std::vector<int>* observations; // list of possible observations (phonems)
             std::vector<char>* states; // list of possible states (letters)
-            arma::mat *transmission; // state transition probability distribution - transmission matrix
-            arma::mat *emission; // observation symbol probability distribution - emission matrix
-            arma::vec *pi; // initial state distribution
+            shared_ptr<arma::mat> transmission; // state transition probability distribution - transmission matrix
+            shared_ptr<arma::mat> emission; // observation symbol probability distribution - emission matrix
+            shared_ptr<arma::vec> pi; // initial state distribution
         private:
             const double EPS = 10e-7;
-            arma::mat *stateToObservationCount; // numbers of emissions between each state and observation
-            arma::mat *stateToStateCount; // numbers of transmitions between each pair of states
-            arma::vec *stateCount; // numbers of occurences of each state as a first state in a sequence
+            shared_ptr<arma::mat> stateToObservationCount; // numbers of emissions between each state and observation
+            shared_ptr<arma::mat> stateToStateCount; // numbers of transmitions between each pair of states
+            shared_ptr<arma::vec> stateCount; // numbers of occurences of each state as a first state in a sequence
             SpellingAdjuster spellingAdjuster; // adjust the length of the word to given value
 
             inline int stateToIndex(const char &state);

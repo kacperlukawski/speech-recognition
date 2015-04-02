@@ -18,9 +18,9 @@ speech::spelling::HMM::HMM(std::istream &in) {
         in.read((char *) &states->at(i), sizeof(char));
     }
 
-    transmission = new arma::mat(numberOfStates, numberOfStates); // at(fromState, toState)
-    emission = new arma::mat(numberOfStates, numberOfObservations); // at(state, observation)
-    pi = new arma::vec(numberOfStates);
+    transmission = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfStates)); // at(fromState, toState)
+    emission = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfObservations)); // at(state, observation)
+    pi = std::shared_ptr<arma::vec>(new arma::vec(numberOfStates));
 
     in.read((char *) transmission->memptr(), transmission->n_elem * sizeof(double));
     in.read((char *) emission->memptr(), emission->n_elem * sizeof(double));
@@ -29,9 +29,9 @@ speech::spelling::HMM::HMM(std::istream &in) {
         in.read((char *) &pi->at(i), sizeof(double));
     }
 
-    stateToStateCount = new arma::mat(numberOfStates, numberOfStates);
-    stateToObservationCount = new arma::mat(numberOfStates, numberOfObservations);
-    stateCount = new arma::vec(numberOfStates);
+    stateToStateCount = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfStates));
+    stateToObservationCount = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfObservations));
+    stateCount = std::shared_ptr<arma::vec>(new arma::vec(numberOfStates));
 
     in.read((char *) stateToObservationCount->memptr(), stateToObservationCount->n_elem * sizeof(double));
     in.read((char *) stateToStateCount->memptr(), stateToStateCount->n_elem * sizeof(double));
@@ -53,16 +53,16 @@ speech::spelling::HMM::HMM(int _numberOfObservations, int _numberOfStates)
         states->at(i) = 'a' + (char) i;
     }
 
-    transmission = new arma::mat(numberOfStates, numberOfStates); // at(fromState, toState)
-    emission = new arma::mat(numberOfStates, numberOfObservations); // at(state, observation)
-    pi = new arma::vec(numberOfStates);
+    transmission = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfStates)); // at(fromState, toState)
+    emission = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfObservations)); // at(state, observation)
+    pi = std::shared_ptr<arma::vec>(new arma::vec(numberOfStates));
 
     transmission->zeros();
     emission->zeros();
 
-    stateToStateCount = new arma::mat(numberOfStates, numberOfStates);
-    stateToObservationCount = new arma::mat(numberOfStates, numberOfObservations);
-    stateCount = new arma::vec(numberOfStates);
+    stateToStateCount = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfStates));
+    stateToObservationCount = std::shared_ptr<arma::mat>(new arma::mat(numberOfStates, numberOfObservations));
+    stateCount = std::shared_ptr<arma::vec>(new arma::vec(numberOfStates));
 
     stateToStateCount->zeros();
     stateToObservationCount->zeros();
@@ -87,12 +87,12 @@ speech::spelling::HMM::HMM(int _numberOfObservations, const std::vector<char> &_
 speech::spelling::HMM::~HMM() {
     delete observations;
     delete states;
-    delete transmission;
-    delete emission;
-    delete pi;
-    delete stateToStateCount;
-    delete stateToObservationCount;
-    delete stateCount;
+    transmission.reset();
+    emission.reset();
+    pi.reset();
+    stateToStateCount.reset();
+    stateToObservationCount.reset();
+    stateCount.reset();
 }
 
 /**

@@ -12,15 +12,14 @@ std::vector<double> speech::vectorizer::MaxFrequencyVectorizer<FrameType>::vecto
     std::vector<double> result;
 
     double *amplitutePtr = filteredSample.getAmplitude().get();
+    double *phasePtr = filteredSample.getPhase().get();
     for (int i = 0; i < filteredSample.getSize() / 2 + 1; i++) {
-        double value = amplitutePtr[i];
-        if (value > 0.0) {
+        double amplitude = amplitutePtr[i];
+        double phase = phasePtr[i];
+        if (amplitude > 0.0) {
             result.push_back((double) i);
-            if (value > 1.0) {
-                result.push_back(value);
-            } else {
-                result.push_back(0.0);
-            }
+            result.push_back(amplitude);
+//            result.push_back(phase);
         }
     }
 

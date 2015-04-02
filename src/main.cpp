@@ -44,7 +44,7 @@ using speech::vectorizer::MaxFrequencyVectorizer;
 //
 int main(int argc, char **argv) {
     const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
-    const int numberOfPhonems = 6;              // number of clusters used by the clustering method
+    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
 //    const int numberOfLetters = 10;              // number of symbols used in the spelling transcription
 
     std::vector<std::shared_ptr<double>> tmp;
@@ -53,10 +53,10 @@ int main(int argc, char **argv) {
     // uses unsupervised learning, i.e. KMeans
 
     std::vector<const char *> dataSources;
-    dataSources.push_back("/home/kacper/voice/linda.wav");        // @todo: list should be more dynamic, but it's not necessary now
+    dataSources.push_back("/home/kacper/voice/samogloski.wav");        // @todo: list should be more dynamic, but it's not necessary now
 
     std::vector<std::string> transcriptions;
-    transcriptions.push_back("wypierdalac");
+    transcriptions.push_back("a e i");
 
     std::vector<char> letters;
     for (auto it = transcriptions.begin(); it != transcriptions.end(); it++) {
@@ -87,6 +87,10 @@ int main(int argc, char **argv) {
 
         for (auto innerIt = begin; innerIt != end; innerIt++) {
             FrequencySample<short> frequencySample = fft->transform(*innerIt);
+            if (frequencySample.getSize() == 0) {
+                continue;
+            }
+
             std::vector<double> vector = vectorizer->vectorize(frequencySample);
 
 //            std::cout << "vector(" << vector.size() << "): ";
@@ -142,6 +146,10 @@ int main(int argc, char **argv) {
             std::vector<int> predictedLabels;
             for (auto innerIt = begin; innerIt != end; innerIt++) {
                 FrequencySample<short> frequencySample = fft->transform(*innerIt);
+                if (frequencySample.getSize() == 0) {
+                    continue;
+                }
+
                 std::vector<double> vector = vectorizer->vectorize(frequencySample);
 
 //            std::cout << "vector(" << vector.size() << "): ";
@@ -184,6 +192,10 @@ int main(int argc, char **argv) {
             std::vector<int> predictedLabels;
             for (auto innerIt = begin; innerIt != end; innerIt++) {
                 FrequencySample<short> frequencySample = fft->transform(*innerIt);
+                if (frequencySample.getSize() == 0) {
+                    continue;
+                }
+
                 std::vector<double> vector = vectorizer->vectorize(frequencySample);
 
                 double *rawDataVector = new double[singleDataVectorDimension];

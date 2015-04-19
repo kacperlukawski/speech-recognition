@@ -33,11 +33,11 @@ TEST(KMeans, XORTest) {
     // (vectors [0.0, 0.0] and [1.0, 1.0] are not the closest ones)
     // this test was only created to be some kind of an example
     // how to write a test of other things
-    std::vector<double *> vectors;
-    vectors.push_back(new double[2]{0.0, 0.0});
-    vectors.push_back(new double[2]{0.0, 1.0});
-    vectors.push_back(new double[2]{1.0, 0.0});
-    vectors.push_back(new double[2]{1.0, 1.0});
+    std::vector<std::valarray<double>> vectors;
+    vectors.push_back(std::valarray<double>({0.0, 0.0}));
+    vectors.push_back(std::valarray<double>({0.0, 1.0}));
+    vectors.push_back(std::valarray<double>({1.0, 0.0}));
+    vectors.push_back(std::valarray<double>({1.0, 1.0}));
 
     std::vector<int> labels;
 
@@ -45,10 +45,10 @@ TEST(KMeans, XORTest) {
 
     kMeansPtr->fit(vectors, labels);
 
-    int zeroVectorLabel = kMeansPtr->predict(new double[2]{0.0, 0.0});
-    int firstVectorLabel = kMeansPtr->predict(new double[2]{0.0, 1.0});
-    int twoVectorLabel = kMeansPtr->predict(new double[2]{1.0, 0.0});
-    int threeVectorLabel = kMeansPtr->predict(new double[2]{1.0, 1.0});
+    int zeroVectorLabel = kMeansPtr->predict(std::valarray<double>({0.0, 0.0}));
+    int firstVectorLabel = kMeansPtr->predict(std::valarray<double>({0.0, 1.0}));
+    int twoVectorLabel = kMeansPtr->predict(std::valarray<double>({1.0, 0.0}));
+    int threeVectorLabel = kMeansPtr->predict(std::valarray<double>({1.0, 1.0}));
 
     // ASSERT_EQ(zeroVectorLabel, threeVectorLabel);
     // ASSERT_EQ(firstVectorLabel, twoVectorLabel);
@@ -64,11 +64,11 @@ TEST(KMeans, KCentroidsTest) {
     // is proper - whenever we set up the KMeans method
     // to find K clusters and the data is properly
     // arranged, we should get all K clusters
-    std::vector<double *> vectors;
-    vectors.push_back(new double[2]{0.0, 0.0});
-    vectors.push_back(new double[2]{0.0, 1.0});
-    vectors.push_back(new double[2]{1.0, 0.0});
-    vectors.push_back(new double[2]{1.0, 1.0});
+    std::vector<std::valarray<double>> vectors;
+    vectors.push_back(std::valarray<double>({0.0, 0.0}));
+    vectors.push_back(std::valarray<double>({0.0, 1.0}));
+    vectors.push_back(std::valarray<double>({1.0, 0.0}));
+    vectors.push_back(std::valarray<double>({1.0, 1.0}));
 
     std::vector<int> labels;
 
@@ -85,15 +85,15 @@ TEST(KMeans, RandomDataDistribution) {
 }
 
 TEST(KMeans, SimpleCase) {
-    std::vector<double *> leftSideVectors;
-    leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
-    leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> leftSideVectors;
+    leftSideVectors.push_back(std::valarray<double>({-1.0, 0.0, 0.0}));
+    leftSideVectors.push_back(std::valarray<double>({-2.0, 0.0, 0.0}));
 
-    std::vector<double *> rightSideVectors;
-    rightSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
-    rightSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> rightSideVectors;
+    rightSideVectors.push_back(std::valarray<double>({1.0, 0.0, 0.0}));
+    rightSideVectors.push_back(std::valarray<double>({2.0, 0.0, 0.0}));
 
-    std::vector<double *> vectors;
+    std::vector<std::valarray<double>> vectors;
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
     vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
 
@@ -114,15 +114,15 @@ TEST(KMeans, SimpleCase) {
 // returned by unserialized copy are the same)
 //
 TEST(KMeans, Serialization) {
-    std::vector<double *> leftSideVectors;
-    leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
-    leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> leftSideVectors;
+    leftSideVectors.push_back(std::valarray<double>({-1.0, 0.0, 0.0}));
+    leftSideVectors.push_back(std::valarray<double>({-2.0, 0.0, 0.0}));
 
-    std::vector<double *> rightSideVectors;
-    rightSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
-    rightSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> rightSideVectors;
+    rightSideVectors.push_back(std::valarray<double>({1.0, 0.0, 0.0}));
+    rightSideVectors.push_back(std::valarray<double>({2.0, 0.0, 0.0}));
 
-    std::vector<double *> vectors;
+    std::vector<std::valarray<double>> vectors;
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
     vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
 

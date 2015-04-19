@@ -56,7 +56,7 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
 
     IFrequencyTransform<short> *fft = new FastFourierTransform<FrameType>();
 
-    vector<double *> vectors;
+    vector<valarray<double>> vectors;
     for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
         DataSource<FrameType> &dataSource = *it;
 
@@ -69,14 +69,8 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
                 continue;
             }
 
-            std::valarray<double> vector = vectorizer->vectorize(frequencySample); // TODO: operate on valarray!
-
-            double *rawDataVector = new double[vector.size()];
-            for (int i = 0; i < vector.size(); i++) {
-                rawDataVector[i] = vector[i];
-            }
-
-            vectors.push_back(rawDataVector);
+            std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+            vectors.push_back(vector);
         }
     }
 
@@ -102,15 +96,8 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
                 continue;
             }
 
-            // TODO: output of vectorizer should be the input of clustering
             std::valarray<double> vector = vectorizer->vectorize(frequencySample);
-
-            double *rawDataVector = new double[vector.size()];
-            for (int i = 0; i < vector.size(); i++) {
-                rawDataVector[i] = vector[i];
-            }
-
-            int label = clusteringMethod->predict(rawDataVector);
+            int label = clusteringMethod->predict(vector);
             predictedLabels.push_back(label);
 
             std::cout << label;
@@ -139,19 +126,8 @@ std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dat
             continue;
         }
 
-        std::valarray<double> vector = vectorizer->vectorize(frequencySample); // TODO: the same...
-
-        double *rawDataVector = new double[singleDataVectorDimension];
-        for (int i = 0; i < singleDataVectorDimension; i++) {
-            double value = 0.0;
-            if (i < vector.size()) {
-                value = vector[i];
-            }
-
-            rawDataVector[i] = value;
-        }
-
-        int label = clusteringMethod->predict(rawDataVector);
+        std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+        int label = clusteringMethod->predict(vector);
         if (predictedLabels.size() > 0 && predictedLabels.back() == label) {
             continue;
         }

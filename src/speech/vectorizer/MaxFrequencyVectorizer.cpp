@@ -20,8 +20,6 @@ std::valarray<double> speech::vectorizer::MaxFrequencyVectorizer<FrameType>::vec
         FrequencySample<FrameType> &sample) {
     FrequencySample<FrameType> filteredSample = filterPtr->filter(sample);
 
-//    std::vector<double> result; // TODO: use valarray from beginning
-
     std::valarray<double> vec(0.0, this->n);
 
     int currentPos = 0;

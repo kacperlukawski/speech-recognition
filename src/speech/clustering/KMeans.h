@@ -29,9 +29,9 @@ namespace speech {
 
             virtual ~KMeans();
 
-            virtual void fit(std::vector<double *> &vectors, std::vector<int> &labels);
+            virtual void fit(vector<valarray<double>> &vectors, vector<int> &labels);
 
-            virtual int predict(double *vector);
+            virtual int predict(const valarray<double> &vector);
 
             virtual void serialize(std::ostream &out) const;
         protected:
@@ -39,9 +39,9 @@ namespace speech {
         private:
             unsigned int k; // number of clusters
             unsigned int dimension; // single vector dimension
-            std::vector<double *> *centroids;
+            std::vector<valarray<double>> *centroids;
 
-            inline double distance(double *v1, double *v2);
+            inline double distance(const valarray<double> &v1, const valarray<double> &v2);
         };
 
     }

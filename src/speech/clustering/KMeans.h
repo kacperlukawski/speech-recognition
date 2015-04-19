@@ -3,9 +3,10 @@
 
 #include "IClusteringMethod.h"
 
-#include <ostream>
+#include "../metric/IMetric.h"
+#include "../metric/EuclideanDistance.h"
 
-// TODO: use std::valarray instead of raw pointers
+#include <ostream>
 
 namespace speech {
 
@@ -39,9 +40,8 @@ namespace speech {
         private:
             unsigned int k; // number of clusters
             unsigned int dimension; // single vector dimension
-            std::vector<valarray<double>> *centroids;
-
-            inline double distance(const valarray<double> &v1, const valarray<double> &v2);
+            std::vector<valarray<double>> *centroids; // list of centroids
+            speech::metric::EuclideanDistance metric = speech::metric::EuclideanDistance(); // distance function
         };
 
     }

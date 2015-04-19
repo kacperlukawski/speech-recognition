@@ -66,7 +66,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
 
         bool addCurrentVector = true;
         for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
-            if (distance(vector, *centroidsIt) == 0.0) {
+            if (metric(vector, *centroidsIt) == 0.0) {
                 addCurrentVector = false;
                 break;
             }
@@ -150,9 +150,9 @@ int speech::clustering::KMeans::predict(const valarray<double> &vector) {
 
     int argmin = 0;
     int centroidsNumber = centroids->size();
-    double currentMinimumDistance = distance(vector, centroids->at(0));
+    double currentMinimumDistance = metric(vector, centroids->at(0));
     for (int i = 1; i < centroidsNumber; ++i) {
-        double currentDistance = distance(vector, centroids->at(i));
+        double currentDistance = metric(vector, centroids->at(i));
         if (currentDistance < currentMinimumDistance) {
             currentMinimumDistance = currentDistance;
             argmin = i;
@@ -183,17 +183,4 @@ void speech::clustering::KMeans::serialize(std::ostream &out) const {
             out.write((char const *) &(*it)[i], sizeof(double));
         }
     }
-}
-
-/**
- * Calculate Euclidean distance of two given vectors
- *
- * @return distance between vectors
- */
-//double speech::clustering::KMeans::distance(double *v1, double *v2) {
-double speech::clustering::KMeans::distance(const valarray<double> &v1,
-                                            const valarray<double> &v2) {
-    valarray<double> difference = v1 - v2;
-    valarray<double> square = difference * difference;
-    return sqrt(square.sum());
 }

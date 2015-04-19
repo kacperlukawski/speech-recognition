@@ -14,27 +14,33 @@ speech::clustering::KMeans::KMeans(std::istream &in) {
 
     unsigned int singleVectorSize = sizeof(double) * dimension;
 
-    centroids = new std::vector<double*>(centroidsNb);
+    double temp;
+    centroids = new std::vector<valarray<double>>(centroidsNb);
     for (int i = 0; i < centroidsNb; i++) {
-        double * vector = new double[dimension];
-        in.read((char *) vector, singleVectorSize);
+        size_t vectorSize;
+        in.read((char *) &vectorSize, sizeof(vectorSize));
+
+        valarray<double> vector(0.0, vectorSize);
+        for (int i = 0; i < vectorSize; i++) {
+            in.read((char *) &temp, sizeof(double));
+            vector[i] = temp;
+        }
+
         (*centroids)[i] = vector;
     }
 }
 
 speech::clustering::KMeans::KMeans(unsigned int _k, unsigned int _dim)
         : k(_k), dimension(_dim) {
-    centroids = new std::vector<double*>();
+    centroids = new std::vector<valarray<double>>();
 }
 
 speech::clustering::KMeans::~KMeans() {
-    std::vector<double *>::const_iterator centroidsIt;
-    for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
-        delete *centroidsIt;
-    }
-
+    centroids->clear();
     delete centroids;
 }
+
+#include <iostream> // TODO: remove this entry
 
 //
 // Fit the KMeans model using standard algorithm:
@@ -43,7 +49,8 @@ speech::clustering::KMeans::~KMeans() {
 // 3. Update each centroid to be a mean of the all vectors belonging to this particular group
 // 4. Stop when nothing changed in an iteration or after maximum number of iterations
 //
-void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector<int> &labels) {
+//void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector<int> &labels) {
+void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
         // current dataset is not enough to create K clusters
@@ -52,10 +59,10 @@ void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector
 
     // @todo change a way of choosing initial centroids to be random
     unsigned int currentCentroidPosition = 0;
-    std::vector<double *>::iterator vectorsIt;
-    std::vector<double *>::const_iterator centroidsIt;
+    std::vector<valarray<double>>::iterator vectorsIt;
+    std::vector<valarray<double>>::const_iterator centroidsIt;
     for (vectorsIt = vectors.begin(); vectorsIt != vectors.end(); ++vectorsIt) {
-        double* vector = *vectorsIt;
+        valarray<double> &vector = *vectorsIt;
 
         bool addCurrentVector = true;
         for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
@@ -66,12 +73,7 @@ void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector
         }
 
         if (addCurrentVector) {
-            double *vectorCopy = new double[dimension];
-            for (int i = 0; i < dimension; ++i) {
-                vectorCopy[i] = vector[i];
-            }
-
-            centroids->push_back(vectorCopy);
+            centroids->push_back(valarray<double>(vector));
             currentCentroidPosition++;
         }
 
@@ -122,6 +124,15 @@ void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector
             break;
         }
     }
+
+    std::cout << "Centroids: " << std::endl;
+    for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
+        std::cout << "[ ";
+        for (int i = 0; i < dimension; i++) {
+            std::cout << (*centroidsIt)[i] << " ";
+        }
+        std::cout << "]" << std::endl;
+    }
 }
 
 /**
@@ -130,7 +141,8 @@ void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector
  *
  * @return predicted label
  */
-int speech::clustering::KMeans::predict(double *vector) {
+//int speech::clustering::KMeans::predict(double *vector) {
+int speech::clustering::KMeans::predict(const valarray<double> &vector) {
     if (centroids->empty()) {
         // @todo probably throw an exception there, because the model was not fitted properly
         return 0;
@@ -157,16 +169,19 @@ void speech::clustering::KMeans::serialize(std::ostream &out) const {
     uint32_t typeIdentifier = TYPE_IDENTIFIER;
     out.write((char const *) &typeIdentifier, sizeof(typeIdentifier));
 
-    unsigned int singleVectorSize = sizeof(double) * dimension;
     unsigned long centroidsNb = centroids->size();
 
     out.write((char const *) &k, sizeof(unsigned int));
     out.write((char const *) &dimension, sizeof(unsigned int));
     out.write((char const *) &centroidsNb, sizeof(unsigned long));
 
-    std::vector<double *>::const_iterator it;
+    std::vector<valarray<double>>::const_iterator it;
     for (it = centroids->begin(); it != centroids->end(); ++it) {
-        out.write((char const *)(*it), singleVectorSize);
+        size_t vectorSize = it->size();
+        out.write((char const *) &vectorSize, sizeof(vectorSize));
+        for (int i = 0; i < vectorSize; i++) {
+            out.write((char const *) &(*it)[i], sizeof(double));
+        }
     }
 }
 
@@ -175,11 +190,10 @@ void speech::clustering::KMeans::serialize(std::ostream &out) const {
  *
  * @return distance between vectors
  */
-double speech::clustering::KMeans::distance(double *v1, double *v2) {
-    double sum = 0.0;
-    for (int i = 0; i < dimension; ++i) {
-        sum += pow(v1[i] - v2[i], 2.0);
-    }
-
-    return sqrt(sum);
+//double speech::clustering::KMeans::distance(double *v1, double *v2) {
+double speech::clustering::KMeans::distance(const valarray<double> &v1,
+                                            const valarray<double> &v2) {
+    valarray<double> difference = v1 - v2;
+    valarray<double> square = difference * difference;
+    return sqrt(square.sum());
 }

@@ -4,6 +4,10 @@
 #include "../IStreamSerializable.h"
 
 #include <vector>
+#include <valarray>
+
+using std::vector;
+using std::valarray;
 
 namespace speech {
 
@@ -14,9 +18,9 @@ namespace speech {
         //
         class IClusteringMethod : public IStreamSerializable {
         public:
-            virtual void fit(std::vector<double *> &vectors, std::vector<int> &labels) = 0;
+            virtual void fit(vector<valarray<double>> &vectors, vector<int> &labels) = 0;
 
-            virtual int predict(double *vector) = 0;
+            virtual int predict(const valarray<double> &vector) = 0;
 
             virtual void serialize(std::ostream &out) const = 0;
         };

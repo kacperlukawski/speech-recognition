@@ -14,11 +14,19 @@ namespace speech {
         template<typename FrameType>
         class MaxFrequencyVectorizer : public IVectorizer<FrameType> {
         public:
+            static const uint32_t TYPE_IDENTIFIER = 0x00100001;
+
             MaxFrequencyVectorizer(int n);
 
-            virtual std::vector<double> vectorize(FrequencySample<FrameType> &sample) override;
+            MaxFrequencyVectorizer(std::istream &in);
+
+            virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample) override;
+
+            virtual void serialize(std::ostream &out) const override;
 
         private:
+            int n;
+
             MaxFrequenciesFilter<FrameType> *filterPtr;
         };
 

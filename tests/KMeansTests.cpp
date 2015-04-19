@@ -1,4 +1,5 @@
 #include <string>
+#include <memory>
 #include <fstream>
 
 #include "gtest/gtest.h"
@@ -17,6 +18,12 @@ using speech::spelling::HMM;
 
 using speech::LanguageModel;
 
+#include "../src/speech/vectorizer/IVectorizer.h"
+#include "../src/speech/vectorizer/MaxFrequencyVectorizer.h"
+
+using speech::vectorizer::IVectorizer;
+using speech::vectorizer::MaxFrequencyVectorizer;
+
 /**
  * KMeans - test case
  * XORTest - test name
@@ -26,11 +33,11 @@ TEST(KMeans, XORTest) {
     // (vectors [0.0, 0.0] and [1.0, 1.0] are not the closest ones)
     // this test was only created to be some kind of an example
     // how to write a test of other things
-    std::vector<double *> vectors;
-    vectors.push_back(new double[2]{0.0, 0.0});
-    vectors.push_back(new double[2]{0.0, 1.0});
-    vectors.push_back(new double[2]{1.0, 0.0});
-    vectors.push_back(new double[2]{1.0, 1.0});
+    std::vector<std::valarray<double>> vectors;
+    vectors.push_back(std::valarray<double>({0.0, 0.0}));
+    vectors.push_back(std::valarray<double>({0.0, 1.0}));
+    vectors.push_back(std::valarray<double>({1.0, 0.0}));
+    vectors.push_back(std::valarray<double>({1.0, 1.0}));
 
     std::vector<int> labels;
 
@@ -38,10 +45,10 @@ TEST(KMeans, XORTest) {
 
     kMeansPtr->fit(vectors, labels);
 
-    int zeroVectorLabel = kMeansPtr->predict(new double[2]{0.0, 0.0});
-    int firstVectorLabel = kMeansPtr->predict(new double[2]{0.0, 1.0});
-    int twoVectorLabel = kMeansPtr->predict(new double[2]{1.0, 0.0});
-    int threeVectorLabel = kMeansPtr->predict(new double[2]{1.0, 1.0});
+    int zeroVectorLabel = kMeansPtr->predict(std::valarray<double>({0.0, 0.0}));
+    int firstVectorLabel = kMeansPtr->predict(std::valarray<double>({0.0, 1.0}));
+    int twoVectorLabel = kMeansPtr->predict(std::valarray<double>({1.0, 0.0}));
+    int threeVectorLabel = kMeansPtr->predict(std::valarray<double>({1.0, 1.0}));
 
     // ASSERT_EQ(zeroVectorLabel, threeVectorLabel);
     // ASSERT_EQ(firstVectorLabel, twoVectorLabel);
@@ -57,11 +64,11 @@ TEST(KMeans, KCentroidsTest) {
     // is proper - whenever we set up the KMeans method
     // to find K clusters and the data is properly
     // arranged, we should get all K clusters
-    std::vector<double *> vectors;
-    vectors.push_back(new double[2]{0.0, 0.0});
-    vectors.push_back(new double[2]{0.0, 1.0});
-    vectors.push_back(new double[2]{1.0, 0.0});
-    vectors.push_back(new double[2]{1.0, 1.0});
+    std::vector<std::valarray<double>> vectors;
+    vectors.push_back(std::valarray<double>({0.0, 0.0}));
+    vectors.push_back(std::valarray<double>({0.0, 1.0}));
+    vectors.push_back(std::valarray<double>({1.0, 0.0}));
+    vectors.push_back(std::valarray<double>({1.0, 1.0}));
 
     std::vector<int> labels;
 
@@ -78,15 +85,15 @@ TEST(KMeans, RandomDataDistribution) {
 }
 
 TEST(KMeans, SimpleCase) {
-    std::vector<double *> leftSideVectors;
-    leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
-    leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> leftSideVectors;
+    leftSideVectors.push_back(std::valarray<double>({-1.0, 0.0, 0.0}));
+    leftSideVectors.push_back(std::valarray<double>({-2.0, 0.0, 0.0}));
 
-    std::vector<double *> rightSideVectors;
-    rightSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
-    rightSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> rightSideVectors;
+    rightSideVectors.push_back(std::valarray<double>({1.0, 0.0, 0.0}));
+    rightSideVectors.push_back(std::valarray<double>({2.0, 0.0, 0.0}));
 
-    std::vector<double *> vectors;
+    std::vector<std::valarray<double>> vectors;
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
     vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
 
@@ -107,21 +114,26 @@ TEST(KMeans, SimpleCase) {
 // returned by unserialized copy are the same)
 //
 TEST(KMeans, Serialization) {
-    std::vector<double *> leftSideVectors;
-    leftSideVectors.push_back(new double[3]{-1.0, 0.0, 0.0});
-    leftSideVectors.push_back(new double[3]{-2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> leftSideVectors;
+    leftSideVectors.push_back(std::valarray<double>({-1.0, 0.0, 0.0}));
+    leftSideVectors.push_back(std::valarray<double>({-2.0, 0.0, 0.0}));
 
-    std::vector<double *> rightSideVectors;
-    rightSideVectors.push_back(new double[3]{1.0, 0.0, 0.0});
-    rightSideVectors.push_back(new double[3]{2.0, 0.0, 0.0});
+    std::vector<std::valarray<double>> rightSideVectors;
+    rightSideVectors.push_back(std::valarray<double>({1.0, 0.0, 0.0}));
+    rightSideVectors.push_back(std::valarray<double>({2.0, 0.0, 0.0}));
 
-    std::vector<double *> vectors;
+    std::vector<std::valarray<double>> vectors;
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
     vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
 
     std::vector<int> labels;
 
-    KMeans *kMeansPtr = new KMeans(2, 3);
+    const int singleDataVectorDimension = 3;
+
+    std::shared_ptr<IVectorizer<short>> vectorizerPtr = std::shared_ptr<IVectorizer<short>>(
+            new MaxFrequencyVectorizer<short>(singleDataVectorDimension));
+
+    std::shared_ptr<KMeans> kMeansPtr = std::shared_ptr<KMeans>(new KMeans(2, singleDataVectorDimension));
     kMeansPtr->fit(vectors, labels);
 
     std::vector<int> leftLeftWordPhonems;
@@ -140,13 +152,13 @@ TEST(KMeans, Serialization) {
     rightRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
     rightRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
 
-    HMM *hmmPtr = new HMM(2, 3);
+    std::shared_ptr<HMM> hmmPtr = std::shared_ptr<HMM>(new HMM(2, 3));
     hmmPtr->fit(leftLeftWordPhonems, "aa");
     hmmPtr->fit(leftRightWordPhonems, "ab");
     hmmPtr->fit(rightLeftWordPhonems, "ba");
     hmmPtr->fit(rightRightWordPhonems, "bb");
 
-    LanguageModel *languageModel = new LanguageModel(kMeansPtr, hmmPtr);
+    LanguageModel<short> *languageModel = new LanguageModel<short>(vectorizerPtr, kMeansPtr, hmmPtr);
 
     const std::string modelFileName = "kmeans_model.dat";
 
@@ -156,12 +168,14 @@ TEST(KMeans, Serialization) {
         outputFileStream.close();
 
         std::ifstream inputFileStream(modelFileName);
-        LanguageModel *languageModelUnserialized = new LanguageModel(inputFileStream);
+        LanguageModel<short> *languageModelUnserialized = new LanguageModel<short>(inputFileStream);
         inputFileStream.close();
 
-        speech::clustering::IClusteringMethod* clusteringMethod = languageModelUnserialized->getClusteringMethod();
-        speech::spelling::ISpellingTranscription* spellingTranscription = languageModelUnserialized->getSpellingTranscription();
+        std::shared_ptr<speech::vectorizer::IVectorizer<short>> vectorizer = languageModelUnserialized->getVectorizer();
+        std::shared_ptr<speech::clustering::IClusteringMethod> clusteringMethod = languageModelUnserialized->getClusteringMethod();
+        std::shared_ptr<speech::spelling::ISpellingTranscription> spellingTranscription = languageModelUnserialized->getSpellingTranscription();
 
+        ASSERT_NE(vectorizer, nullptr);
         ASSERT_NE(clusteringMethod, nullptr);
         ASSERT_NE(spellingTranscription, nullptr);
 
@@ -175,6 +189,7 @@ TEST(KMeans, Serialization) {
         ASSERT_STREQ(hmmPtr->predict(rightLeftWordPhonems).c_str(), spellingTranscription->predict(rightLeftWordPhonems).c_str());
         ASSERT_STREQ(hmmPtr->predict(rightRightWordPhonems).c_str(), spellingTranscription->predict(rightRightWordPhonems).c_str());
     } catch (speech::exception::NullptrSerializationException& ex) {
+        //std::cerr << ex.what() << std::endl;
         FAIL();
     }
 }

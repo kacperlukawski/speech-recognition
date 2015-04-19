@@ -1,4 +1,5 @@
 #include <string>
+#include <memory>
 #include <fstream>
 
 #include "gtest/gtest.h"
@@ -16,6 +17,12 @@ using speech::spelling::HMM;
 #include "../src/speech/exception/NullptrSerializationException.h"
 
 using speech::LanguageModel;
+
+#include "../src/speech/vectorizer/IVectorizer.h"
+#include "../src/speech/vectorizer/MaxFrequencyVectorizer.h"
+
+using speech::vectorizer::IVectorizer;
+using speech::vectorizer::MaxFrequencyVectorizer;
 
 /**
  * KMeans - test case
@@ -121,7 +128,12 @@ TEST(KMeans, Serialization) {
 
     std::vector<int> labels;
 
-    KMeans *kMeansPtr = new KMeans(2, 3);
+    const int singleDataVectorDimension = 3;
+
+    std::shared_ptr<IVectorizer<short>> vectorizerPtr = std::shared_ptr<IVectorizer<short>>(
+            new MaxFrequencyVectorizer<short>(singleDataVectorDimension));
+
+    std::shared_ptr<KMeans> kMeansPtr = std::shared_ptr<KMeans>(new KMeans(2, singleDataVectorDimension));
     kMeansPtr->fit(vectors, labels);
 
     std::vector<int> leftLeftWordPhonems;
@@ -140,13 +152,13 @@ TEST(KMeans, Serialization) {
     rightRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
     rightRightWordPhonems.push_back(kMeansPtr->predict(rightSideVectors[0]));
 
-    HMM *hmmPtr = new HMM(2, 3);
+    std::shared_ptr<HMM> hmmPtr = std::shared_ptr<HMM>(new HMM(2, 3));
     hmmPtr->fit(leftLeftWordPhonems, "aa");
     hmmPtr->fit(leftRightWordPhonems, "ab");
     hmmPtr->fit(rightLeftWordPhonems, "ba");
     hmmPtr->fit(rightRightWordPhonems, "bb");
 
-    LanguageModel *languageModel = new LanguageModel(kMeansPtr, hmmPtr);
+    LanguageModel<short> *languageModel = new LanguageModel<short>(vectorizerPtr, kMeansPtr, hmmPtr);
 
     const std::string modelFileName = "kmeans_model.dat";
 
@@ -156,12 +168,14 @@ TEST(KMeans, Serialization) {
         outputFileStream.close();
 
         std::ifstream inputFileStream(modelFileName);
-        LanguageModel *languageModelUnserialized = new LanguageModel(inputFileStream);
+        LanguageModel<short> *languageModelUnserialized = new LanguageModel<short>(inputFileStream);
         inputFileStream.close();
 
-        speech::clustering::IClusteringMethod* clusteringMethod = languageModelUnserialized->getClusteringMethod();
-        speech::spelling::ISpellingTranscription* spellingTranscription = languageModelUnserialized->getSpellingTranscription();
+        std::shared_ptr<speech::vectorizer::IVectorizer<short>> vectorizer = languageModelUnserialized->getVectorizer();
+        std::shared_ptr<speech::clustering::IClusteringMethod> clusteringMethod = languageModelUnserialized->getClusteringMethod();
+        std::shared_ptr<speech::spelling::ISpellingTranscription> spellingTranscription = languageModelUnserialized->getSpellingTranscription();
 
+        ASSERT_NE(vectorizer, nullptr);
         ASSERT_NE(clusteringMethod, nullptr);
         ASSERT_NE(spellingTranscription, nullptr);
 
@@ -175,6 +189,7 @@ TEST(KMeans, Serialization) {
         ASSERT_STREQ(hmmPtr->predict(rightLeftWordPhonems).c_str(), spellingTranscription->predict(rightLeftWordPhonems).c_str());
         ASSERT_STREQ(hmmPtr->predict(rightRightWordPhonems).c_str(), spellingTranscription->predict(rightRightWordPhonems).c_str());
     } catch (speech::exception::NullptrSerializationException& ex) {
+        //std::cerr << ex.what() << std::endl;
         FAIL();
     }
 }

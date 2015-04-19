@@ -13,6 +13,8 @@ namespace speech {
         class NullptrSerializationException : SerializationException  {
         public:
             NullptrSerializationException() : SerializationException() {}
+
+            NullptrSerializationException(const char *msg) : SerializationException(msg) { }
         };
 
     }

@@ -1,5 +1,8 @@
 #include <iostream>
+#include <memory>
 #include <list>
+
+using std::shared_ptr;
 
 #include "speech/raw_data/WaveFileDataSource.h"
 
@@ -36,28 +39,22 @@ using speech::vectorizer::IVectorizer;
 using speech::vectorizer::MaxFrequencyVectorizer;
 
 //
-// This is an entry point of the application. It allows user to select the data source used
-// to get an input data, choose the methods of signal transformation into frequency domain
-// and a spelling transcription.
+// Overloads the << operator for std::valarray to have a simple method
+// to display current values of vectors.
 //
-// @todo create a logic
+std::ostream &operator<<(std::ostream &out, std::valarray<double> vector) {
+    for (int i = 0; i < vector.size(); i++) {
+        out << vector[i] << " ";
+    }
+
+    return out;
+}
+
 //
-int main(int argc, char **argv) {
-    const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
-    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
-//    const int numberOfLetters = 10;              // number of symbols used in the spelling transcription
-
-    std::vector<std::shared_ptr<double>> tmp;
-    std::vector<double *> vectors;              // list of vectors produced by all data sources
-    std::vector<int> labels;                    // list of labels can be empty if used clustering method
-    // uses unsupervised learning, i.e. KMeans
-
-    std::vector<const char *> dataSources;
-    dataSources.push_back("/home/kacper/voice/samogloski.wav");        // @todo: list should be more dynamic, but it's not necessary now
-
-    std::vector<std::string> transcriptions;
-    transcriptions.push_back("a e i");
-
+// Gets the vector containing all letters occuring in given collection
+// of words. The result does not contain duplicates.
+//
+std::vector<char> getUniqueLetters(std::vector<std::string> &transcriptions) {
     std::vector<char> letters;
     for (auto it = transcriptions.begin(); it != transcriptions.end(); it++) {
         int length = (*it).size();
@@ -68,153 +65,60 @@ int main(int argc, char **argv) {
                 continue;
             }
 
-            std::cout << letter << " ";
+//            std::cout << letter << " ";
 
             letters.push_back(letter);
         }
     }
 
-    std::cout << std::endl;
+    return letters;
+}
 
-    IFrequencyTransform<short> *fft = new FastFourierTransform<short>();
-    IVectorizer<short> *vectorizer = new MaxFrequencyVectorizer<short>(singleDataVectorDimension / 4);
+//
+// This is an entry point of the application. It allows user to select the data source used
+// to get an input data, choose the methods of signal transformation into frequency domain
+// and a spelling transcription.
+//
+// @todo create a logic
+//
+int main(int argc, char **argv) {
+    const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
+    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
 
-    for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
-        WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(*it);
+    std::vector<const char *> sourceFiles;
+    sourceFiles.push_back(
+            "/home/kacper/voice/samogloski.wav");        // @todo: list should be more dynamic, but it's not necessary now
+//    sourceFiles.push_back("/home/kacper/voice/linda.wav");
 
-        auto begin = dataSourcePtr->getSamplesIteratorBegin();
-        auto end = dataSourcePtr->getSamplesIteratorEnd();
+    std::vector<std::string> transcriptions;
+    transcriptions.push_back("aaaaaaaaaeeeeeeeeeiiiiiiiiiiiii");
+//    transcriptions.push_back("wypierdalac");
 
-        for (auto innerIt = begin; innerIt != end; innerIt++) {
-            FrequencySample<short> frequencySample = fft->transform(*innerIt);
-            if (frequencySample.getSize() == 0) {
-                continue;
-            }
-
-            std::vector<double> vector = vectorizer->vectorize(frequencySample);
-
-//            std::cout << "vector(" << vector.size() << "): ";
-//            for (auto it = vector.begin(); it != vector.end(); it++) {
-//                std::cout << *it << " ";
-//            }
-//            std::cout << "\n";
-
-            double *rawDataVector = new double[singleDataVectorDimension];
-            for (int i = 0; i < singleDataVectorDimension; i++) {
-                double value = 0.0;
-                if (i < vector.size()) {
-                    value = vector.at(i);
-                }
-
-                rawDataVector[i] = value;
-            }
-
-            vectors.push_back(rawDataVector);
-
-//            std::shared_ptr<double> a = frequencySample.getAmplitude();
-//            tmp.push_back(a);
-//            vectors.push_back(a.get());
-        }
-
-        delete dataSourcePtr;
+    std::vector<DataSource<short>> dataSources;
+    for (auto it = sourceFiles.begin(); it != sourceFiles.end(); it++) {
+        dataSources.push_back(WaveFileDataSource<short>(*it));
     }
 
+//    double init[] = {1.0, 2.0, 3.0};
+//    std::valarray<double> test(init, 3);
+//    std::cout << /*"test = " << */test << std::endl;
+    std::vector<char> letters = getUniqueLetters(transcriptions);
 
-//    for (auto it = vectors.begin(); it != vectors.end(); it++) {
-//        for (int pos = 0; pos < 100; pos++) {
-//            std::cout << (*it)[pos] << " ";
-//        }
-//        std::cout << std::endl;
-//    }
-
-    IClusteringMethod *clusteringMethodPtr = new KMeans(numberOfPhonems, singleDataVectorDimension);
-    ISpellingTranscription *spellingMethodPtr = new HMM(numberOfPhonems, letters);
+    shared_ptr<IVectorizer<short>> vectorizerPtr = shared_ptr<IVectorizer<short>>(
+            new MaxFrequencyVectorizer<short>(singleDataVectorDimension));
+    shared_ptr<IClusteringMethod> clusteringMethodPtr = shared_ptr<IClusteringMethod>(
+            new KMeans(numberOfPhonems, singleDataVectorDimension));
+    shared_ptr<ISpellingTranscription> spellingMethodPtr = shared_ptr<ISpellingTranscription>(
+            new HMM(numberOfPhonems, letters));
+    LanguageModel<short> languageModel(vectorizerPtr, clusteringMethodPtr, spellingMethodPtr);
 
     try {
-        clusteringMethodPtr->fit(vectors, labels);
+        // fit the model using data taken from source files
+        languageModel.fit(dataSources, transcriptions);
 
-        int dataSourcesSize = dataSources.size();
-        for (int i = 0; i < dataSourcesSize; i++) {
-            const char *fileName = dataSources.at(i);
-            std::string &transcription = transcriptions.at(i);
-
-            WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(fileName);
-
-            auto begin = dataSourcePtr->getSamplesIteratorBegin();
-            auto end = dataSourcePtr->getSamplesIteratorEnd();
-
-            std::vector<int> predictedLabels;
-            for (auto innerIt = begin; innerIt != end; innerIt++) {
-                FrequencySample<short> frequencySample = fft->transform(*innerIt);
-                if (frequencySample.getSize() == 0) {
-                    continue;
-                }
-
-                std::vector<double> vector = vectorizer->vectorize(frequencySample);
-
-//            std::cout << "vector(" << vector.size() << "): ";
-//            for (auto it = vector.begin(); it != vector.end(); it++) {
-//                std::cout << *it << " ";
-//            }
-//            std::cout << "\n";
-
-                double *rawDataVector = new double[singleDataVectorDimension];
-                for (int i = 0; i < singleDataVectorDimension; i++) {
-                    double value = 0.0;
-                    if (i < vector.size()) {
-                        value = vector.at(i);
-                    }
-
-                    rawDataVector[i] = value;
-                }
-
-                int label = clusteringMethodPtr->predict(rawDataVector);
-                predictedLabels.push_back(label);
-
-                std::cout << label;
-            }
-
-            std::cout << std::endl;
-
-            spellingMethodPtr->fit(predictedLabels, transcription);
-
-            delete dataSourcePtr;
-        }
-
-        LanguageModel languageModel(clusteringMethodPtr, spellingMethodPtr);
-
+        // test files one by one and try to predict the transcription
         for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
-            WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>(*it);
-
-            auto begin = dataSourcePtr->getSamplesIteratorBegin();
-            auto end = dataSourcePtr->getSamplesIteratorEnd();
-
-            std::vector<int> predictedLabels;
-            for (auto innerIt = begin; innerIt != end; innerIt++) {
-                FrequencySample<short> frequencySample = fft->transform(*innerIt);
-                if (frequencySample.getSize() == 0) {
-                    continue;
-                }
-
-                std::vector<double> vector = vectorizer->vectorize(frequencySample);
-
-                double *rawDataVector = new double[singleDataVectorDimension];
-                for (int i = 0; i < singleDataVectorDimension; i++) {
-                    double value = 0.0;
-                    if (i < vector.size()) {
-                        value = vector.at(i);
-                    }
-
-                    rawDataVector[i] = value;
-                }
-
-                int label = clusteringMethodPtr->predict(rawDataVector);
-                predictedLabels.push_back(label);
-            }
-
-            std::cout << "predicted: " << spellingMethodPtr->predict(predictedLabels) << std::endl;
-
-            delete dataSourcePtr;
+            std::cout << "predicted: " << languageModel.predict(*it) << std::endl;
         }
 
         //std::cout << languageModel;
@@ -226,10 +130,6 @@ int main(int argc, char **argv) {
         std::cerr << "You need to provide at least " << numberOfPhonems
                 << " vectors to perform the clustering" << std::endl;
     }
-
-    delete fft;
-    delete clusteringMethodPtr;
-    delete spellingMethodPtr;
 
     return 0;
 }

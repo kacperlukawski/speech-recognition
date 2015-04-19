@@ -5,6 +5,8 @@
 
 #include <ostream>
 
+// TODO: use std::valarray instead of raw pointers
+
 namespace speech {
 
     namespace clustering {
@@ -18,7 +20,7 @@ namespace speech {
         public:
             static const uint32_t TYPE_IDENTIFIER = 0x00000001;
 
-            const unsigned int MAX_ITERATIONS = 100000;
+            const unsigned int MAX_ITERATIONS = 1000000;
             const double EPS = 10e-18;
 
             KMeans(std::istream& in);

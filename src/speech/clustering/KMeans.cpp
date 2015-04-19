@@ -36,6 +36,8 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
+#include <iostream> // TODO: remove this entry
+
 //
 // Fit the KMeans model using standard algorithm:
 // 1. Randomly choose k centroids from given vectors' set
@@ -121,6 +123,15 @@ void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector
         if (difference < EPS) {
             break;
         }
+    }
+
+    std::cout << "Centroids: " << std::endl;
+    for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
+        std::cout << "[ ";
+        for (int i = 0; i < dimension; i++) {
+            std::cout << (*centroidsIt)[i] << " ";
+        }
+        std::cout << "]" << std::endl;
     }
 }
 

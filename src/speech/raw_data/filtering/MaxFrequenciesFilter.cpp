@@ -14,14 +14,25 @@ speech::raw_data::filtering::MaxFrequenciesFilter<FrameType>::MaxFrequenciesFilt
 template<typename FrameType>
 FrequencySample<FrameType> speech::raw_data::filtering::MaxFrequenciesFilter<FrameType>::filter(const FrequencySample<FrameType> &sample) {
     FrequencySample<FrameType> result(sample);
-    double threshold = getNthMaxValue(result);
+//    double threshold = getNthMaxValue(result);
+//
+//    double *amplitudePtr = result.getAmplitude().get();
+//    for (int i = 0; i < result.getSize(); i++) {
+//        if (fabs(amplitudePtr[i]) < threshold) {
+//            amplitudePtr[i] = 0.0;
+//            // TODO: it may be good to zero the phase
+//        }
+//    }
 
     double *amplitudePtr = result.getAmplitude().get();
-    for (int i = 0; i < result.getSize(); i++) {
-        if (fabs(amplitudePtr[i]) < threshold) {
-            amplitudePtr[i] = 0.0;
-            // TODO: it may be good to zero the phase
+    for (int i = 1; i < result.getSize() - 1; i++) {
+        if (amplitudePtr[i] > amplitudePtr[i - 1] && amplitudePtr[i] > amplitudePtr[i + 1]) {
+            // we have a local maximum, because both left and right values are
+            // lower than current value
+            continue;
         }
+
+        amplitudePtr[i] = 0.0;
     }
 
     return result;

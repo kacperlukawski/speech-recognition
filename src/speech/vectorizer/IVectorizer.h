@@ -1,7 +1,11 @@
 #ifndef _SPEECH_RECOGNITION_IVECTORIZER_H_
 #define _SPEECH_RECOGNITION_IVECTORIZER_H_
 
-#include <vector>
+#include <valarray>
+
+#include "../IStreamSerializable.h"
+
+using speech::IStreamSerializable;
 
 #include "../raw_data/FrequencySample.h"
 
@@ -12,9 +16,16 @@ namespace speech {
     namespace vectorizer {
 
         template<typename FrameType>
-        class IVectorizer {
+        class IVectorizer : public IStreamSerializable {
         public:
-            virtual std::vector<double> vectorize(FrequencySample<FrameType> &sample) = 0;
+            //
+            // Projects given sample into feature space. Each vector needs to have
+            // exactly same size, equal to dimension of the feature space.
+            // @return the projection of vector in a feature space
+            //
+            virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample) = 0;
+
+            virtual void serialize(std::ostream &out) const = 0;
         };
 
     }

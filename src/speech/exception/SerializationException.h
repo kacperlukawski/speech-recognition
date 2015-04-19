@@ -13,6 +13,8 @@ namespace speech {
         class SerializationException : public ::std::length_error {
         public:
             SerializationException() : length_error("") {}
+
+            SerializationException(const char *msg) : length_error(msg) { }
         };
 
     }

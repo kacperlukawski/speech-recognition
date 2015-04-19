@@ -37,7 +37,6 @@ namespace speech {
     // from the clustering method and a method which converts
     // labeled signals into textual representation (we call it
     // spelling transcription)
-    // TODO: implement fit and predict methods
     //
     template<typename FrameType>
     class LanguageModel : public IStreamSerializable {

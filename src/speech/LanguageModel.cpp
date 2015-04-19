@@ -114,7 +114,6 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
 
 template<typename FrameType>
 std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dataSource) {
-    const int singleDataVectorDimension = 40; // TODO: remove!
     IFrequencyTransform<short> *fft = new FastFourierTransform<FrameType>();
 
     std::vector<int> predictedLabels;

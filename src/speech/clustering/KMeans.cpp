@@ -129,7 +129,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
     for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
         std::cout << "[ ";
         for (int i = 0; i < dimension; i++) {
-            std::cout << (*centroidsIt)[i] << " ";
+            std::cout << (*centroidsIt)[i] << "\t";
         }
         std::cout << "]" << std::endl;
     }

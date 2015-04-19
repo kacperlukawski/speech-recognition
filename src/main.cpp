@@ -82,12 +82,12 @@ std::vector<char> getUniqueLetters(std::vector<std::string> &transcriptions) {
 // @todo create a logic
 //
 int main(int argc, char **argv) {
-    const int singleDataVectorDimension = 10;   // dimension of the vector describing single sample
-    const int numberOfPhonems = 5;              // number of clusters used by the clustering method
+    const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
+    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
 
+    // @todo: list should be more dynamic, but it's not necessary now
     std::vector<const char *> sourceFiles;
-    sourceFiles.push_back(
-            "/home/kacper/voice/samogloski.wav");        // @todo: list should be more dynamic, but it's not necessary now
+    sourceFiles.push_back("/home/kacper/voice/samogloski.wav");
 //    sourceFiles.push_back("/home/kacper/voice/linda.wav");
 
     std::vector<std::string> transcriptions;

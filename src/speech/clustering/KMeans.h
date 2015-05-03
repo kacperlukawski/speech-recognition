@@ -36,6 +36,7 @@ namespace speech {
 
             virtual void serialize(std::ostream &out) const;
         protected:
+//            void chooseCentroids(vector<valarray<double>> &vectors);
 
         private:
             unsigned int k; // number of clusters

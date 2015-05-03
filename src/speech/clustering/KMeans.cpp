@@ -40,8 +40,6 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
-#include <iostream> // TODO: remove this entry
-
 //
 // Fit the KMeans model using standard algorithm:
 // 1. Randomly choose k centroids from given vectors' set
@@ -49,7 +47,6 @@ speech::clustering::KMeans::~KMeans() {
 // 3. Update each centroid to be a mean of the all vectors belonging to this particular group
 // 4. Stop when nothing changed in an iteration or after maximum number of iterations
 //
-//void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector<int> &labels) {
 void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
@@ -141,7 +138,6 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
  *
  * @return predicted label
  */
-//int speech::clustering::KMeans::predict(double *vector) {
 int speech::clustering::KMeans::predict(const valarray<double> &vector) {
     if (centroids->empty()) {
         // @todo probably throw an exception there, because the model was not fitted properly

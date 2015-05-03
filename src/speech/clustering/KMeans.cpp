@@ -40,8 +40,6 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
-#include <iostream> // TODO: remove this entry
-
 //
 // Fit the KMeans model using standard algorithm:
 // 1. Randomly choose k centroids from given vectors' set
@@ -49,7 +47,6 @@ speech::clustering::KMeans::~KMeans() {
 // 3. Update each centroid to be a mean of the all vectors belonging to this particular group
 // 4. Stop when nothing changed in an iteration or after maximum number of iterations
 //
-//void speech::clustering::KMeans::fit(std::vector<double *> &vectors, std::vector<int> &labels) {
 void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
@@ -66,7 +63,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
 
         bool addCurrentVector = true;
         for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
-            if (distance(vector, *centroidsIt) == 0.0) {
+            if (metric(vector, *centroidsIt) == 0.0) {
                 addCurrentVector = false;
                 break;
             }
@@ -129,7 +126,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
     for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
         std::cout << "[ ";
         for (int i = 0; i < dimension; i++) {
-            std::cout << (*centroidsIt)[i] << " ";
+            std::cout << (*centroidsIt)[i] << "\t";
         }
         std::cout << "]" << std::endl;
     }
@@ -141,7 +138,6 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
  *
  * @return predicted label
  */
-//int speech::clustering::KMeans::predict(double *vector) {
 int speech::clustering::KMeans::predict(const valarray<double> &vector) {
     if (centroids->empty()) {
         // @todo probably throw an exception there, because the model was not fitted properly
@@ -150,9 +146,9 @@ int speech::clustering::KMeans::predict(const valarray<double> &vector) {
 
     int argmin = 0;
     int centroidsNumber = centroids->size();
-    double currentMinimumDistance = distance(vector, centroids->at(0));
+    double currentMinimumDistance = metric(vector, centroids->at(0));
     for (int i = 1; i < centroidsNumber; ++i) {
-        double currentDistance = distance(vector, centroids->at(i));
+        double currentDistance = metric(vector, centroids->at(i));
         if (currentDistance < currentMinimumDistance) {
             currentMinimumDistance = currentDistance;
             argmin = i;
@@ -183,17 +179,4 @@ void speech::clustering::KMeans::serialize(std::ostream &out) const {
             out.write((char const *) &(*it)[i], sizeof(double));
         }
     }
-}
-
-/**
- * Calculate Euclidean distance of two given vectors
- *
- * @return distance between vectors
- */
-//double speech::clustering::KMeans::distance(double *v1, double *v2) {
-double speech::clustering::KMeans::distance(const valarray<double> &v1,
-                                            const valarray<double> &v2) {
-    valarray<double> difference = v1 - v2;
-    valarray<double> square = difference * difference;
-    return sqrt(square.sum());
 }

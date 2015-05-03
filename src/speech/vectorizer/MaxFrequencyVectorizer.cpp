@@ -37,18 +37,6 @@ std::valarray<double> speech::vectorizer::MaxFrequencyVectorizer<FrameType>::vec
     }
 
     return vec;
-
-//    for (int i = 0; i < filteredSample.getSize() / 2 + 1; i++) {
-//        double amplitude = amplitutePtr[i];
-//        double phase = phasePtr[i];
-//        if (amplitude > 0.0) {
-//            result.push_back((double) i);
-//            result.push_back(amplitude);
-////            result.push_back(phase);
-//        }
-//    }
-//
-//    return std::valarray<double>(result.data(), result.size());
 }
 
 template<typename FrameType>

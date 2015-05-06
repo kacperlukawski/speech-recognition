@@ -30,6 +30,12 @@ using speech::transform::FastFourierTransform;
 
 #include "spelling/HMM.h"
 
+#include "detector/IDetector.h"
+#include "detector/NaiveSilenceDetector.h"
+
+using speech::detector::IDetector;
+using speech::detector::NaiveSilenceDetector;
+
 namespace speech {
 
     //
@@ -69,6 +75,8 @@ namespace speech {
         shared_ptr<clustering::IClusteringMethod> clusteringMethod = nullptr;
         shared_ptr<spelling::ISpellingTranscription> spellingTranscription = nullptr;
     private:
+        shared_ptr<IDetector<FrameType>> silenceDetector =
+                shared_ptr<IDetector<FrameType>>(new NaiveSilenceDetector<FrameType>());
     };
 }
 

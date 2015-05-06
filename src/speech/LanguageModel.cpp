@@ -96,6 +96,13 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
                 continue;
             }
 
+            if (silenceDetector->detected(frequencySample)) {
+                std::cout << "Silence detected" << std::endl;
+                continue;
+            } else {
+                std::cout << "No silence" << std::endl;
+            }
+
             std::valarray<double> vector = vectorizer->vectorize(frequencySample);
             int label = clusteringMethod->predict(vector);
             predictedLabels.push_back(label);

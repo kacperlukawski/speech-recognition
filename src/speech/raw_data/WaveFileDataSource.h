@@ -50,7 +50,8 @@ namespace speech {
             wav_header *meta_data;
 
             void readFromFile(bool convertToMono);
-            unsigned short int getBufferSize();
+
+            unsigned int getBufferSize();
             void showFileInfo();
             pair<shared_ptr<FrameType>, int> convertSamplesToMono(shared_ptr<FrameType> buffer,
                     int bufferSize, int num_channels);

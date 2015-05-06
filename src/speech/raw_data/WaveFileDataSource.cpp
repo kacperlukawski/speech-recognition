@@ -68,7 +68,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
 
     fread(meta_data, 1, sizeof(*meta_data), file);
 
-    const unsigned short int BUFFER_SIZE = getBufferSize();
+    const unsigned int BUFFER_SIZE = getBufferSize();
 
     int numberOfRead = 0;
 
@@ -127,10 +127,9 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 }
 
 template<typename FrameType>
-unsigned short int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    int bits_for_sixteen_ms = meta_data->bits_per_sample*meta_data->sample_rate*0.016;
-    int buffer_size = 1024;//bits_for_sixteen_ms - (bits_for_sixteen_ms % meta_data->bits_per_sample);
-    return buffer_size;
+unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
+    const int miliseconds = 16;
+    return meta_data->byte_rate * miliseconds / 1000;
 }
 
 template

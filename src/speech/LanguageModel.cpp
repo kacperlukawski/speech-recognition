@@ -97,10 +97,7 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
             }
 
             if (silenceDetector->detected(frequencySample)) {
-                std::cout << "Silence detected" << std::endl;
                 continue;
-            } else {
-                std::cout << "No silence" << std::endl;
             }
 
             std::valarray<double> vector = vectorizer->vectorize(frequencySample);
@@ -129,6 +126,10 @@ std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dat
     for (auto innerIt = begin; innerIt != end; innerIt++) {
         FrequencySample<short> frequencySample = fft->transform(*innerIt);
         if (frequencySample.getSize() == 0) {
+            continue;
+        }
+
+        if (silenceDetector->detected(frequencySample)) {
             continue;
         }
 

@@ -88,7 +88,7 @@ std::vector<char> getUniqueLetters(std::vector<std::string> &transcriptions) {
 // @todo create a logic
 //
 int main(int argc, char **argv) {
-    const int singleSampleLength = 1000;          // length of the DataSample in milliseconds
+    const int singleSampleLength = 20;          // length of the DataSample in milliseconds
     const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
     const int numberOfPhonems = 3;              // number of clusters used by the clustering method
 

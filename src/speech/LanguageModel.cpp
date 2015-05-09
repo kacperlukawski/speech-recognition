@@ -42,8 +42,8 @@ speech::LanguageModel<FrameType>::LanguageModel(std::istream &in) {
 
 template<typename FrameType>
 speech::LanguageModel<FrameType>::LanguageModel(shared_ptr<IVectorizer<FrameType>> vectorizer,
-                                                std::shared_ptr<clustering::IClusteringMethod> clusteringMethod,
-                                                std::shared_ptr<spelling::ISpellingTranscription> spellingTranscription)
+                                                shared_ptr<clustering::IClusteringMethod> clusteringMethod,
+                                                shared_ptr<spelling::ISpellingTranscription> spellingTranscription)
         : vectorizer(vectorizer), clusteringMethod(clusteringMethod), spellingTranscription(spellingTranscription) {
 }
 

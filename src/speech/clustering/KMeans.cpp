@@ -40,13 +40,6 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
-//
-// Fit the KMeans model using standard algorithm:
-// 1. Randomly choose k centroids from given vectors' set
-// 2. In each iteration assign all vectors into the nearest centroid
-// 3. Update each centroid to be a mean of the all vectors belonging to this particular group
-// 4. Stop when nothing changed in an iteration or after maximum number of iterations
-//
 void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
@@ -132,12 +125,6 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
     }
 }
 
-/**
- * Select the most probable label for the given vector.
- * Label is a position of the closest centroid.
- *
- * @return predicted label
- */
 int speech::clustering::KMeans::predict(const valarray<double> &vector) {
     if (centroids->empty()) {
         // @todo probably throw an exception there, because the model was not fitted properly

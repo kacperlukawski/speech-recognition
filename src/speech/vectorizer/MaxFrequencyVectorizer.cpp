@@ -31,8 +31,8 @@ std::valarray<double> speech::vectorizer::MaxFrequencyVectorizer<FrameType>::vec
         }
 
         if (amplitutePtr[i] > 0.0) {
-            vec[currentPos++] = i;
-            vec[currentPos++] = amplitutePtr[i];
+            vec[currentPos++] = sample.getIndexFrequency(i); // frequency of the local maximum
+            vec[currentPos++] = amplitutePtr[i];             // amplitude of this maximum
         }
     }
 

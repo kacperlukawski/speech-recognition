@@ -18,13 +18,17 @@ namespace speech {
         template<typename FrameType>
         class IVectorizer : public IStreamSerializable {
         public:
-            //
-            // Projects given sample into feature space. Each vector needs to have
-            // exactly same size, equal to dimension of the feature space.
-            // @return the projection of vector in a feature space
-            //
+            /**
+             * Projects given sample into feature space. Each vector needs to have
+             * exactly same size, equal to dimension of the feature space.
+             * @return the projection of vector in a feature space
+             */
             virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample) = 0;
 
+            /**
+             * Serializes the vectorizer into given stream
+             * @param out output stream
+             */
             virtual void serialize(std::ostream &out) const = 0;
         };
 

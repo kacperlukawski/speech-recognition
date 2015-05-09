@@ -38,22 +38,51 @@ namespace speech {
         template<typename FrameType>
         class WaveFileDataSource : public DataSource<FrameType> {
         public:
-            WaveFileDataSource(wav_header _meta_data);
-            WaveFileDataSource(string _fileName);
+            /**
+             * Construct an empty file with given WAV file header
+             * and length of one DataSample used in sampling.
+             *
+             * @param _meta_data WAV file header
+             * @param sampleLength length of a single sample in milliseconds
+             */
+            WaveFileDataSource(wav_header _meta_data, int sampleLength);
+
+            /**
+             * Construct a file using a file from provided path
+             * and length of one DataSample used in sampling.
+             *
+             * @param _fileName path to WAV file
+             * @param sampleLength length of a single sample in milliseconds
+             */
+            WaveFileDataSource(string _fileName, int sampleLength);
+
+            /**
+             * Destructor
+             */
             virtual ~WaveFileDataSource();
+
             void saveToFile(string _fileName);
+
             virtual wav_header getMetaData();
 
         protected:
+            /** Path to the WAV file */
             string fileName;
+            /** Length of the single sample in milliseconds */
+            int sampleLength;
         private:
             wav_header *meta_data;
 
             void readFromFile(bool convertToMono);
-            unsigned short int getBufferSize();
+
+            unsigned int getBufferSize();
+
             void showFileInfo();
+
             pair<shared_ptr<FrameType>, int> convertSamplesToMono(shared_ptr<FrameType> buffer,
-                    int bufferSize, int num_channels);
+                                                                  int bufferSize,
+                                                                  int num_channels);
+
         };
     }
 

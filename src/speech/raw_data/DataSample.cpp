@@ -2,7 +2,8 @@
 
 template<typename FrameType>
 speech::raw_data::DataSample<FrameType>::DataSample(int _size, int _length, std::shared_ptr<FrameType> _values) {
-    size = _size;
+    this->size = _size;
+    this->length = _length;
     this->values = _values;
 }
 

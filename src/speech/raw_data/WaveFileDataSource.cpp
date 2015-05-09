@@ -6,9 +6,10 @@
 #include "WaveFileDataSource.h"
 
 template<typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName)
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName, int sampleLength)
         : DataSource<FrameType>() {
     this->fileName = _fileName;
+    this->sampleLength = sampleLength;
     meta_data = new wav_header;
     readFromFile(true);
 //    showFileInfo();
@@ -29,9 +30,10 @@ void speech::raw_data::WaveFileDataSource<FrameType>::showFileInfo() {
 }
 
 template<typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data) {
-    meta_data = new wav_header;
-    memcpy(meta_data, &_meta_data, sizeof(*meta_data));
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data, int sampleLength) {
+    this->meta_data = new wav_header;
+    memcpy(this->meta_data, &_meta_data, sizeof(*this->meta_data));
+    this->sampleLength = sampleLength;
 }
 
 template<typename FrameType>
@@ -83,7 +85,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
             mono = std::make_pair(buffer, numberOfRead);
         }
 
-        this->samples->push_back(DataSample<FrameType>(mono.second, BUFFER_SIZE, mono.first));
+        this->samples->push_back(DataSample<FrameType>(mono.second, sampleLength, mono.first));
         buffer.reset();
     }
 
@@ -128,8 +130,7 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    const int miliseconds = 20;
-    return meta_data->byte_rate * miliseconds / 1000;
+    return meta_data->byte_rate * sampleLength / 1000;
 }
 
 template

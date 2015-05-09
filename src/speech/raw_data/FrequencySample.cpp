@@ -7,6 +7,7 @@ speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size, int _le
                                                               std::shared_ptr<double> _amplitude,
                                                               std::shared_ptr<double> _phase) {
     size = _size;
+    length = _length;
     amplitude = _amplitude;
     phase = _phase;
 }

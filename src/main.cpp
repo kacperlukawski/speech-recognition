@@ -89,7 +89,7 @@ std::vector<char> getUniqueLetters(std::vector<std::string> &transcriptions) {
 //
 int main(int argc, char **argv) {
     const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
-    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
+    const int numberOfPhonems = 3;              // number of clusters used by the clustering method
 
     // @todo: list should be more dynamic, but it's not necessary now
     std::vector<const char *> sourceFiles;
@@ -121,6 +121,12 @@ int main(int argc, char **argv) {
     try {
         // fit the model using data taken from source files
         languageModel.fit(dataSources, transcriptions);
+
+        // add a new file to be checked
+        dataSources.push_back(
+                WaveFileDataSource<short>("/home/kacper/voice/samogloski_100-110_100-110_100-110_100-110.wav"));
+        dataSources.push_back(
+                WaveFileDataSource<short>("/home/kacper/voice/samogloski_1_2_3_4_5_6_7_8_9_10_11_12-25.wav"));
 
         // test files one by one and try to predict the transcription
         for (auto it = dataSources.begin(); it != dataSources.end(); it++) {

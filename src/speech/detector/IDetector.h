@@ -16,10 +16,12 @@ namespace speech {
         template<typename FrameType>
         class IDetector {
         public:
-            ///
-            /// Checks the condition of the particular detector, and returns
-            /// TRUE if the condition was met, FALSE otherwise.
-            ///
+            /**
+             * Checks the condition of the particular detector, and returns
+             * TRUE if the condition was met, FALSE otherwise.
+             *
+             * @return TRUE - if detected the pattern, FALSE otherwise
+             */
             virtual bool detected(FrequencySample<FrameType> &sample) const = 0;
         };
 

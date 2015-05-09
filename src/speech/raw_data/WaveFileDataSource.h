@@ -54,7 +54,9 @@ namespace speech {
             unsigned int getBufferSize();
             void showFileInfo();
             pair<shared_ptr<FrameType>, int> convertSamplesToMono(shared_ptr<FrameType> buffer,
-                    int bufferSize, int num_channels);
+                                                                  int bufferSize,
+                                                                  int num_channels);
+
         };
     }
 

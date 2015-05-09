@@ -3,8 +3,9 @@
 #include <cstring>
 
 template<typename FrameType>
-speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size,
-        std::shared_ptr<double> _amplitude, std::shared_ptr<double> _phase) {
+speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size, int _length,
+                                                              std::shared_ptr<double> _amplitude,
+                                                              std::shared_ptr<double> _phase) {
     size = _size;
     amplitude = _amplitude;
     phase = _phase;
@@ -29,6 +30,11 @@ speech::raw_data::FrequencySample<FrameType>::~FrequencySample() {
 template<typename FrameType>
 int speech::raw_data::FrequencySample<FrameType>::getSize() const {
     return size;
+}
+
+template<typename FrameType>
+int speech::raw_data::FrequencySample<FrameType>::getLength() {
+    return length;
 }
 
 template<typename FrameType>

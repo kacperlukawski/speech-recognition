@@ -83,7 +83,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
             mono = std::make_pair(buffer, numberOfRead);
         }
 
-        this->samples->push_back(DataSample<FrameType>(mono.second, mono.first));
+        this->samples->push_back(DataSample<FrameType>(mono.second, BUFFER_SIZE, mono.first));
         buffer.reset();
     }
 
@@ -128,7 +128,7 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    const int miliseconds = 16;
+    const int miliseconds = 20;
     return meta_data->byte_rate * miliseconds / 1000;
 }
 

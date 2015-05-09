@@ -26,7 +26,7 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
         phase.get()[i] = calculatePhase(comp[i]);
     }
 
-    return FrequencySample<FrameType>(vector.getSize(), amplitude, phase);
+    return FrequencySample<FrameType>(vector.getSize(), vector.getLength(), amplitude, phase);
 }
 
 template<typename FrameType>
@@ -48,7 +48,7 @@ DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::revers
         values.get()[i] = (FrameType) (comp[i].real() * MAX_VALUE);
     }
 
-    return DataSample<FrameType>(vector.getSize(), values);
+    return DataSample<FrameType>(vector.getSize(), vector.getLength(), values);
 }
 
 // http://rosettacode.org/wiki/Fast_Fourier_transform#C.2B.2B

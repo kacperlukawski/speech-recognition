@@ -97,6 +97,9 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
             }
 
             if (silenceDetector->detected(frequencySample)) {
+                // don't teach the classifier on the silence
+                // since it may affect the centroids used
+                // in clustering phonems
                 continue;
             }
 
@@ -147,13 +150,13 @@ std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dat
     return spellingTranscription->predict(predictedLabels);
 }
 
-//
-// This method saves the model into given stream. It works in the following way:
-// 1. Saves the type of the clustering method (uint32_t)
-// 2. Saves the clustering method (by calling its serialize method)
-// 3. Saves the type of the spelling transcription (uint32_t)
-// 4. Saves the spelling transcription (by calling its serialize method)
-//
+/**
+ * This method saves the model into given stream. It works in the following way:
+ * 1. Saves the type of the clustering method (uint32_t)
+ * 2. Saves the clustering method (by calling its serialize method)
+ * 3. Saves the type of the spelling transcription (uint32_t)
+ * 4. Saves the spelling transcription (by calling its serialize method)
+ */
 template<typename FrameType>
 void speech::LanguageModel<FrameType>::serialize(std::ostream &out) const {
     if (vectorizer == nullptr) {

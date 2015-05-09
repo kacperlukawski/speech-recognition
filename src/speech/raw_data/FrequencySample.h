@@ -39,26 +39,24 @@ namespace speech {
              * Minimal frequency is a frequency with the highest period.
              * This frequency is stored on the first position in the sample
              * (position 0 is reserved for a constant).
+             * @see http://s-mat-pcs.oulu.fi/~ssa/ESignals/sig2_2_4.htm
              *
              * @return frequency in Hz
-             *
-             * @todo: implement
              */
-            inline unsigned int getMinFrequency() {
-                return 0;
+            inline double getMinFrequency() {
+                return 1 / (length / 1000.0);
             }
 
             /**
              * Get maximal frequency which can be represented by this sample.
              * Maximal frequency is a frequency with the lowest period.
              * This frequency is stored on the center position in the sample.
+             * @see http://s-mat-pcs.oulu.fi/~ssa/ESignals/sig2_2_4.htm
              *
              * @return frequency in Hz
-             *
-             * @todo: implement
              */
-            inline unsigned int getMaxFrequency() {
-                return INT32_MAX;
+            inline double getMaxFrequency() {
+                return size / (2.0 * length / 1000.0);
             }
 
             /**
@@ -68,7 +66,7 @@ namespace speech {
              *
              * @todo: implement
              */
-            inline unsigned int getIndexFrequency(int index) {
+            inline double getIndexFrequency(int index) {
                 int halfSize = size / 2;
                 if (index > halfSize) {
                     // sample has duplicates of frequencies, so let
@@ -76,8 +74,7 @@ namespace speech {
                     index = halfSize - index;
                 }
 
-
-                return 0;
+                return getMinFrequency() * index;
             }
         };
 

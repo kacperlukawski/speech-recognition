@@ -69,6 +69,10 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
                 continue;
             }
 
+//            std::cout << "min = " << frequencySample.getMinFrequency() << "Hz "
+//                      << "max = " << frequencySample.getMaxFrequency() << "Hz "
+//                      << "size = " << frequencySample.getSize() << std::endl;
+
             std::valarray<double> vector = vectorizer->vectorize(frequencySample);
             vectors.push_back(vector);
         }

@@ -11,6 +11,11 @@ namespace speech {
 
     namespace vectorizer {
 
+        /**
+         * Vectorizer converting raw signal into vectors of fixed size
+         * containing frequencies with maximal amplitude.
+         * @deprecated
+         */
         template<typename FrameType>
         class MaxFrequencyVectorizer : public IVectorizer<FrameType> {
         public:

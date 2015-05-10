@@ -1,18 +1,39 @@
-# parse the subdirectories
-add_subdirectory(speech)
-
 # add the executable "Main"
 add_executable(
     Main
         main.cpp
+        speech/LanguageModel.cpp
+        speech/raw_data/DataSample.cpp
+        speech/raw_data/FrequencySample.cpp
+        speech/raw_data/WaveFileDataSource.cpp
+        speech/raw_data/DataSource.cpp
+        speech/clustering/KMeans.cpp
+        speech/spelling/HMM.cpp
+        speech/spelling/SpellingAdjuster.cpp
+        speech/transform/FastFourierTransform.cpp
+        speech/raw_data/filtering/MaxFrequenciesFilter.cpp
+        speech/vectorizer/MaxFrequencyVectorizer.cpp
+        speech/vectorizer/FormantVectorizer.cpp
+        speech/metric/EuclideanDistance.cpp
+        speech/detector/NaiveSilenceDetector.cpp
 )
 
 # add the executable "Filters"
 add_executable(
     Filters
         filters_test.cpp
+        speech/LanguageModel.cpp
+        speech/raw_data/DataSample.cpp
+        speech/raw_data/FrequencySample.cpp
+        speech/raw_data/WaveFileDataSource.cpp
+        speech/raw_data/DataSource.cpp
+        speech/clustering/KMeans.cpp
+        speech/spelling/HMM.cpp
+        speech/spelling/SpellingAdjuster.cpp
+        speech/transform/FastFourierTransform.cpp
+        speech/raw_data/filtering/MaxFrequenciesFilter.cpp
+        speech/vectorizer/MaxFrequencyVectorizer.cpp
+        speech/vectorizer/FormantVectorizer.cpp
+        speech/metric/EuclideanDistance.cpp
+        speech/detector/NaiveSilenceDetector.cpp
 )
-
-# connect "Main" executable with "Speech" library
-target_link_libraries(Main LINK_PUBLIC Speech)
-target_link_libraries(Filters LINK_PUBLIC Speech)

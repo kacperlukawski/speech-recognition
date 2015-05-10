@@ -17,6 +17,8 @@ speech::LanguageModel<FrameType>::LanguageModel(std::istream &in) {
         case vectorizer::MaxFrequencyVectorizer<FrameType>::TYPE_IDENTIFIER:
             vectorizer = std::shared_ptr<IVectorizer<FrameType>>(new vectorizer::MaxFrequencyVectorizer<FrameType>(in));
             break;
+        case vectorizer::FormantVectorizer<FrameType>::TYPE_IDENTIFIER:
+            vectorizer = std::shared_ptr<IVectorizer<FrameType>>(new vectorizer::FormantVectorizer<FrameType>(in));
         default:
             throw exception::NullptrSerializationException();
     }

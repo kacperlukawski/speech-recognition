@@ -38,12 +38,12 @@ using speech::detector::NaiveSilenceDetector;
 
 namespace speech {
 
-    //
-    // It is a representation of the language model which is built
-    // from the clustering method and a method which converts
-    // labeled signals into textual representation (we call it
-    // spelling transcription)
-    //
+    /**
+     * It is a representation of the language model which is built
+     * from the clustering method and a method which converts
+     * labeled signals into textual representation (we call it
+     * spelling transcription)
+     */
     template<typename FrameType>
     class LanguageModel : public IStreamSerializable {
     public:

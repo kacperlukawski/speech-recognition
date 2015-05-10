@@ -11,6 +11,9 @@ namespace speech {
 
     namespace metric {
 
+        /**
+         * Calculates standard Euclidean distance between two vectors.
+         */
         class EuclideanDistance : public IMetric {
         public:
 

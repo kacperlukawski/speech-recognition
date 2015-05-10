@@ -63,8 +63,6 @@ namespace speech {
              * Get the frequency stored on given index of this sample.
              *
              * @return frequency in Hz
-             *
-             * @todo: implement
              */
             inline double getIndexFrequency(int index) {
                 int halfSize = size / 2;

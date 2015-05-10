@@ -13,9 +13,9 @@ namespace speech {
 
     namespace clustering {
 
-        //
-        // This is an interface for all clustering methods used for phonemes labeling
-        //
+        /**
+         * This is an interface for all clustering methods used for phonemes labeling
+         */
         class IClusteringMethod : public IStreamSerializable {
         public:
             virtual void fit(vector<valarray<double>> &vectors, vector<int> &labels) = 0;

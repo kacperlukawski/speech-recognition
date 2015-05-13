@@ -29,3 +29,6 @@
 
 # CMake directory
 CMakeFiles
+
+dataset/people.txt
+dataset/env

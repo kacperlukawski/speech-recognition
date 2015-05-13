@@ -6,9 +6,10 @@
 #include "WaveFileDataSource.h"
 
 template<typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName)
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName, int sampleLength)
         : DataSource<FrameType>() {
     this->fileName = _fileName;
+    this->sampleLength = sampleLength;
     meta_data = new wav_header;
     readFromFile(true);
 //    showFileInfo();
@@ -29,9 +30,10 @@ void speech::raw_data::WaveFileDataSource<FrameType>::showFileInfo() {
 }
 
 template<typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data) {
-    meta_data = new wav_header;
-    memcpy(meta_data, &_meta_data, sizeof(*meta_data));
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data, int sampleLength) {
+    this->meta_data = new wav_header;
+    memcpy(this->meta_data, &_meta_data, sizeof(*this->meta_data));
+    this->sampleLength = sampleLength;
 }
 
 template<typename FrameType>
@@ -68,7 +70,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
 
     fread(meta_data, 1, sizeof(*meta_data), file);
 
-    const unsigned short int BUFFER_SIZE = getBufferSize();
+    const unsigned int BUFFER_SIZE = getBufferSize();
 
     int numberOfRead = 0;
 
@@ -83,7 +85,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
             mono = std::make_pair(buffer, numberOfRead);
         }
 
-        this->samples->push_back(DataSample<FrameType>(mono.second, mono.first));
+        this->samples->push_back(DataSample<FrameType>(mono.second, sampleLength, mono.first));
         buffer.reset();
     }
 
@@ -127,10 +129,8 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 }
 
 template<typename FrameType>
-unsigned short int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    int bits_for_sixteen_ms = meta_data->bits_per_sample*meta_data->sample_rate*0.016;
-    int buffer_size = 1024;//bits_for_sixteen_ms - (bits_for_sixteen_ms % meta_data->bits_per_sample);
-    return buffer_size;
+unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
+    return meta_data->byte_rate * sampleLength / 1000;
 }
 
 template

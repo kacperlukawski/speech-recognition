@@ -88,8 +88,9 @@ std::vector<char> getUniqueLetters(std::vector<std::string> &transcriptions) {
 // @todo create a logic
 //
 int main(int argc, char **argv) {
+    const int singleSampleLength = 20;          // length of the DataSample in milliseconds
     const int singleDataVectorDimension = 40;   // dimension of the vector describing single sample
-    const int numberOfPhonems = 4;              // number of clusters used by the clustering method
+    const int numberOfPhonems = 3;              // number of clusters used by the clustering method
 
     // @todo: list should be more dynamic, but it's not necessary now
     std::vector<const char *> sourceFiles;
@@ -102,7 +103,7 @@ int main(int argc, char **argv) {
 
     std::vector<DataSource<short>> dataSources;
     for (auto it = sourceFiles.begin(); it != sourceFiles.end(); it++) {
-        dataSources.push_back(WaveFileDataSource<short>(*it));
+        dataSources.push_back(WaveFileDataSource<short>(*it, singleSampleLength));
     }
 
 //    double init[] = {1.0, 2.0, 3.0};
@@ -121,6 +122,14 @@ int main(int argc, char **argv) {
     try {
         // fit the model using data taken from source files
         languageModel.fit(dataSources, transcriptions);
+
+        // add a new file to be checked
+        dataSources.push_back(
+                WaveFileDataSource<short>("/home/kacper/voice/samogloski_100-110_100-110_100-110_100-110.wav",
+                                          singleSampleLength));
+        dataSources.push_back(
+                WaveFileDataSource<short>("/home/kacper/voice/samogloski_1_2_3_4_5_6_7_8_9_10_11_12-25.wav",
+                                          singleSampleLength));
 
         // test files one by one and try to predict the transcription
         for (auto it = dataSources.begin(); it != dataSources.end(); it++) {

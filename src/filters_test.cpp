@@ -47,8 +47,11 @@ std::vector<int> getRange(const std::string &text) {
 }
 
 int main(int argc, char **argv) {
+    const int singleSampleLength = 25;
+
     IFrequencyTransform<short> *fft = new FastFourierTransform<short>();
-    WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>("/home/kacper/voice/samogloski.wav");
+    WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>("/home/kacper/voice/samogloski.wav",
+                                                                             singleSampleLength);
     IVectorizer<short> *vectorizer = new MaxFrequencyVectorizer<short>(10);
     IFilter<short> *filter = new MaxFrequenciesFilter<short>(20);
 
@@ -107,7 +110,7 @@ int main(int argc, char **argv) {
     metadata.subchunk2_size /= frequencySamples.size();
     metadata.subchunk2_size *= selectedSamples.size();
     metadata.chunk_size = 36 + metadata.subchunk2_size;
-    WaveFileDataSource<short> *dataExportPtr = new WaveFileDataSource<short>(metadata);
+    WaveFileDataSource<short> *dataExportPtr = new WaveFileDataSource<short>(metadata, singleSampleLength);
     for (auto it = selectedSamples.begin(); it != selectedSamples.end(); it++) {
         FrequencySample<short> *sample = frequencySamples.at(*it);
         dataExportPtr->addSample(fft->reverseTransform(*sample));

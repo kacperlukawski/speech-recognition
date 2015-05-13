@@ -21,15 +21,23 @@ namespace speech {
             /**
              * Projects given sample into feature space. Each vector needs to have
              * exactly same size, equal to dimension of the feature space.
+             *
              * @return the projection of vector in a feature space
              */
             virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample) = 0;
 
             /**
-             * Serializes the vectorizer into given stream
+             * Serializes the vectorizer into given stream.
              * @param out output stream
              */
             virtual void serialize(std::ostream &out) const = 0;
+
+            /**
+             * Gets the size of the output vector produced by the vectorizer.
+             *
+             * @return size of the produced vector
+             */
+            virtual int getVectorSize() const = 0;
         };
 
     }

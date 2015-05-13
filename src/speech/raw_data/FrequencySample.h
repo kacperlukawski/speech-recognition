@@ -61,6 +61,7 @@ namespace speech {
 
             /**
              * Get the frequency stored on given index of this sample.
+             * @param index position in the array of values
              *
              * @return frequency in Hz
              */
@@ -74,6 +75,17 @@ namespace speech {
 
                 return getMinFrequency() * index;
             }
+
+            /**
+             * Get the index which stores at most given frequency.
+             * @param frequency frequency in Hz
+             *
+             * @return index in the array of values
+             */
+            inline int getFrequencyIndex(double frequency) {
+                return (int) (frequency / getMinFrequency());
+            }
+
         };
 
     }

@@ -46,5 +46,10 @@ void speech::vectorizer::MaxFrequencyVectorizer<FrameType>::serialize(std::ostre
     out.write((char const *) &n, sizeof(n));
 }
 
+template<typename FrameType>
+int speech::vectorizer::MaxFrequencyVectorizer<FrameType>::getVectorSize() const {
+    return this->n;
+}
+
 template
 class speech::vectorizer::MaxFrequencyVectorizer<short int>;

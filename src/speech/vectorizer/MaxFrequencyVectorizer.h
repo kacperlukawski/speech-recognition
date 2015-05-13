@@ -29,6 +29,9 @@ namespace speech {
 
             virtual void serialize(std::ostream &out) const override;
 
+
+            virtual int getVectorSize() const;
+
         private:
             int n;
 

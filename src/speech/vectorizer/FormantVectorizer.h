@@ -25,9 +25,13 @@ namespace speech {
 
             FormantVectorizer(std::istream &in);
 
+            FormantVectorizer();
+
             virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample);
 
             virtual void serialize(std::ostream &out) const;
+
+            virtual int getVectorSize() const;
         };
 
     }

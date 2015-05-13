@@ -34,9 +34,11 @@ using namespace speech::transform;
 
 #include "speech/vectorizer/IVectorizer.h"
 #include "speech/vectorizer/MaxFrequencyVectorizer.h"
+#include "speech/vectorizer/FormantVectorizer.h"
 
 using speech::vectorizer::IVectorizer;
 using speech::vectorizer::MaxFrequencyVectorizer;
+using speech::vectorizer::FormantVectorizer;
 
 //
 // Overloads the << operator for std::valarray to have a simple method
@@ -89,7 +91,6 @@ std::vector<char> getUniqueLetters(std::vector<std::string> &transcriptions) {
 //
 int main(int argc, char **argv) {
     const int singleSampleLength = 20;          // length of the DataSample in milliseconds
-    const int singleDataVectorDimension = 80;   // dimension of the vector describing single sample
     const int numberOfPhonems = 3;              // number of clusters used by the clustering method
 
     // @todo: list should be more dynamic, but it's not necessary now
@@ -112,9 +113,10 @@ int main(int argc, char **argv) {
     std::vector<char> letters = getUniqueLetters(transcriptions);
 
     shared_ptr<IVectorizer<short>> vectorizerPtr = shared_ptr<IVectorizer<short>>(
-            new MaxFrequencyVectorizer<short>(singleDataVectorDimension));
+//            new MaxFrequencyVectorizer<short>(singleDataVectorDimension));
+              new FormantVectorizer<short>());
     shared_ptr<IClusteringMethod> clusteringMethodPtr = shared_ptr<IClusteringMethod>(
-            new KMeans(numberOfPhonems, singleDataVectorDimension));
+            new KMeans(numberOfPhonems, vectorizerPtr->getVectorSize()));
     shared_ptr<ISpellingTranscription> spellingMethodPtr = shared_ptr<ISpellingTranscription>(
             new HMM(numberOfPhonems, letters));
     LanguageModel<short> languageModel(vectorizerPtr, clusteringMethodPtr, spellingMethodPtr);

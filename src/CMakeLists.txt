@@ -1,7 +1,6 @@
 # add the executable "Main"
 add_executable(
     Main
-        main.cpp
         speech/LanguageModel.cpp
         speech/raw_data/DataSample.cpp
         speech/raw_data/FrequencySample.cpp
@@ -16,12 +15,12 @@ add_executable(
         speech/vectorizer/FormantVectorizer.cpp
         speech/metric/EuclideanDistance.cpp
         speech/detector/NaiveSilenceDetector.cpp
+        main.cpp
 )
 
 # add the executable "Filters"
 add_executable(
     Filters
-        filters_test.cpp
         speech/LanguageModel.cpp
         speech/raw_data/DataSample.cpp
         speech/raw_data/FrequencySample.cpp
@@ -36,4 +35,5 @@ add_executable(
         speech/vectorizer/FormantVectorizer.cpp
         speech/metric/EuclideanDistance.cpp
         speech/detector/NaiveSilenceDetector.cpp
+        filters_test.cpp
 )

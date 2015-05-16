@@ -30,5 +30,5 @@
 # CMake directory
 CMakeFiles
 
-# Other entries
-dataset/env
+dataset/people.txt
+dataset/env/*

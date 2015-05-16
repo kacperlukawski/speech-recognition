@@ -31,4 +31,4 @@
 CMakeFiles
 
 dataset/people.txt
-dataset/env
+dataset/env/*

@@ -56,4 +56,4 @@ add_executable(
         speech/metric/EuclideanDistance.cpp
         speech/detector/NaiveSilenceDetector.cpp
         harmonics.cpp
-)
+speech/vectorizer/ThirdsPowerVectorizer.cpp speech/vectorizer/ThirdsPowerVectorizer.h)

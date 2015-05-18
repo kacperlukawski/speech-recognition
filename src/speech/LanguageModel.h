@@ -18,6 +18,7 @@ using speech::raw_data::DataSource;
 #include "vectorizer/IVectorizer.h"
 #include "vectorizer/MaxFrequencyVectorizer.h"
 #include "vectorizer/FormantVectorizer.h"
+#include "vectorizer/ThirdsPowerVectorizer.h"
 
 using speech::vectorizer::IVectorizer;
 

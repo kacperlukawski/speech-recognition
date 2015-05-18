@@ -19,6 +19,10 @@ speech::LanguageModel<FrameType>::LanguageModel(std::istream &in) {
             break;
         case vectorizer::FormantVectorizer<FrameType>::TYPE_IDENTIFIER:
             vectorizer = std::shared_ptr<IVectorizer<FrameType>>(new vectorizer::FormantVectorizer<FrameType>(in));
+            break;
+        case vectorizer::ThirdsPowerVectorizer<FrameType>::TYPE_IDENTIFIER:
+            vectorizer = std::shared_ptr<IVectorizer<FrameType>>(new vectorizer::ThirdsPowerVectorizer<FrameType>(in));
+            break;
         default:
             throw exception::NullptrSerializationException();
     }
@@ -113,10 +117,10 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
             int label = clusteringMethod->predict(vector);
             predictedLabels.push_back(label);
 
-//            std::cout << label << " ";
+            std::cout << label << ' ';
         }
 
-//        std::cout << " (size = " << predictedLabels.size() << ")" << std::endl;
+        std::cout << " (size = " << predictedLabels.size() << ")" << std::endl;
 
         spellingTranscription->fit(predictedLabels, transcription);
         predictedLabels.clear();
@@ -144,20 +148,16 @@ std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dat
 
         std::valarray<double> vector = vectorizer->vectorize(frequencySample);
         int label = clusteringMethod->predict(vector);
-//        if (predictedLabels.size() > 0 && predictedLabels.back() == label) {
-//            continue;
-//        }
         predictedLabels.push_back(label);
 
-        std::cout << label << " ";
+        std::cout << label << ' ';
     }
 
     std::cout << " (size = " << predictedLabels.size() << ")" << std::endl;
 
     delete fft;
 
-    // TODO: add spelling transcription usage (it is not necessary to use it, as long as we do not have correct formant seeking)
-    return ""; //spellingTranscription->predict(predictedLabels);
+    return spellingTranscription->predict(predictedLabels);
 }
 
 /**

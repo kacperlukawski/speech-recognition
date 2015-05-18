@@ -33,17 +33,27 @@ std::valarray<double> speech::vectorizer::FormantVectorizer<FrameType>::vectoriz
     int pos2350Hz = sample.getFrequencyIndex(2350.0);
     int pos4000Hz = sample.getFrequencyIndex(4000.0);
 
+    // F3 boundaries
+    int pos5000Hz = sample.getFrequencyIndex(5000.0);
+    int pos15000Hz = sample.getFrequencyIndex(15000.0);
+
     double *amplitudePtr = sample.getAmplitude().get();
     double *f1FormantPos = std::max_element(amplitudePtr + pos300Hz, amplitudePtr + pos1000Hz);
     double *f2FormantPos = std::max_element(amplitudePtr + pos850Hz, amplitudePtr + pos2500Hz);
     double *f3FormantPos = std::max_element(amplitudePtr + pos2350Hz, amplitudePtr + pos4000Hz);
+    double *f4FormantPos = std::max_element(amplitudePtr + pos5000Hz, amplitudePtr + pos15000Hz);
 
     std::valarray<double> result(0.0, 4);
 //    result[0] = *f1FormantPos;
 //    result[1] = *f2FormantPos;
-    result[1] = sample.getIndexFrequency(f1FormantPos - amplitudePtr);
-    result[2] = sample.getIndexFrequency(f2FormantPos - amplitudePtr);
-    result[3] = sample.getIndexFrequency(f3FormantPos - amplitudePtr);
+    if (*f1FormantPos > 0.25)
+        result[0] = (sample.getIndexFrequency(f1FormantPos - amplitudePtr));
+    if (*f2FormantPos > 0.25)
+        result[1] = (sample.getIndexFrequency(f2FormantPos - amplitudePtr));
+    if (*f3FormantPos > 0.25)
+        result[2] = (sample.getIndexFrequency(f3FormantPos - amplitudePtr));
+    if (*f4FormantPos > 0.25)
+        result[3] = (sample.getIndexFrequency(f4FormantPos - amplitudePtr));
 
 //    std::cout << result[2] << " " << result[3] << std::endl;
 

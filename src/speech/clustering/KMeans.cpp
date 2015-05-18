@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+#include <iterator>
 
 speech::clustering::KMeans::KMeans(std::istream &in) {
     unsigned long centroidsNb = 0;
@@ -116,8 +117,9 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
     }
 
     std::cout << "Centroids: " << std::endl;
+    auto centroidsBegin = centroids->begin();
     for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
-        std::cout << "[ ";
+        std::cout << (centroidsIt - centroidsBegin) << ". [ ";
         for (int i = 0; i < dimension; i++) {
             std::cout << (*centroidsIt)[i] << "\t";
         }

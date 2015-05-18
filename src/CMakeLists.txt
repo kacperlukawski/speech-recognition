@@ -37,3 +37,23 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         filters_test.cpp
 )
+
+# add the executable "Harmonics"
+add_executable(
+    Harmonics
+        speech/LanguageModel.cpp
+        speech/raw_data/DataSample.cpp
+        speech/raw_data/FrequencySample.cpp
+        speech/raw_data/WaveFileDataSource.cpp
+        speech/raw_data/DataSource.cpp
+        speech/clustering/KMeans.cpp
+        speech/spelling/HMM.cpp
+        speech/spelling/SpellingAdjuster.cpp
+        speech/transform/FastFourierTransform.cpp
+        speech/raw_data/filtering/MaxFrequenciesFilter.cpp
+        speech/vectorizer/MaxFrequencyVectorizer.cpp
+        speech/vectorizer/FormantVectorizer.cpp
+        speech/metric/EuclideanDistance.cpp
+        speech/detector/NaiveSilenceDetector.cpp
+        harmonics.cpp
+)

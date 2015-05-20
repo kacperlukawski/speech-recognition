@@ -5,6 +5,7 @@
 
 #include "../metric/IMetric.h"
 #include "../metric/EuclideanDistance.h"
+#include "../metric/MaximumDistance.h"
 
 #include <ostream>
 
@@ -74,7 +75,7 @@ namespace speech {
             /** List of centroids */
             std::vector<valarray<double>> *centroids;
             /** Distance function */
-            speech::metric::EuclideanDistance metric = speech::metric::EuclideanDistance();
+            speech::metric::IMetric* metric = new speech::metric::MaximumDistance();
         };
 
     }

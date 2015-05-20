@@ -15,6 +15,7 @@ speech::raw_data::FrequencySample<FrameType>::FrequencySample(int _size, int _le
 template<typename FrameType>
 speech::raw_data::FrequencySample<FrameType>::FrequencySample(const FrequencySample<FrameType> &ref) {
     size = ref.size;
+    length = ref.length;
     amplitude = std::shared_ptr<double>(new double[size], std::default_delete<double[]>());
     phase = std::shared_ptr<double>(new double[size], std::default_delete<double[]>());
 
@@ -39,12 +40,12 @@ int speech::raw_data::FrequencySample<FrameType>::getLength() {
 }
 
 template<typename FrameType>
-std::shared_ptr<double> speech::raw_data::FrequencySample<FrameType>::getAmplitude() {
+std::shared_ptr<double> speech::raw_data::FrequencySample<FrameType>::getAmplitude() const {
     return amplitude;
 }
 
 template<typename FrameType>
-std::shared_ptr<double> speech::raw_data::FrequencySample<FrameType>::getPhase() {
+std::shared_ptr<double> speech::raw_data::FrequencySample<FrameType>::getPhase() const {
     return phase;
 }
 

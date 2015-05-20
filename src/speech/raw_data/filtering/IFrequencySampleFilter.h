@@ -12,7 +12,7 @@ namespace speech {
         namespace filtering {
 
             template<typename FrameType>
-            class IFilter {
+            class IFrequencySampleFilter {
             public:
                 virtual FrequencySample<FrameType> filter(const FrequencySample<FrameType> &sample) = 0;
             };

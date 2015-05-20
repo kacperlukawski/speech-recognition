@@ -12,8 +12,11 @@ using std::shared_ptr;
 #include "exception/NullptrSerializationException.h"
 
 #include "raw_data/DataSource.h"
+#include "raw_data/filtering/IDataSampleFilter.h"
+#include "raw_data/filtering/EmphasisFilter.h"
 
 using speech::raw_data::DataSource;
+using speech::raw_data::filtering::IDataSampleFilter;
 
 #include "vectorizer/IVectorizer.h"
 #include "vectorizer/MaxFrequencyVectorizer.h"
@@ -45,6 +48,8 @@ namespace speech {
      * from the clustering method and a method which converts
      * labeled signals into textual representation (we call it
      * spelling transcription)
+     *
+     * @todo add methods allowing to add both data sample and frequency sample filters
      */
     template<typename FrameType>
     class LanguageModel : public IStreamSerializable {
@@ -79,6 +84,8 @@ namespace speech {
     private:
         shared_ptr<IDetector<FrameType>> silenceDetector =
                 shared_ptr<IDetector<FrameType>>(new NaiveSilenceDetector<FrameType>());
+        IDataSampleFilter<FrameType>* dataSampleFilter =
+                new speech::raw_data::filtering::EmphasisFilter<FrameType>(0.97); // TODO: remove all hardcoded things
     };
 }
 

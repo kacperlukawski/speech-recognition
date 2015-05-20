@@ -4,8 +4,8 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(SPEECH_RECOGNITION)
 
-# enable c++11 standard
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# enable c++11 standard and pthread library
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
 # set "build" as a directory for executable files
 set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)
@@ -16,5 +16,6 @@ enable_testing()
 add_subdirectory(lib/gtest-1.7.0)
 
 # add directories to be used in compilation
+add_subdirectory(lib/vl)
 add_subdirectory(tests)
 add_subdirectory(src)

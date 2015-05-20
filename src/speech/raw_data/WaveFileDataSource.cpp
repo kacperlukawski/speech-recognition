@@ -130,7 +130,8 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    return meta_data->byte_rate * sampleLength / 1000;
+    // TODO: fix wrong Fourier transform when buffer size is not a power of 2
+    return 2048;//meta_data->byte_rate * sampleLength / 1000;
 }
 
 template

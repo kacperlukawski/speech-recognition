@@ -53,6 +53,9 @@ speech::LanguageModel<FrameType>::LanguageModel(shared_ptr<IVectorizer<FrameType
         : vectorizer(vectorizer), clusteringMethod(clusteringMethod), spellingTranscription(spellingTranscription) {
 }
 
+// TODO: remove
+std::ostream &operator<<(std::ostream &out, std::valarray<double> vector);
+
 template<typename FrameType>
 void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSources,
                                            vector<std::string> &transcriptions) {
@@ -69,19 +72,34 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
         auto begin = dataSource.getSamplesIteratorBegin();
         auto end = dataSource.getSamplesIteratorEnd();
 
+        vector<FrequencySample<FrameType>> samples;
         for (auto innerIt = begin; innerIt != end; innerIt++) {
-            FrequencySample<FrameType> frequencySample = fft->transform(*innerIt);
+            DataSample<short> dataSample = *innerIt; // dataSampleFilter->filter(*innerIt); // filtering data samples
+            FrequencySample<FrameType> frequencySample = fft->transform(dataSample);
             if (frequencySample.getSize() == 0) {
                 continue;
             }
+
+//            if (silenceDetector->detected(frequencySample)) {
+//                continue;
+//            }
+
+            samples.push_back(frequencySample);
 
 //            std::cout << "min = " << frequencySample.getMinFrequency() << "Hz "
 //                      << "max = " << frequencySample.getMaxFrequency() << "Hz "
 //                      << "size = " << frequencySample.getSize() << std::endl;
 
-            std::valarray<double> vector = vectorizer->vectorize(frequencySample);
-            vectors.push_back(vector);
+//            std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+//            vectors.push_back(vector);
         }
+
+        vector<valarray<double>> samplesVectors = vectorizer->vectorize(samples);
+//        for (valarray<double>& vector : samplesVectors) {
+//            std::cout << std::endl << "v = " << vector << std::endl;
+//        }
+
+        vectors.insert(vectors.end(), samplesVectors.begin(), samplesVectors.end());
     }
 
     // fit the clustering method to divide the dataset into groups
@@ -100,23 +118,37 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
         auto end = dataSource.getSamplesIteratorEnd();
 
         std::vector<int> predictedLabels;
+
+        vector<FrequencySample<FrameType>> samples;
         for (auto innerIt = begin; innerIt != end; innerIt++) {
-            FrequencySample<FrameType> frequencySample = fft->transform(*innerIt);
+            DataSample<short> dataSample = *innerIt; // dataSampleFilter->filter(*innerIt); // filtering data samples
+            FrequencySample<FrameType> frequencySample = fft->transform(dataSample);
             if (frequencySample.getSize() == 0) {
                 continue;
             }
 
-            if (silenceDetector->detected(frequencySample)) {
-                // don't teach the classifier on the silence
-                // since it may affect the centroids used
-                // in clustering phonems
-                continue;
-            }
+//            if (silenceDetector->detected(frequencySample)) {
+//                // don't teach the classifier on the silence
+//                // since it may affect the centroids used
+//                // in clustering phonems
+//                continue;
+//            }
 
-            std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+            samples.push_back(frequencySample);
+
+//            std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+//            int label = clusteringMethod->predict(vector);
+//            predictedLabels.push_back(label);
+//
+//            std::cout << label << ' ';
+        }
+
+        vector<valarray<double>> samplesVectors = vectorizer->vectorize(samples);
+        for (valarray<double>& vector : samplesVectors) {
+//            std::cout << std::endl << "v = " << vector << std::endl;
+
             int label = clusteringMethod->predict(vector);
             predictedLabels.push_back(label);
-
             std::cout << label << ' ';
         }
 
@@ -133,23 +165,40 @@ template<typename FrameType>
 std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dataSource) {
     IFrequencyTransform<short> *fft = new FastFourierTransform<FrameType>();
 
-    std::vector<int> predictedLabels;
+    vector<FrequencySample<FrameType>> samples;
     auto begin = dataSource.getSamplesIteratorBegin();
     auto end = dataSource.getSamplesIteratorEnd();
     for (auto innerIt = begin; innerIt != end; innerIt++) {
-        FrequencySample<short> frequencySample = fft->transform(*innerIt);
+        DataSample<short> dataSample = *innerIt; // dataSampleFilter->filter(*innerIt); // filtering data samples
+        FrequencySample<short> frequencySample = fft->transform(dataSample);
         if (frequencySample.getSize() == 0) {
             continue;
         }
 
-        if (silenceDetector->detected(frequencySample)) {
-            continue;
-        }
+//        if (silenceDetector->detected(frequencySample)) {
+//            continue;
+//        }
 
-        std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+        samples.push_back(frequencySample);
+
+//        std::valarray<double> vector = vectorizer->vectorize(frequencySample);
+//        int label = clusteringMethod->predict(vector);
+//        predictedLabels.push_back(label);
+//
+//        std::cout << label << ' ';
+    }
+
+//    std::cout << " (size = " << predictedLabels.size() << ")" << std::endl;
+
+    vector<int> predictedLabels;
+    vector<valarray<double>> samplesVectors = vectorizer->vectorize(samples);
+    for (valarray<double>& vector : samplesVectors) {
+//        for (valarray<double>& vector : samplesVectors) {
+//            std::cout << std::endl << "v = " << vector << std::endl;
+//        }
+
         int label = clusteringMethod->predict(vector);
         predictedLabels.push_back(label);
-
         std::cout << label << ' ';
     }
 

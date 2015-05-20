@@ -37,7 +37,7 @@ std::valarray<double> speech::vectorizer::ThirdsPowerVectorizer<FrameType>::vect
         result[i] = getThirdEnergy(amplitudePtr, lowerIndex, upperIndex);
     }
 
-//    std::cout << result << std::endl;
+    std::cout << result << std::endl;
 
     return result;
 }
@@ -50,13 +50,13 @@ double speech::vectorizer::ThirdsPowerVectorizer<FrameType>::getThirdEnergy(doub
         thirdEnergy += pow(*(amplitudePtr + j), 2.0);
     }
 
-    thirdEnergy /= upperIndex - lowerIndex + 1;
+//    thirdEnergy /= upperIndex - lowerIndex + 1;
     return thirdEnergy;
 }
 
 template<typename FrameType>
 void speech::vectorizer::ThirdsPowerVectorizer<FrameType>::serialize(std::ostream &out) const {
-
+    // TODO: implement
 }
 
 template<typename FrameType>

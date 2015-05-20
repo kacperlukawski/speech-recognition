@@ -1,10 +1,9 @@
 #include "MaxFrequenciesFilter.h"
 
+#include <map>
 #include <cmath>
 #include <vector>
 #include <algorithm>
-
-// TODO: remove copy constructor of FrequencySample to avoid copying the values
 
 template<typename FrameType>
 speech::raw_data::filtering::MaxFrequenciesFilter<FrameType>::MaxFrequenciesFilter(int n) {
@@ -14,50 +13,44 @@ speech::raw_data::filtering::MaxFrequenciesFilter<FrameType>::MaxFrequenciesFilt
 template<typename FrameType>
 FrequencySample<FrameType> speech::raw_data::filtering::MaxFrequenciesFilter<FrameType>::filter(const FrequencySample<FrameType> &sample) {
     FrequencySample<FrameType> result(sample);
-//    double threshold = getNthMaxValue(result);
-//
-//    double *amplitudePtr = result.getAmplitude().get();
-//    for (int i = 0; i < result.getSize(); i++) {
-//        if (fabs(amplitudePtr[i]) < threshold) {
-//            amplitudePtr[i] = 0.0;
-//            // TODO: it may be good to zero the phase
-//        }
-//    }
+
+    int sampleSize = result.getSize();
 
     double *amplitudePtr = result.getAmplitude().get();
-    for (int i = 1; i < result.getSize() - 1; i++) {
-        if (amplitudePtr[i] > amplitudePtr[i - 1] && amplitudePtr[i] > amplitudePtr[i + 1]) {
-            // we have a local maximum, because both left and right values are
-            // lower than current value
+    double *phasePtr = result.getPhase().get();
+
+    std::map<int, double> maximas;
+    for (int i = 1; i < (sampleSize / 2) - 1; i++) {
+        if (*(amplitudePtr + i) > *(amplitudePtr + i - 1) && *(amplitudePtr + i) > *(amplitudePtr + i + 1)) {
+            // this is a local maximum of the amplitude
+            maximas.insert(std::pair<int, double>(i, *(amplitudePtr + i)));
+        }
+    }
+
+    while (maximas.size() > n) {
+        auto minPos = std::min_element(maximas.begin(),
+                                       maximas.end(),
+                                       [](std::map<int, double>::value_type& l,
+                                          std::map<int, double>::value_type& r) -> bool {
+                                           return l.second < r.second;
+                                       });
+        maximas.erase(minPos);
+    }
+
+    for (int i = 0; i < sampleSize / 2; i++) {
+        if (maximas.find(i) == maximas.end()) {
+            *(amplitudePtr + (sampleSize - i - 1)) = 0.0;
+            *(phasePtr + (sampleSize - i - 1)) = 0.0;
+            *(amplitudePtr + i) = 0.0;
+            *(phasePtr + i) = 0.0;
             continue;
         }
 
-        amplitudePtr[i] = 0.0;
+        *(phasePtr + (sampleSize - i - 1)) = 0.0;
+        *(phasePtr + i) = 0.0;
     }
 
     return result;
-}
-
-template<typename FrameType>
-double speech::raw_data::filtering::MaxFrequenciesFilter<FrameType>::getNthMaxValue(FrequencySample<FrameType> &sample) {
-    std::vector<double> biggestElements;
-
-    double *amplitudePtr = sample.getAmplitude().get();
-    for (int i = 0; i < sample.getSize(); i++) {
-        double value = fabs(amplitudePtr[i]);
-
-        if (biggestElements.size() < 2 * n) { // FrequencySample has duplicates (see: Nyquist frequency)
-            biggestElements.push_back(value);
-            continue;
-        }
-
-        auto minPosition = std::min_element(biggestElements.begin(), biggestElements.end());
-        if (value > *minPosition) {
-            *minPosition = value;
-        }
-    }
-
-    return *(std::min_element(biggestElements.begin(), biggestElements.end()));
 }
 
 template

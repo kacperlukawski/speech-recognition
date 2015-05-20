@@ -36,22 +36,12 @@ using namespace speech::transform;
 #include "speech/vectorizer/IVectorizer.h"
 #include "speech/vectorizer/MaxFrequencyVectorizer.h"
 #include "speech/vectorizer/FormantVectorizer.h"
+#include "speech/vectorizer/ThirdsPowerVectorizer.h"
 
 using speech::vectorizer::IVectorizer;
 using speech::vectorizer::MaxFrequencyVectorizer;
 using speech::vectorizer::FormantVectorizer;
-
-//
-// Overloads the << operator for std::valarray to have a simple method
-// to display current values of vectors.
-//
-std::ostream &operator<<(std::ostream &out, std::valarray<double> vector) {
-    for (int i = 0; i < vector.size(); i++) {
-        out << vector[i] << " ";
-    }
-
-    return out;
-}
+using speech::vectorizer::ThirdsPowerVectorizer;
 
 //
 // Gets the vector containing all letters occuring in given collection
@@ -146,7 +136,8 @@ int main(int argc, char **argv) {
     std::vector<char> letters = getUniqueLetters(transcriptions);
 
     shared_ptr<IVectorizer<short>> vectorizerPtr = shared_ptr<IVectorizer<short>>(
-            new FormantVectorizer<short>());
+//            new FormantVectorizer<short>());
+            new ThirdsPowerVectorizer<short>());
     shared_ptr<IClusteringMethod> clusteringMethodPtr = shared_ptr<IClusteringMethod>(
             new KMeans(numberOfPhonems, vectorizerPtr->getVectorSize()));
     shared_ptr<ISpellingTranscription> spellingMethodPtr = shared_ptr<ISpellingTranscription>(

@@ -30,9 +30,9 @@ namespace speech {
 
             int getLength();
 
-            std::shared_ptr<double> getAmplitude();
+            std::shared_ptr<double> getAmplitude() const;
 
-            std::shared_ptr<double> getPhase();
+            std::shared_ptr<double> getPhase() const;
 
             /**
              * Get minimal frequency which can be represented by this sample.
@@ -43,7 +43,7 @@ namespace speech {
              *
              * @return frequency in Hz
              */
-            inline double getMinFrequency() {
+            inline double getMinFrequency() const {
                 return 1 / (length / 1000.0);
             }
 
@@ -55,7 +55,7 @@ namespace speech {
              *
              * @return frequency in Hz
              */
-            inline double getMaxFrequency() {
+            inline double getMaxFrequency() const {
                 return size / (2.0 * length / 1000.0);
             }
 
@@ -65,7 +65,7 @@ namespace speech {
              *
              * @return frequency in Hz
              */
-            inline double getIndexFrequency(int index) {
+            inline double getIndexFrequency(int index) const {
                 int halfSize = size / 2;
                 if (index > halfSize) {
                     // sample has duplicates of frequencies, so let
@@ -82,7 +82,7 @@ namespace speech {
              *
              * @return index in the array of values
              */
-            inline int getFrequencyIndex(double frequency) {
+            inline int getFrequencyIndex(double frequency) const {
                 return (int) (frequency / getMinFrequency());
             }
 

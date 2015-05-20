@@ -1,5 +1,42 @@
 add_library(
     VLFeat
+        aib.c
+        array.c
+        covdet.c
+        dsift.c
+        fisher.c
+        float.th
+        generic.c
+        getopt_long.c
+        gmm.c
+        hikmeans.c
+        hog.c
+        homkermap.c
         host.c
+        ikmeans.c
+        ikmeans_elkan.tc
+        ikmeans_init.tc
+        imopv.c
+        imopv_sse2.c
+        kdtree.c
+        kmeans.c
+        lbp.c
+        liop.c
+        mathop.c
+        mathop_avx.c
+        mathop_sse2.c
+        mser.c
+        pgm.c
+        quickshift.c
         random.c
-        generic.c)
+        rodrigues.c
+        scalespace.c
+        sift.c
+        slic.c
+        stringop.c
+        svm.c
+        svmdataset.c
+        vlad.c)
+
+# disables AVX due to the lack of support for it by the compiler
+add_definitions(-DVL_DISABLE_AVX)

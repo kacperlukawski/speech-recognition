@@ -86,7 +86,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
         }
 
         this->samples->push_back(DataSample<FrameType>(mono.second, sampleLength, mono.first));
-        buffer.reset();
+        buffer.reset(); // TODO: use offset and allow to change the windowing
     }
 
     if (convertToMono && meta_data->num_channels > 1) {
@@ -131,7 +131,7 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
     // TODO: fix wrong Fourier transform when buffer size is not a power of 2
-    return 2048;//meta_data->byte_rate * sampleLength / 1000;
+    return 1024; //meta_data->byte_rate * sampleLength / 1000;
 }
 
 template

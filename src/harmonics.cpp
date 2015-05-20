@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
             shared_ptr<IVectorizer<short>>(new MFCCVectorizer<short>(26, 12));
     shared_ptr<IClusteringMethod> clusteringMethod =
 //            shared_ptr<IClusteringMethod>(new KMeans(phonemesNumber, vectorizer->getVectorSize()));
-            shared_ptr<IClusteringMethod>(new GaussianMixtureModel());
+            shared_ptr<IClusteringMethod>(new GaussianMixtureModel(phonemesNumber, vectorizer->getVectorSize()));
     shared_ptr<ISpellingTranscription> spellingTranscription =
             shared_ptr<ISpellingTranscription>(new HMM(4, 10));
     LanguageModel<short> languageModel(vectorizer,

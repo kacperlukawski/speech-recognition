@@ -5,8 +5,8 @@
 #include "GaussianMixtureModel.h"
 
 speech::clustering::GaussianMixtureModel::GaussianMixtureModel(std::istream &in) {
-    in.read((char *) &this->nbClusters, sizeof(double));
-    in.read((char *) &this->dimension, sizeof(double));
+    in.read((char *) &this->nbClusters, sizeof(int));
+    in.read((char *) &this->dimension, sizeof(int));
 
     this->means = new double[this->nbClusters * this->dimension];
     this->covariances = new double[this->nbClusters * this->dimension];
@@ -40,17 +40,12 @@ speech::clustering::GaussianMixtureModel::GaussianMixtureModel(int nbClusters, i
 
 speech::clustering::GaussianMixtureModel::~GaussianMixtureModel() {
     vl_gmm_reset(this->gmm);
-
-    delete[] this->means;
-    delete[] this->covariances;
-    delete[] this->priors;
-    delete[] this->posteriors;
 }
 
 void speech::clustering::GaussianMixtureModel::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
     int nbVectors = vectors.size();
     double * data = this->createData(vectors);
-    vl_gmm_cluster(this->gmm, data, nbVectors); // TODO: check the covariances matrix, because it produces some -nan
+    vl_gmm_cluster(this->gmm, data, nbVectors);
     delete[] data;
 
     this->means = (double *) vl_gmm_get_means(this->gmm);
@@ -86,9 +81,10 @@ int speech::clustering::GaussianMixtureModel::predict(const valarray<double> &ve
 }
 
 void speech::clustering::GaussianMixtureModel::serialize(std::ostream &out) const {
+    uint32_t type = TYPE_IDENTIFIER;
+    out.write((char const *) &type, sizeof(type));
     out.write((char const *) &this->nbClusters, sizeof(this->nbClusters));
     out.write((char const *) &this->dimension, sizeof(this->dimension));
-//    out.write((char const *) this->gmm, sizeof(VlGMM)); TODO: probably it is not necessary to serialize it
     out.write((char const *) this->means, sizeof(double) * this->nbClusters * this->dimension);
     out.write((char const *) this->covariances, sizeof(double) * this->nbClusters * this->dimension);
     out.write((char const *) this->priors, sizeof(double) * this->nbClusters);

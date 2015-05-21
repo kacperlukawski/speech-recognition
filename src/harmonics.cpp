@@ -72,12 +72,27 @@ int main(int argc, char **argv) {
 
     languageModel.fit(dataSources, transcriptions);
 
-    // TODO: check the vectorizer, because it returns different values after using it for a set of vectors
-
     std::cout << std::endl << "Predictions:" << std::endl;
     languageModel.predict(dataSources[0]);
     languageModel.predict(dataSources[1]);
     languageModel.predict(dataSources[2]);
+
+    try {
+        std::ofstream outputFile("model_gmm.lm");
+        languageModel.serialize(outputFile);
+        outputFile.close();
+
+        std::ifstream inputFile("model_gmm.lm");
+        LanguageModel<short> languageModelCopy(inputFile);
+        inputFile.close();
+
+        std::cout << std::endl << "Copy predictions:" << std::endl;
+        languageModelCopy.predict(dataSources[0]);
+        languageModelCopy.predict(dataSources[1]);
+        languageModelCopy.predict(dataSources[2]);
+    } catch (speech::exception::NullptrSerializationException& ex) {
+        std::cerr << "Serialization error: " << ex.what() << std::endl;
+    }
 
     return 0;
 }

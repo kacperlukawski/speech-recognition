@@ -5,6 +5,7 @@
 #ifndef SPEECH_RECOGNITION_MFCCVECTORIZER_H
 #define SPEECH_RECOGNITION_MFCCVECTORIZER_H
 
+#include <istream>
 #include <cmath>
 
 #include "../transform/IFrequencyTransform.h"
@@ -27,6 +28,20 @@ namespace speech {
         template<typename FrameType>
         class MFCCVectorizer : public IVectorizer<FrameType> {
         public:
+            /** Globally unique type identifier of this vectorizer */
+            static const uint32_t TYPE_IDENTIFIER = 0x00100004;
+
+            /**
+             * Construct the vectorizer from a data stream containing serialized vectorizer
+             * @param in input data stream
+             */
+            MFCCVectorizer(std::istream& in);
+
+            /**
+             * Construct the vectorizer using given number of bins and cepstral coefficients
+             * @param bins number of bins
+             * @param cepstralCoefficientsNumber number of cepstral coefficients
+             */
             MFCCVectorizer(int bins, int cepstralCoefficientsNumber) :
                     bins(bins), cepstralCoefficientsNumber(cepstralCoefficientsNumber) { }
 
@@ -40,7 +55,10 @@ namespace speech {
             virtual int getVectorSize() const;
 
         private:
+            /** Number of mel frequency bins */
             int bins;
+
+            /** Number of used cepstral coefficients */
             int cepstralCoefficientsNumber;
 
             /**

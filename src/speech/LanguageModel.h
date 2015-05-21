@@ -22,10 +22,12 @@ using speech::raw_data::filtering::IDataSampleFilter;
 #include "vectorizer/MaxFrequencyVectorizer.h"
 #include "vectorizer/FormantVectorizer.h"
 #include "vectorizer/ThirdsPowerVectorizer.h"
+#include "vectorizer/MFCCVectorizer.h"
 
 using speech::vectorizer::IVectorizer;
 
 #include "clustering/KMeans.h"
+#include "clustering/GaussianMixtureModel.h"
 
 #include "transform/IFrequencyTransform.h"
 #include "transform/FastFourierTransform.h"

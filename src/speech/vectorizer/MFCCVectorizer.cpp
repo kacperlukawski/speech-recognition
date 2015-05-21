@@ -7,6 +7,12 @@
 #include "MFCCVectorizer.h"
 
 template<typename FrameType>
+speech::vectorizer::MFCCVectorizer<FrameType>::MFCCVectorizer(std::istream &in) {
+    in.read((char *) &this->bins, sizeof(int));
+    in.read((char *) &this->cepstralCoefficientsNumber, sizeof(int));
+}
+
+template<typename FrameType>
 std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(FrequencySample<FrameType> &sample) {
     std::valarray<double> result(0.0, getVectorSize());
 
@@ -86,7 +92,10 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
 
 template<typename FrameType>
 void speech::vectorizer::MFCCVectorizer<FrameType>::serialize(std::ostream &out) const {
-
+    uint32_t type = TYPE_IDENTIFIER;
+    out.write((char const *) &type, sizeof(type));
+    out.write((char const *) &this->bins, sizeof(int));
+    out.write((char const *) &this->cepstralCoefficientsNumber, sizeof(int));
 }
 
 template<typename FrameType>

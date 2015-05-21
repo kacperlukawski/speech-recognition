@@ -23,6 +23,9 @@ speech::LanguageModel<FrameType>::LanguageModel(std::istream &in) {
         case vectorizer::ThirdsPowerVectorizer<FrameType>::TYPE_IDENTIFIER:
             vectorizer = std::shared_ptr<IVectorizer<FrameType>>(new vectorizer::ThirdsPowerVectorizer<FrameType>(in));
             break;
+        case vectorizer::MFCCVectorizer<FrameType>::TYPE_IDENTIFIER:
+            vectorizer = std::shared_ptr<IVectorizer<FrameType>>(new vectorizer::MFCCVectorizer<FrameType>(in));
+            break;
         default:
             throw exception::NullptrSerializationException();
     }
@@ -31,6 +34,9 @@ speech::LanguageModel<FrameType>::LanguageModel(std::istream &in) {
     switch (clusteringMethodTypeIdentifier) {
         case clustering::KMeans::TYPE_IDENTIFIER:
             clusteringMethod = std::shared_ptr<clustering::IClusteringMethod>(new clustering::KMeans(in));
+            break;
+        case clustering::GaussianMixtureModel::TYPE_IDENTIFIER:
+            clusteringMethod = std::shared_ptr<clustering::IClusteringMethod>(new clustering::GaussianMixtureModel(in));
             break;
         default:
             throw exception::NullptrSerializationException();

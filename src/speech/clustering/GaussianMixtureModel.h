@@ -24,6 +24,8 @@ namespace speech {
         class GaussianMixtureModel : public IClusteringMethod {
         public:
 
+            static const uint32_t TYPE_IDENTIFIER = 0x00000002;
+
             /**
              * Creates a Gaussian mixture model from the stream which contains
              * serialized model. All parameters are loaded into the model, which

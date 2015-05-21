@@ -4,11 +4,34 @@
 
 #include "GaussianMixtureModel.h"
 
+speech::clustering::GaussianMixtureModel::GaussianMixtureModel(std::istream &in) {
+    in.read((char *) &this->nbClusters, sizeof(double));
+    in.read((char *) &this->dimension, sizeof(double));
+
+    this->means = new double[this->nbClusters * this->dimension];
+    this->covariances = new double[this->nbClusters * this->dimension];
+    this->priors = new double[this->nbClusters];
+    this->posteriors = new double[this->nbClusters];
+
+    in.read((char *) this->means, sizeof(double) * this->nbClusters * this->dimension);
+    in.read((char *) this->covariances, sizeof(double) * this->nbClusters * this->dimension);
+    in.read((char *) this->priors, sizeof(double) * this->nbClusters);
+    in.read((char *) this->posteriors, sizeof(double) * this->nbClusters);
+    in.read((char *) &this->logLikelihood, sizeof(double));
+
+    this->gmm = vl_gmm_new(VL_TYPE_DOUBLE, this->dimension, this->nbClusters);
+    vl_gmm_set_max_num_iterations(this->gmm, 100);
+    vl_gmm_set_initialization(this->gmm, VlGMMCustom);
+    vl_gmm_set_means(this->gmm, this->means);
+    vl_gmm_set_covariances(this->gmm, this->covariances);
+    vl_gmm_set_priors(this->gmm, this->priors);
+    vl_gmm_set_verbosity(this->gmm, 1);
+}
 
 speech::clustering::GaussianMixtureModel::GaussianMixtureModel(int nbClusters, int dimension) {
     this->nbClusters = nbClusters;
     this->dimension = dimension;
-    this->gmm = vl_gmm_new(VL_TYPE_DOUBLE, dimension, nbClusters);
+    this->gmm = vl_gmm_new(VL_TYPE_DOUBLE, this->dimension, this->nbClusters);
     vl_gmm_set_max_num_iterations(this->gmm, 100); // max number of EM iterations TODO: allow to change that
     vl_gmm_set_initialization(this->gmm, VlGMMRand);
     vl_gmm_set_verbosity(this->gmm, 1); // enables verbosity
@@ -17,7 +40,11 @@ speech::clustering::GaussianMixtureModel::GaussianMixtureModel(int nbClusters, i
 
 speech::clustering::GaussianMixtureModel::~GaussianMixtureModel() {
     vl_gmm_reset(this->gmm);
-    // TODO: add means, convariances, priors and posteriors removal
+
+    delete[] this->means;
+    delete[] this->covariances;
+    delete[] this->priors;
+    delete[] this->posteriors;
 }
 
 void speech::clustering::GaussianMixtureModel::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
@@ -59,7 +86,14 @@ int speech::clustering::GaussianMixtureModel::predict(const valarray<double> &ve
 }
 
 void speech::clustering::GaussianMixtureModel::serialize(std::ostream &out) const {
-    // TODO: add model serialization
+    out.write((char const *) &this->nbClusters, sizeof(this->nbClusters));
+    out.write((char const *) &this->dimension, sizeof(this->dimension));
+//    out.write((char const *) this->gmm, sizeof(VlGMM)); TODO: probably it is not necessary to serialize it
+    out.write((char const *) this->means, sizeof(double) * this->nbClusters * this->dimension);
+    out.write((char const *) this->covariances, sizeof(double) * this->nbClusters * this->dimension);
+    out.write((char const *) this->priors, sizeof(double) * this->nbClusters);
+    out.write((char const *) this->posteriors, sizeof(double) * this->nbClusters);
+    out.write((char const *) &this->logLikelihood, sizeof(double));
 }
 
 // TODO: check if the format of the data is correct (it might be a problem that matrix should be transposed...)

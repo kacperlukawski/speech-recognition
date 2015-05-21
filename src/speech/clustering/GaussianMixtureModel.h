@@ -7,6 +7,8 @@
 
 #include "IClusteringMethod.h"
 
+#include <istream>
+
 extern "C" {
 #include "../../../lib/vl/generic.h"
 #include "../../../lib/vl/gmm.h"
@@ -21,6 +23,15 @@ namespace speech {
          */
         class GaussianMixtureModel : public IClusteringMethod {
         public:
+
+            /**
+             * Creates a Gaussian mixture model from the stream which contains
+             * serialized model. All parameters are loaded into the model, which
+             * can be then taught further.
+             * @param in input stream
+             */
+            GaussianMixtureModel(std::istream& in);
+
             /**
              * Creates a Gaussian mixture model for given number of clusters and
              * dimension of a single data vector.

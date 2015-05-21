@@ -22,6 +22,9 @@ add_executable(
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         main.cpp)
 
+# add VLFeat library usage
+target_link_libraries(Main LINK_PUBLIC VLFeat)
+
 # add the executable "Filters"
 add_executable(
     Filters

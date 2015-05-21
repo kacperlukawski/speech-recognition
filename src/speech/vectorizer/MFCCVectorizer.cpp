@@ -36,6 +36,8 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
             result[i] = *(cepstrumValues + i);
         }
 
+//        result[this->cepstralCoefficientsNumber] = result[0] + result[1]; // TODO: replace with energy
+
         // TODO: add calculating energy
 
         // stores the vector

@@ -14,9 +14,11 @@ using speech::raw_data::WaveFileDataSource;
 #include "speech/transform/IFrequencyTransform.h"
 
 #include "speech/clustering/KMeans.h"
+#include "speech/clustering/GaussianMixtureModel.h"
 
 using speech::clustering::IClusteringMethod;
 using speech::clustering::KMeans;
+using speech::clustering::GaussianMixtureModel;
 
 #include "speech/spelling/HMM.h"
 
@@ -37,11 +39,13 @@ using namespace speech::transform;
 #include "speech/vectorizer/MaxFrequencyVectorizer.h"
 #include "speech/vectorizer/FormantVectorizer.h"
 #include "speech/vectorizer/ThirdsPowerVectorizer.h"
+#include "speech/vectorizer/MFCCVectorizer.h"
 
 using speech::vectorizer::IVectorizer;
 using speech::vectorizer::MaxFrequencyVectorizer;
 using speech::vectorizer::FormantVectorizer;
 using speech::vectorizer::ThirdsPowerVectorizer;
+using speech::vectorizer::MFCCVectorizer;
 
 //
 // Gets the vector containing all letters occuring in given collection
@@ -137,9 +141,11 @@ int main(int argc, char **argv) {
 
     shared_ptr<IVectorizer<short>> vectorizerPtr = shared_ptr<IVectorizer<short>>(
 //            new FormantVectorizer<short>());
-            new ThirdsPowerVectorizer<short>());
+//            new ThirdsPowerVectorizer<short>());
+            new MFCCVectorizer<short>(26, 12));
     shared_ptr<IClusteringMethod> clusteringMethodPtr = shared_ptr<IClusteringMethod>(
-            new KMeans(numberOfPhonems, vectorizerPtr->getVectorSize()));
+//            new KMeans(numberOfPhonems, vectorizerPtr->getVectorSize()));
+            new GaussianMixtureModel(numberOfPhonems, vectorizerPtr->getVectorSize()));
     shared_ptr<ISpellingTranscription> spellingMethodPtr = shared_ptr<ISpellingTranscription>(
             new HMM(numberOfPhonems, letters));
     LanguageModel<short> languageModel(vectorizerPtr, clusteringMethodPtr, spellingMethodPtr);

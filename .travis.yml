@@ -8,4 +8,5 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install cmake
   - sudo apt-get install libarmadillo-dev
+  - sudo apt-get install libboost-all-dev
 script: cmake ./ && make

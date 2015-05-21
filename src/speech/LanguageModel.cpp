@@ -1,11 +1,6 @@
 #include <istream>
 #include "LanguageModel.h"
 
-//
-// Load the model from given input stream
-//
-// @todo it is necessary to recognize the objects which is our model built from
-//
 template<typename FrameType>
 speech::LanguageModel<FrameType>::LanguageModel(std::istream &in) {
     uint32_t vectorizerTypeIdentifier;
@@ -215,13 +210,6 @@ std::string speech::LanguageModel<FrameType>::predict(DataSource<FrameType> &dat
     return spellingTranscription->predict(predictedLabels);
 }
 
-/**
- * This method saves the model into given stream. It works in the following way:
- * 1. Saves the type of the clustering method (uint32_t)
- * 2. Saves the clustering method (by calling its serialize method)
- * 3. Saves the type of the spelling transcription (uint32_t)
- * 4. Saves the spelling transcription (by calling its serialize method)
- */
 template<typename FrameType>
 void speech::LanguageModel<FrameType>::serialize(std::ostream &out) const {
     if (vectorizer == nullptr) {

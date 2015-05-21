@@ -36,32 +36,35 @@ namespace speech {
         private:
             int MAX_VALUE;
 
-            //
-            // Calculates an amplitude of the signal.
-            // @param value a result of FFT
-            // @return double
-            //
+            /**
+             * Calculates an amplitude of the signal.
+             * @param value a result of FFT
+             *
+             * @return double
+             */
             inline double calculateAmplitude(std::complex<double> value) {
 //                return value.real() * MAX_VALUE;
                 return std::abs(value);
             }
 
-            //
-            // Calculates a phase of the signal.
-            // @param value a result of FFT
-            // @return double
-            //
+            /**
+             * Calculates a phase of the signal.
+             * @param value a result of FFT
+             *
+             * @return double
+             */
             inline double calculatePhase(std::complex<double> value) {
 //                return value.imag() * MAX_VALUE;
                 return std::arg(value);
             }
 
-            //
-            // Calculates a signal using amplitude and phase.
-            // @param amplitude
-            // @param phase
-            // @return complex
-            //
+            /**
+             * Calculates a signal using amplitude and phase.
+             * @param amplitude
+             * @param phase
+             *
+             * @return complex
+             */
             inline std::complex<double> calculateSignal(double amplitude, double phase) {
 //                return complex<double>(amplitude / MAX_VALUE, phase / MAX_VALUE);
                 return std::polar(amplitude, phase);

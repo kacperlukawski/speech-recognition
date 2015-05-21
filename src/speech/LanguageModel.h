@@ -62,18 +62,44 @@ namespace speech {
                       shared_ptr<clustering::IClusteringMethod> clusteringMethod,
                       shared_ptr<spelling::ISpellingTranscription> spellingTranscription);
 
+        /**
+         * Fits all model components
+         * @param dataSources collection of data sources
+         * @param transcriptions collection of transcriptions for each provided data source
+         */
         void fit(vector<DataSource<FrameType>> &dataSources, vector<std::string> &transcriptions);
 
+        /**
+         * Predicts the sentence from given data source samples
+         * @param dataSource referene to the data source
+         *
+         * @return predicted sentence
+         */
         std::string predict(DataSource<FrameType> &dataSource);
 
+        /**
+         * Gets shared pointer to the vectorizer instance used by the model
+         *
+         * @return instance of the vectorizer
+         */
         inline shared_ptr<IVectorizer<FrameType>> getVectorizer() {
             return vectorizer;
         }
 
+        /**
+         * Gets shared pointer to the clustering method used by the model
+         *
+         * @return instance of the clustering method
+         */
         inline shared_ptr<clustering::IClusteringMethod> getClusteringMethod() {
             return clusteringMethod;
         }
 
+        /**
+         * Gets shared pointer to the spelling transcription used by the model
+         *
+         * @return instance of the spelling transcription
+         */
         inline shared_ptr<spelling::ISpellingTranscription> getSpellingTranscription() {
             return spellingTranscription;
         }

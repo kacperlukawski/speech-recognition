@@ -20,10 +20,18 @@ namespace speech {
             template<typename FrameType>
             class EmphasisFilter : public IDataSampleFilter<FrameType> {
             public:
+                /**
+                 * Creates a filter instance with provided weight of the
+                 * each previous sample, which will be substracted from current
+                 * sample to emphasise the difference between them:
+                 * u[n] = u[n] - alpha * u[n-1]
+                 * @param alpha weight of the previous sample
+                 */
                 EmphasisFilter(double alpha) : alpha(alpha) {}
 
                 virtual DataSample<FrameType> filter(const DataSample<FrameType> &sample);
             private:
+                /** Weight of the previous sample */
                 double alpha;
             };
         }

@@ -1,10 +1,21 @@
 #include "DataSample.h"
 
+#include <cstring>
+
 template<typename FrameType>
 speech::raw_data::DataSample<FrameType>::DataSample(int _size, int _length, std::shared_ptr<FrameType> _values) {
     this->size = _size;
     this->length = _length;
     this->values = _values;
+}
+
+template<typename FrameType>
+speech::raw_data::DataSample<FrameType>::DataSample(const speech::raw_data::DataSample<FrameType> &ref) {
+    this->size = ref.size;
+    this->length = ref.length;
+    this->values = std::shared_ptr<FrameType>(new FrameType[this->size], std::default_delete<FrameType[]>());
+
+    memcpy(this->values.get(), ref.values.get(), size * sizeof(FrameType));
 }
 
 template<typename FrameType>

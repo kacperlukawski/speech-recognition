@@ -13,10 +13,10 @@ using speech::raw_data::WaveFileDataSource;
 
 using namespace speech::transform;
 
-#include "speech/raw_data/filtering/IFilter.h"
+#include "IFrequencySampleFilter.h"
 #include "speech/raw_data/filtering/MaxFrequenciesFilter.h"
 
-using speech::raw_data::filtering::IFilter;
+using speech::raw_data::filtering::IFrequencySampleFilter;
 using speech::raw_data::filtering::MaxFrequenciesFilter;
 
 #include "speech/vectorizer/IVectorizer.h"
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
     WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>("/home/kacper/voice/samogloski.wav",
                                                                              singleSampleLength);
     IVectorizer<short> *vectorizer = new MaxFrequencyVectorizer<short>(10);
-    IFilter<short> *filter = new MaxFrequenciesFilter<short>(20);
+    IFrequencySampleFilter<short> *filter = new MaxFrequenciesFilter<short>(20);
 
     auto begin = dataSourcePtr->getSamplesIteratorBegin();
     auto end = dataSourcePtr->getSamplesIteratorEnd();

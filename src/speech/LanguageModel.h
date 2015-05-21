@@ -12,15 +12,22 @@ using std::shared_ptr;
 #include "exception/NullptrSerializationException.h"
 
 #include "raw_data/DataSource.h"
+#include "raw_data/filtering/IDataSampleFilter.h"
+#include "raw_data/filtering/EmphasisFilter.h"
 
 using speech::raw_data::DataSource;
+using speech::raw_data::filtering::IDataSampleFilter;
 
 #include "vectorizer/IVectorizer.h"
 #include "vectorizer/MaxFrequencyVectorizer.h"
+#include "vectorizer/FormantVectorizer.h"
+#include "vectorizer/ThirdsPowerVectorizer.h"
+#include "vectorizer/MFCCVectorizer.h"
 
 using speech::vectorizer::IVectorizer;
 
 #include "clustering/KMeans.h"
+#include "clustering/GaussianMixtureModel.h"
 
 #include "transform/IFrequencyTransform.h"
 #include "transform/FastFourierTransform.h"
@@ -38,12 +45,14 @@ using speech::detector::NaiveSilenceDetector;
 
 namespace speech {
 
-    //
-    // It is a representation of the language model which is built
-    // from the clustering method and a method which converts
-    // labeled signals into textual representation (we call it
-    // spelling transcription)
-    //
+    /**
+     * It is a representation of the language model which is built
+     * from the clustering method and a method which converts
+     * labeled signals into textual representation (we call it
+     * spelling transcription)
+     *
+     * @todo add methods allowing to add both data sample and frequency sample filters
+     */
     template<typename FrameType>
     class LanguageModel : public IStreamSerializable {
     public:
@@ -77,6 +86,8 @@ namespace speech {
     private:
         shared_ptr<IDetector<FrameType>> silenceDetector =
                 shared_ptr<IDetector<FrameType>>(new NaiveSilenceDetector<FrameType>());
+        IDataSampleFilter<FrameType>* dataSampleFilter =
+                new speech::raw_data::filtering::EmphasisFilter<FrameType>(0.97); // TODO: remove all hardcoded things
     };
 }
 

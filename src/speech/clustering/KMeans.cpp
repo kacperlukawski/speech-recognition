@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+#include <iterator>
 
 speech::clustering::KMeans::KMeans(std::istream &in) {
     unsigned long centroidsNb = 0;
@@ -40,13 +41,6 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
-//
-// Fit the KMeans model using standard algorithm:
-// 1. Randomly choose k centroids from given vectors' set
-// 2. In each iteration assign all vectors into the nearest centroid
-// 3. Update each centroid to be a mean of the all vectors belonging to this particular group
-// 4. Stop when nothing changed in an iteration or after maximum number of iterations
-//
 void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
@@ -63,7 +57,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
 
         bool addCurrentVector = true;
         for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
-            if (metric(vector, *centroidsIt) == 0.0) {
+            if ((*metric)(vector, *centroidsIt) == 0.0) {
                 addCurrentVector = false;
                 break;
             }
@@ -123,8 +117,9 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
     }
 
     std::cout << "Centroids: " << std::endl;
+    auto centroidsBegin = centroids->begin();
     for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
-        std::cout << "[ ";
+        std::cout << (centroidsIt - centroidsBegin) << ". [ ";
         for (int i = 0; i < dimension; i++) {
             std::cout << (*centroidsIt)[i] << "\t";
         }
@@ -132,12 +127,6 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<i
     }
 }
 
-/**
- * Select the most probable label for the given vector.
- * Label is a position of the closest centroid.
- *
- * @return predicted label
- */
 int speech::clustering::KMeans::predict(const valarray<double> &vector) {
     if (centroids->empty()) {
         // @todo probably throw an exception there, because the model was not fitted properly
@@ -146,9 +135,9 @@ int speech::clustering::KMeans::predict(const valarray<double> &vector) {
 
     int argmin = 0;
     int centroidsNumber = centroids->size();
-    double currentMinimumDistance = metric(vector, centroids->at(0));
+    double currentMinimumDistance = (*metric)(vector, centroids->at(0));
     for (int i = 1; i < centroidsNumber; ++i) {
-        double currentDistance = metric(vector, centroids->at(i));
+        double currentDistance = (*metric)(vector, centroids->at(i));
         if (currentDistance < currentMinimumDistance) {
             currentMinimumDistance = currentDistance;
             argmin = i;

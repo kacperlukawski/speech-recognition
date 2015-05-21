@@ -1,9 +1,9 @@
 #ifndef _SPEECH_RECOGNITION_MAXFREQUENCIESFILTER_H_
 #define _SPEECH_RECOGNITION_MAXFREQUENCIESFILTER_H_
 
-#include "IFilter.h"
+#include "IFrequencySampleFilter.h"
 
-using speech::raw_data::filtering::IFilter;
+using speech::raw_data::filtering::IFrequencySampleFilter;
 
 namespace speech {
 
@@ -12,16 +12,16 @@ namespace speech {
         namespace filtering {
 
             template<typename FrameType>
-            class MaxFrequenciesFilter : public IFilter<FrameType> {
+            class MaxFrequenciesFilter : public IFrequencySampleFilter<FrameType> {
             public:
                 MaxFrequenciesFilter(int n);
 
                 virtual FrequencySample<FrameType> filter(const FrequencySample<FrameType> &sample);
 
             protected:
-                int n;
+                static double constexpr EPS = 1e-2;
 
-                double getNthMaxValue(FrequencySample<FrameType> &sample);
+                int n;
             };
 
         }

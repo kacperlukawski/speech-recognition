@@ -11,13 +11,13 @@ namespace speech {
 
     namespace detector {
 
-        ///
-        /// The detector of silence based on some intuitions only.
-        /// It checks the mean and standard deviation of the signal
-        /// amplitude with thresholding. Silence tends to use some
-        /// high frequencies (noise) and using this intution we
-        /// try to detect it.
-        ///
+        /**
+         * The detector of silence based on some intuitions only.
+         * It checks the mean and standard deviation of the signal
+         * amplitude with thresholding. Silence tends to use some
+         * high frequencies (noise) and using this intution we
+         * try to detect it.
+         */
         template<typename FrameType>
         class NaiveSilenceDetector : public IDetector<FrameType> {
         public:

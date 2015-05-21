@@ -31,8 +31,8 @@ std::valarray<double> speech::vectorizer::MaxFrequencyVectorizer<FrameType>::vec
         }
 
         if (amplitutePtr[i] > 0.0) {
-            vec[currentPos++] = i;
-            vec[currentPos++] = amplitutePtr[i];
+            vec[currentPos++] = i; // sample.getIndexFrequency(i); // frequency of the local maximum
+            vec[currentPos++] = amplitutePtr[i];             // amplitude of this maximum
         }
     }
 
@@ -44,6 +44,11 @@ void speech::vectorizer::MaxFrequencyVectorizer<FrameType>::serialize(std::ostre
     uint32_t typeIdentifier = TYPE_IDENTIFIER;
     out.write((char const *) &typeIdentifier, sizeof(typeIdentifier));
     out.write((char const *) &n, sizeof(n));
+}
+
+template<typename FrameType>
+int speech::vectorizer::MaxFrequencyVectorizer<FrameType>::getVectorSize() const {
+    return this->n;
 }
 
 template

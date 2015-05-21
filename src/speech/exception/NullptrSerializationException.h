@@ -15,6 +15,10 @@ namespace speech {
             NullptrSerializationException() : SerializationException() {}
 
             NullptrSerializationException(const char *msg) : SerializationException(msg) { }
+
+            virtual const char *what() const _GLIBCXX_USE_NOEXCEPT {
+                return ::std::length_error::what();
+            }
         };
 
     }

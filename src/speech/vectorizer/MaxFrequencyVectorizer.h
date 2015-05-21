@@ -11,6 +11,11 @@ namespace speech {
 
     namespace vectorizer {
 
+        /**
+         * Vectorizer converting raw signal into vectors of fixed size
+         * containing frequencies with maximal amplitude.
+         * @deprecated
+         */
         template<typename FrameType>
         class MaxFrequencyVectorizer : public IVectorizer<FrameType> {
         public:
@@ -23,6 +28,9 @@ namespace speech {
             virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample) override;
 
             virtual void serialize(std::ostream &out) const override;
+
+
+            virtual int getVectorSize() const;
 
         private:
             int n;

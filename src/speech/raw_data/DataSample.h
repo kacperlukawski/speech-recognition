@@ -22,6 +22,8 @@ namespace speech {
         public:
             DataSample(int _size, int _length, std::shared_ptr<FrameType> _values);
 
+            DataSample(const DataSample<FrameType>& ref);
+
             virtual ~DataSample();
 
             int getSize();

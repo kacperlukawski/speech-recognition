@@ -47,7 +47,7 @@ namespace speech {
              */
             ~GaussianMixtureModel();
 
-            virtual void fit(vector<valarray<double>> &vectors, vector<int> &labels);
+            virtual void fit(vector<valarray<double>> &vectors);
 
             virtual int predict(const valarray<double> &vector);
 

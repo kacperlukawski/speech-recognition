@@ -48,7 +48,7 @@ namespace speech {
              * 3. Update each centroid to be a mean of the all vectors belonging to this particular group
              * 4. Stop when nothing changed in an iteration or after maximum number of iterations
              */
-            virtual void fit(vector<valarray<double>> &vectors, vector<int> &labels);
+            virtual void fit(vector<valarray<double>> &vectors);
 
             /**
              * Select the most probable label for the given vector.

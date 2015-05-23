@@ -49,6 +49,9 @@ add_executable(
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         filters_test.cpp)
 
+# add VLFeat library usage
+target_link_libraries(Filters LINK_PUBLIC VLFeat)
+
 # add the executable "Harmonics"
 add_executable(
     Harmonics
@@ -101,3 +104,6 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         harmonics_filter.cpp)
+
+# add VLFeat library usage
+target_link_libraries(Harmonics_filter LINK_PUBLIC VLFeat)

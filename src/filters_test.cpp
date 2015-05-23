@@ -13,7 +13,7 @@ using speech::raw_data::WaveFileDataSource;
 
 using namespace speech::transform;
 
-#include "IFrequencySampleFilter.h"
+#include "speech/raw_data/filtering/IFrequencySampleFilter.h"
 #include "speech/raw_data/filtering/MaxFrequenciesFilter.h"
 
 using speech::raw_data::filtering::IFrequencySampleFilter;

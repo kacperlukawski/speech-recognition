@@ -104,8 +104,7 @@ void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSo
     }
 
     // fit the clustering method to divide the dataset into groups
-    vector<int> labels; // for this purposes can be empty
-    clusteringMethod->fit(vectors, labels);
+    clusteringMethod->fit(vectors);
     vectors.clear();
 
     // load single vectors from data source, cluster them and teach

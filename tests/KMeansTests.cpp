@@ -39,11 +39,8 @@ TEST(KMeans, XORTest) {
     vectors.push_back(std::valarray<double>({1.0, 0.0}));
     vectors.push_back(std::valarray<double>({1.0, 1.0}));
 
-    std::vector<int> labels;
-
     KMeans *kMeansPtr = new KMeans(2, 2);
-
-    kMeansPtr->fit(vectors, labels);
+    kMeansPtr->fit(vectors);
 
     int zeroVectorLabel = kMeansPtr->predict(std::valarray<double>({0.0, 0.0}));
     int firstVectorLabel = kMeansPtr->predict(std::valarray<double>({0.0, 1.0}));
@@ -70,11 +67,9 @@ TEST(KMeans, KCentroidsTest) {
     vectors.push_back(std::valarray<double>({1.0, 0.0}));
     vectors.push_back(std::valarray<double>({1.0, 1.0}));
 
-    std::vector<int> labels;
-
     KMeans *kMeansPtr = new KMeans(5, 2);
 
-    ASSERT_THROW(kMeansPtr->fit(vectors, labels), speech::clustering::exception::TooLessVectorsException);
+    ASSERT_THROW(kMeansPtr->fit(vectors), speech::clustering::exception::TooLessVectorsException);
 }
 
 TEST(KMeans, RandomDataDistribution) {
@@ -97,10 +92,8 @@ TEST(KMeans, SimpleCase) {
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
     vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
 
-    std::vector<int> labels;
-
     KMeans *kMeansPtr = new KMeans(2, 3);
-    kMeansPtr->fit(vectors, labels);
+    kMeansPtr->fit(vectors);
 
     ASSERT_EQ(kMeansPtr->predict(leftSideVectors[0]), kMeansPtr->predict(leftSideVectors[1]));
     ASSERT_EQ(kMeansPtr->predict(rightSideVectors[0]), kMeansPtr->predict(rightSideVectors[1]));
@@ -126,15 +119,13 @@ TEST(KMeans, Serialization) {
     vectors.insert(vectors.end(), rightSideVectors.begin(), rightSideVectors.end());
     vectors.insert(vectors.end(), leftSideVectors.begin(), leftSideVectors.end());
 
-    std::vector<int> labels;
-
     const int singleDataVectorDimension = 3;
 
     std::shared_ptr<IVectorizer<short>> vectorizerPtr = std::shared_ptr<IVectorizer<short>>(
             new MaxFrequencyVectorizer<short>(singleDataVectorDimension));
 
     std::shared_ptr<KMeans> kMeansPtr = std::shared_ptr<KMeans>(new KMeans(2, singleDataVectorDimension));
-    kMeansPtr->fit(vectors, labels);
+    kMeansPtr->fit(vectors);
 
     std::vector<int> leftLeftWordPhonems;
     leftLeftWordPhonems.push_back(kMeansPtr->predict(leftSideVectors[0]));

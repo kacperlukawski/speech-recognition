@@ -42,7 +42,7 @@ speech::clustering::GaussianMixtureModel::~GaussianMixtureModel() {
     vl_gmm_reset(this->gmm);
 }
 
-void speech::clustering::GaussianMixtureModel::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
+void speech::clustering::GaussianMixtureModel::fit(vector<valarray<double>> &vectors) {
     int nbVectors = vectors.size();
     double * data = this->createData(vectors);
     vl_gmm_cluster(this->gmm, data, nbVectors);

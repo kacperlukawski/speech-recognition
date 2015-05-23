@@ -41,7 +41,7 @@ speech::clustering::KMeans::~KMeans() {
     delete centroids;
 }
 
-void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors, vector<int> &labels) {
+void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors) {
     int vectorsNumber = vectors.size();
     if (vectorsNumber < k) {
         // current dataset is not enough to create K clusters

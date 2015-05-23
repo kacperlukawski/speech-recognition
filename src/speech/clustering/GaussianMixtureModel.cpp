@@ -32,7 +32,7 @@ speech::clustering::GaussianMixtureModel::GaussianMixtureModel(int nbClusters, i
     this->nbClusters = nbClusters;
     this->dimension = dimension;
     this->gmm = vl_gmm_new(VL_TYPE_DOUBLE, this->dimension, this->nbClusters);
-    vl_gmm_set_max_num_iterations(this->gmm, 100); // max number of EM iterations TODO: allow to change that
+    vl_gmm_set_max_num_iterations(this->gmm, 1000); // max number of EM iterations TODO: allow to change that
     vl_gmm_set_initialization(this->gmm, VlGMMRand);
     vl_gmm_set_verbosity(this->gmm, 1); // enables verbosity
 //    vl_gmm_set_num_repetitions(this->gmm, 3); // number of repetitions TODO: allow to change that
@@ -92,7 +92,6 @@ void speech::clustering::GaussianMixtureModel::serialize(std::ostream &out) cons
     out.write((char const *) &this->logLikelihood, sizeof(double));
 }
 
-// TODO: check if the format of the data is correct (it might be a problem that matrix should be transposed...)
 double *speech::clustering::GaussianMixtureModel::createData(const std::vector<std::valarray<double>>& vectors){
     int nbVectors = vectors.size();
     double * data = new double[nbVectors * this->dimension];

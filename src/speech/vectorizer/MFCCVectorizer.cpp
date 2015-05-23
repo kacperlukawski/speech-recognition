@@ -91,6 +91,77 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
 }
 
 template<typename FrameType>
+std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(DataSource<FrameType> &dataSource) {
+    std::vector<std::valarray<double>> results;
+    for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
+        DataSample<FrameType>& dataSample = *it;
+        FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample);
+
+        // creates empty vectors for sample
+        std::valarray<double> result(0.0, getVectorSize());
+
+        // calculates MFCC coefficients
+        DataSample<FrameType> cepstrum = getCepstrum(frequencySample);
+        FrameType *cepstrumValues = cepstrum.getValues().get();
+        for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
+            result[i] = *(cepstrumValues + i);
+        }
+
+        // calculates an energy of the samples (TODO: check if it works properly)
+        FrameType *valuesBegin = dataSample.getValues().get();
+        FrameType *valuesEnd = valuesBegin + dataSample.getSize();
+        int sampleSize = dataSample.getSize();
+        result[this->cepstralCoefficientsNumber] = 0.0;
+        for (auto valueIt = valuesBegin; valueIt != valuesEnd; valueIt++) {
+            result[this->cepstralCoefficientsNumber] += (double) *valueIt / sampleSize;
+        }
+
+//        std::cout << "result[this->cepstralCoefficientsNumber]: " << result[this->cepstralCoefficientsNumber] << std::endl;
+
+        // stores the vector
+        results.push_back(result);
+    }
+
+
+    int offset = this->cepstralCoefficientsNumber + 1;
+    for (auto it = results.begin(); it != results.end(); it++) {
+        // omits first and last vector, because deltas cannot be calculated
+        if (it == results.begin() || (it + 1) == results.end()) {
+            continue;
+        }
+
+        // gets vectors with results
+        std::valarray<double>& result = results.at(it - results.begin());
+        std::valarray<double>& prevResults = results.at(it - results.begin() - 1);
+        std::valarray<double>& nextResults = results.at(it - results.begin() + 1);
+
+        // calculates differences
+        for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {
+            result[offset + i] = (nextResults[i] - prevResults[i]) / 2.0;
+        }
+    }
+
+    for (auto it = results.begin(); it != results.end(); it++) {
+        // omits first and last vector, because deltas cannot be calculated
+        if (it == results.begin() || (it + 1) == results.end()) {
+            continue;
+        }
+
+        // gets vectors with results
+        std::valarray<double>& result = results.at(it - results.begin());
+        std::valarray<double>& prevResults = results.at(it - results.begin() - 1);
+        std::valarray<double>& nextResults = results.at(it - results.begin() + 1);
+
+        // calculates differences
+        for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {
+            result[2 * offset + i] = (nextResults[offset + i] - prevResults[offset + i]) / 2.0;
+        }
+    }
+
+    return std::move(results);
+}
+
+template<typename FrameType>
 void speech::vectorizer::MFCCVectorizer<FrameType>::serialize(std::ostream &out) const {
     uint32_t type = TYPE_IDENTIFIER;
     out.write((char const *) &type, sizeof(type));
@@ -108,14 +179,14 @@ DataSample<FrameType> speech::vectorizer::MFCCVectorizer<FrameType>::getCepstrum
         const FrequencySample<FrameType> &sample) {
     double *amplitudePtr = sample.getAmplitude().get();
 
-    double minFrequencyMel = getMelFrequency(64.0);   // 64Hz, can be sample.getMinFrequency() as well
-    double maxFrequencyMel = getMelFrequency(8000.0); // 8kHz, can be sample.getMaxFrequency() as well
+    double minFrequencyMel = herzToMel(64.0);   // 64Hz, can be sample.getMinFrequency() as well
+    double maxFrequencyMel = herzToMel(8000.0); // 8kHz, can be sample.getMaxFrequency() as well
     double delta = (maxFrequencyMel - minFrequencyMel) / (this->bins + 1);
 
     int pos = 0;
     double filterPoints[this->bins + 1];
     for (double mels = minFrequencyMel; mels <= maxFrequencyMel; mels += delta, pos++) {
-        filterPoints[pos] = getFrequencyFromMels(mels);
+        filterPoints[pos] = melToHerz(mels);
     }
 
     FrequencySample<FrameType> cepstrumFrequencySample(this->bins, 0,

@@ -50,16 +50,21 @@ namespace speech {
             virtual std::vector<std::valarray<double>> vectorize(
                     std::vector<FrequencySample<FrameType>> &samples) override;
 
+            virtual std::vector<std::valarray<double>> vectorize(DataSource<FrameType> &dataSource) override;
+
             virtual void serialize(std::ostream &out) const;
 
             virtual int getVectorSize() const;
 
-        private:
+        protected:
             /** Number of mel frequency bins */
             int bins;
 
             /** Number of used cepstral coefficients */
             int cepstralCoefficientsNumber;
+
+            /** Transform between time and frequency domain */
+            IFrequencyTransform<FrameType>* frequencyTransform = new FastFourierTransform<FrameType>(); // TODO: should be more dynamic
 
             /**
              * Calculates the frequency on mel scale
@@ -68,7 +73,7 @@ namespace speech {
              *
              * @return frequency in mels
              */
-            inline double getMelFrequency(double frequency) {
+            inline double herzToMel(double frequency) {
                 return 1127.0 * log(1 + frequency / 700.0);
             }
 
@@ -79,7 +84,7 @@ namespace speech {
              *
              * @return frequency in Hz
              */
-            inline double getFrequencyFromMels(double mels) {
+            inline double melToHerz(double mels) {
                 return 700 * (exp(mels / 1127.0) - 1);
             }
 
@@ -88,9 +93,6 @@ namespace speech {
              * @see http://www.phon.ucl.ac.uk/courses/spsci/matlab/lect10.html
              */
             DataSample<FrameType> getCepstrum(const FrequencySample<FrameType>&sample);
-
-            /** Transform between time and frequency domain */
-            IFrequencyTransform<FrameType>* frequencyTransform = new FastFourierTransform<FrameType>(); // TODO: make it more dynamic
         };
 
     }

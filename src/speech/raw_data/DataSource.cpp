@@ -25,5 +25,8 @@ typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<Fram
     return samples->end();
 }
 
-template class speech::raw_data::DataSource<unsigned char>;
-template class speech::raw_data::DataSource<short int>;
+template
+class speech::raw_data::DataSource<unsigned char>;
+
+template
+class speech::raw_data::DataSource<short int>;

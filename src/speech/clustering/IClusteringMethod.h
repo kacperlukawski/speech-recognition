@@ -14,13 +14,15 @@ namespace speech {
     namespace clustering {
 
         /**
-         * An interface for all clustering methods
+         * This is an interface for all clustering methods
          */
         class IClusteringMethod : public IStreamSerializable {
         public:
             /**
              * Trains the classifier using provided set of vectors
              * @param vectors collection of vectors used in a training phase
+             *
+             * @todo allow to pass iterators or pointers, not only std::vector
              */
             virtual void fit(vector<valarray<double>> &vectors) = 0;
 

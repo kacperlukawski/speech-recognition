@@ -167,7 +167,9 @@ int main(int argc, char **argv) {
             std::cout << "predicted: " << languageModel.predict(*it) << std::endl;
         }
 
-        //std::cout << languageModel;
+        std::ofstream output("/home/kacper/voice/model_2_3_3a.lm");
+        output << languageModel;
+        output.close();
         // @todo store a model into a file to be loaded and used for classification purposes
 
         // the model is fitted and can be used to transcript another data sources (validation)

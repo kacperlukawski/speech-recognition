@@ -25,7 +25,7 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(F
     }
 
     Spectrum spectrum(sample);
-    result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum(); // energy
+    result[this->cepstralCoefficientsNumber] =  spectrum.getValues().sum() / sample.getSize();
 
     return result;
 }
@@ -45,7 +45,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         Spectrum spectrum(*it);
-        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum(); // energy
+        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / it->getSize();
 
         // stores the vector
         results.push_back(result);
@@ -95,6 +95,7 @@ template<typename FrameType>
 std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(DataSource<FrameType> &dataSource) {
     int vectorSize = this->getVectorSize();
     std::vector<std::valarray<double>> results;
+    double maxEnergy = 0.0;
     for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
         DataSample<FrameType>& dataSample = *it;
         FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample);
@@ -108,8 +109,11 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
             result[i] = cepstrum[i];
         }
 
-        Spectrum spectrum(frequencySample);
-        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum(); // energy
+        Spectrum spectrum(frequencySample); // TODO: change energy calculation
+        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / frequencySample.getSize();
+        if (result[this->cepstralCoefficientsNumber] > maxEnergy) {
+            maxEnergy = result[this->cepstralCoefficientsNumber];
+        }
 
         // stores the vector
         results.push_back(result);
@@ -128,10 +132,13 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         std::valarray<double>& prevResults = results.at(it - results.begin() - 1);
         std::valarray<double>& nextResults = results.at(it - results.begin() + 1);
 
+        result[this->cepstralCoefficientsNumber] /= maxEnergy; // normalizing energies
+
         // calculates differences
         for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {
             result[offset + i] = (nextResults[i] - prevResults[i]) / 2.0;
         }
+
     }
 
     for (auto it = results.begin(); it != results.end(); it++) {
@@ -181,7 +188,7 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCe
     int position = 0;
     for (auto filterIt = this->filterBank.begin(); filterIt != this->filterBank.end(); filterIt++) {
         // calculate the log of energy in this particular filter
-        logEnergies[position] = log((*filterIt)(spectrum) + 10e-12);
+        logEnergies[position] = log((*filterIt)(spectrum) + EPS);
         position++;
     }
 

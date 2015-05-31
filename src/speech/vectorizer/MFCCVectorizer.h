@@ -165,6 +165,8 @@ namespace speech {
             };
 
         private:
+            static constexpr double EPS = 10e-12;
+
             /**
              * Creates a bank of filters used in vectorizing
              */

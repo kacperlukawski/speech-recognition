@@ -8,11 +8,17 @@
 #include <istream>
 #include <cmath>
 
+#include "../raw_data/Spectrum.h"
+
+using speech::raw_data::Spectrum;
+
 #include "../transform/IFrequencyTransform.h"
 #include "../transform/FastFourierTransform.h"
+#include "../transform/DiscreteFourierTransform.h"
 
 using speech::transform::IFrequencyTransform;
 using speech::transform::FastFourierTransform;
+using speech::transform::DiscreteFourierTransform;
 
 #include "IVectorizer.h"
 
@@ -35,15 +41,23 @@ namespace speech {
              * Construct the vectorizer from a data stream containing serialized vectorizer
              * @param in input data stream
              */
-            MFCCVectorizer(std::istream& in);
+            MFCCVectorizer(std::istream &in);
 
             /**
              * Construct the vectorizer using given number of bins and cepstral coefficients
              * @param bins number of bins
              * @param cepstralCoefficientsNumber number of cepstral coefficients
+             * @param minFrequency
+             * @param maxFrequency
              */
-            MFCCVectorizer(int bins, int cepstralCoefficientsNumber) :
-                    bins(bins), cepstralCoefficientsNumber(cepstralCoefficientsNumber) { }
+            MFCCVectorizer(int bins, int cepstralCoefficientsNumber, double minFrequency = 64.0,
+                           double maxFrequency = 16000.0) :
+                    bins(bins),
+                    cepstralCoefficientsNumber(cepstralCoefficientsNumber),
+                    minCepstrumFrequency(minFrequency),
+                    maxCepstrumFrequency(maxFrequency) {
+                buildFilterBank();
+            }
 
             virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample);
 
@@ -57,14 +71,26 @@ namespace speech {
             virtual int getVectorSize() const;
 
         protected:
+            /** Declaration of the MelFilter class used for creating bank of filters */
+            class MelFilter;
+
             /** Number of mel frequency bins */
             int bins;
 
             /** Number of used cepstral coefficients */
             int cepstralCoefficientsNumber;
 
+            /** Minimal frequency in cepstrum calculating */
+            double minCepstrumFrequency;
+
+            /** Maximal frequency in cepstrum calculating */
+            double maxCepstrumFrequency;
+
             /** Transform between time and frequency domain */
-            IFrequencyTransform<FrameType>* frequencyTransform = new FastFourierTransform<FrameType>(); // TODO: should be more dynamic
+            IFrequencyTransform<FrameType> *frequencyTransform = new DiscreteFourierTransform<FrameType>(); // TODO: should be more dynamic
+
+            /** Bank of Mel filters */
+            std::vector<MelFilter> filterBank;
 
             /**
              * Calculates the frequency on mel scale
@@ -92,7 +118,57 @@ namespace speech {
              * Calculates the cepstrum of the given sample
              * @see http://www.phon.ucl.ac.uk/courses/spsci/matlab/lect10.html
              */
-            DataSample<FrameType> getCepstrum(const FrequencySample<FrameType>&sample);
+            std::valarray<double> calculateCepstrumCoefficients(const FrequencySample<FrameType> &sample);
+
+            /**
+             * A triangular filter used in MFCC calculating
+             */
+            class MelFilter {
+            public:
+                /**
+                 * Constructs a filter non-zero in given boundaries
+                 * @param startFrequency begin frequency in herzs
+                 * @param endFrequency end frequency in herzs
+                 */
+                MelFilter(double startFrequency, double endFrequency)
+                        : startFrequency(startFrequency), endFrequency(endFrequency) { }
+
+                /**
+                 * Calucates an energy in given spectrum
+                 * @param spectrum reference to Spectrum class object
+                 * @return energy of this filter in given spectrum
+                 */
+                double operator()(Spectrum &spectrum) {
+                    int startIndex = spectrum.getIndexByFrequency(startFrequency);
+                    int endIndex = spectrum.getIndexByFrequency(endFrequency);
+                    int centerIndex = (startIndex + endIndex) / 2;
+
+                    double result = 0.0;
+                    std::valarray<double> &spectrumValues = spectrum.getValues();
+                    for (int index = startIndex; index < endIndex; index++) {
+                        if (index < centerIndex) {
+                            result += spectrumValues[index] *
+                                      (double) ((index - startIndex) / (centerIndex - startIndex));
+                        } else {
+                            result += spectrumValues[index] * (double) ((endIndex - index) / (endIndex - centerIndex));
+                        }
+                    }
+
+                    return result;
+                }
+
+            private:
+                /** Begin index */
+                double startFrequency;
+                /** End index */
+                double endFrequency;
+            };
+
+        private:
+            /**
+             * Creates a bank of filters used in vectorizing
+             */
+            void buildFilterBank();
         };
 
     }

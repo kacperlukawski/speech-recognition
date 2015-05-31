@@ -10,16 +10,18 @@ template<typename FrameType>
 speech::vectorizer::MFCCVectorizer<FrameType>::MFCCVectorizer(std::istream &in) {
     in.read((char *) &this->bins, sizeof(int));
     in.read((char *) &this->cepstralCoefficientsNumber, sizeof(int));
+    in.read((char *) &this->minCepstrumFrequency, sizeof(double));
+    in.read((char *) &this->maxCepstrumFrequency, sizeof(double));
+    buildFilterBank();
 }
 
 template<typename FrameType>
 std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(FrequencySample<FrameType> &sample) {
     std::valarray<double> result(0.0, getVectorSize());
 
-    DataSample<FrameType> cepstrum = getCepstrum(sample);
-    FrameType *cepstrumValues = cepstrum.getValues().get();
+    std::valarray<double> cepstrum = calculateCepstrumCoefficients(sample);
     for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
-        result[i] = *(cepstrumValues + i);
+        result[i] = cepstrum[i];
     }
 
     // TODO: check the implementation and add another features calculated from coefficients
@@ -36,15 +38,14 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         std::valarray<double> result(0.0, getVectorSize());
 
         // calculates MFCC coefficients
-        DataSample<FrameType> cepstrum = getCepstrum(*it);
-        FrameType *cepstrumValues = cepstrum.getValues().get();
+        std::valarray<double> cepstrum = calculateCepstrumCoefficients(*it);
         for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
-            result[i] = *(cepstrumValues + i);
+            result[i] = cepstrum[i];
         }
 
-//        result[this->cepstralCoefficientsNumber] = result[0] + result[1]; // TODO: replace with energy
-
-        // TODO: add calculating energy
+        Spectrum spectrum(*it);
+        double energy = spectrum.getValues().sum();
+        result[this->cepstralCoefficientsNumber] = energy;
 
         // stores the vector
         results.push_back(result);
@@ -92,29 +93,24 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
 
 template<typename FrameType>
 std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(DataSource<FrameType> &dataSource) {
+    int vectorSize = this->getVectorSize();
     std::vector<std::valarray<double>> results;
     for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
         DataSample<FrameType>& dataSample = *it;
         FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample);
 
         // creates empty vectors for sample
-        std::valarray<double> result(0.0, getVectorSize());
+        std::valarray<double> result(0.0, vectorSize);
 
         // calculates MFCC coefficients
-        DataSample<FrameType> cepstrum = getCepstrum(frequencySample);
-        FrameType *cepstrumValues = cepstrum.getValues().get();
+        std::valarray<double> cepstrum = calculateCepstrumCoefficients(frequencySample);
         for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
-            result[i] = *(cepstrumValues + i);
+            result[i] = cepstrum[i]; // TODO: check if there should be logarithm here
         }
 
-        // calculates an energy of the samples (TODO: check if it works properly)
-        FrameType *valuesBegin = dataSample.getValues().get();
-        FrameType *valuesEnd = valuesBegin + dataSample.getSize();
-        int sampleSize = dataSample.getSize();
-        result[this->cepstralCoefficientsNumber] = 0.0;
-        for (auto valueIt = valuesBegin; valueIt != valuesEnd; valueIt++) {
-            result[this->cepstralCoefficientsNumber] += (double) *valueIt / sampleSize;
-        }
+        Spectrum spectrum(frequencySample);
+        double energy = spectrum.getValues().sum();
+        result[this->cepstralCoefficientsNumber] = energy;
 
 //        std::cout << "result[this->cepstralCoefficientsNumber]: " << result[this->cepstralCoefficientsNumber] << std::endl;
 
@@ -167,6 +163,8 @@ void speech::vectorizer::MFCCVectorizer<FrameType>::serialize(std::ostream &out)
     out.write((char const *) &type, sizeof(type));
     out.write((char const *) &this->bins, sizeof(int));
     out.write((char const *) &this->cepstralCoefficientsNumber, sizeof(int));
+    out.write((char const *) &this->minCepstrumFrequency, sizeof(double));
+    out.write((char const *) &this->maxCepstrumFrequency, sizeof(double));
 }
 
 template<typename FrameType>
@@ -175,55 +173,55 @@ int speech::vectorizer::MFCCVectorizer<FrameType>::getVectorSize() const {
 }
 
 template<typename FrameType>
-DataSample<FrameType> speech::vectorizer::MFCCVectorizer<FrameType>::getCepstrum(
+std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCepstrumCoefficients( // TODO: do not use DataSample, it is just a vector of features!
         const FrequencySample<FrameType> &sample) {
-    double *amplitudePtr = sample.getAmplitude().get();
+    // spectrum of the sample
+    Spectrum spectrum(sample);
 
-    double minFrequencyMel = herzToMel(64.0);   // 64Hz, can be sample.getMinFrequency() as well
-    double maxFrequencyMel = herzToMel(8000.0); // 8kHz, can be sample.getMaxFrequency() as well
+    // container for log energies of each filter
+    std::valarray<double> logEnergies(0.0, this->bins);
+
+    int position = 0;
+    for (auto filterIt = this->filterBank.begin(); filterIt != this->filterBank.end(); filterIt++) {
+        // calculate the log of energy in this particular filter
+        logEnergies[position] = log((*filterIt)(spectrum));
+        position++;
+    }
+
+    // container for final cepstral coefficients
+    std::valarray<double> cepstralCoefficients(this->cepstralCoefficientsNumber);
+    for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
+        double coefficient = 0.0;
+        for (int j = 0; j < this->bins; j++) {
+            coefficient += logEnergies[j] * cos((M_PI * i) / this->bins * (j + 0.5));
+        }
+        cepstralCoefficients[i] = coefficient;
+    }
+
+//    std::cout << "Cepstral coefficients: ";
+//    for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
+//        std::cout << cepstralCoefficients[i] << " ";
+//    }
+
+    return std::move(cepstralCoefficients);
+}
+
+
+template<typename FrameType>
+void speech::vectorizer::MFCCVectorizer<FrameType>::buildFilterBank() {
+    double minFrequencyMel = herzToMel(this->minCepstrumFrequency);
+    double maxFrequencyMel = herzToMel(this->maxCepstrumFrequency);
     double delta = (maxFrequencyMel - minFrequencyMel) / (this->bins + 1);
 
-    int pos = 0;
-    double filterPoints[this->bins + 1];
-    for (double mels = minFrequencyMel; mels <= maxFrequencyMel; mels += delta, pos++) {
-        filterPoints[pos] = melToHerz(mels);
+    int boundaries = this->bins + 2;
+    double filterPoints[boundaries];
+    for (int i = 0; i < boundaries; i++) {
+        filterPoints[i] = melToHerz(minFrequencyMel + i * delta);
     }
 
-    FrequencySample<FrameType> cepstrumFrequencySample(this->bins, 0,
-                                                       std::shared_ptr<double>(new double[this->bins],
-                                                                               std::default_delete<double[]>()),
-                                                       std::shared_ptr<double>(new double[this->bins],
-                                                                               std::default_delete<double[]>()));
-    double *cepstralAmplitudePtr = cepstrumFrequencySample.getAmplitude().get();
-    double *cepstralPhasePtr = cepstrumFrequencySample.getPhase().get();
-    for (int i = 1; i <= this->bins; i++) {
-        double lowerBoundary = filterPoints[i - 1];
-        double higherBoundary = filterPoints[i + 1];
-        double centerPoint = filterPoints[i];
-
-        int lowerBoundaryIndex = sample.getFrequencyIndex(lowerBoundary);
-        int higherBoundaryIndex = sample.getFrequencyIndex(higherBoundary);
-        int centerPointIndex = sample.getFrequencyIndex(centerPoint);
-
-        *(cepstralAmplitudePtr + i - 1) = 0;
-        for (int j = lowerBoundaryIndex; j <= higherBoundaryIndex; j++) {
-            double coeff;
-            if (j <= centerPointIndex) {
-                coeff = (double) (j - lowerBoundaryIndex) / (centerPointIndex - lowerBoundaryIndex);
-            } else {
-                coeff = (double) (higherBoundaryIndex - j) / (higherBoundaryIndex - centerPointIndex);
-            }
-
-            double amplitude = *(amplitudePtr + j);
-            *(cepstralAmplitudePtr + i - 1) += amplitude * coeff;
-        }
-
-        *(cepstralAmplitudePtr + i - 1) = log(
-                *(cepstralAmplitudePtr + i - 1) + 10e-16); // 10e-16 for smooting logarithm
-        *(cepstralPhasePtr + i - 1) = 0.0; // zero the phase, it is probably necessary
+    for (int i = 1; i < this->bins + 1; i++) {
+        this->filterBank.push_back(MelFilter(filterPoints[i - 1], filterPoints[i + 1]));
     }
-
-    return frequencyTransform->reverseTransform(cepstrumFrequencySample);
 }
 
 template

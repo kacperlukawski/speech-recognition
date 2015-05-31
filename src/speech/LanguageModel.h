@@ -31,9 +31,11 @@ using speech::vectorizer::IVectorizer;
 
 #include "transform/IFrequencyTransform.h"
 #include "transform/FastFourierTransform.h"
+#include "transform/DiscreteFourierTransform.h"
 
 using speech::transform::IFrequencyTransform;
 using speech::transform::FastFourierTransform;
+using speech::transform::DiscreteFourierTransform;
 
 #include "spelling/HMM.h"
 

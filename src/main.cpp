@@ -114,10 +114,22 @@ int main(int argc, char **argv) {
 
     // @todo: list should be more dynamic, but it's not necessary now
     std::vector<const char *> sourceFiles;
+    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_0.wav");
+    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_1.wav");
     sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_2.wav");
     sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_3.wav");
     sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_3_a.wav");
+    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_4.wav");
+    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_5.wav");
 //    sourceFiles.push_back("/home/kacper/voice/samogloski.wav");
+
+    std::string record0Content = getFileContent(
+            "/home/kacper/Projects/speech-recognition/dataset/variants/words_0.txt");
+    str_replace(record0Content, ",", "");
+
+    std::string record1Content = getFileContent(
+            "/home/kacper/Projects/speech-recognition/dataset/variants/words_1.txt");
+    str_replace(record1Content, ",", "");
 
     std::string record2Content = getFileContent(
             "/home/kacper/Projects/speech-recognition/dataset/variants/words_2.txt");
@@ -127,10 +139,22 @@ int main(int argc, char **argv) {
             "/home/kacper/Projects/speech-recognition/dataset/variants/words_3.txt");
     str_replace(record3Content, ",", "");
 
+    std::string record4Content = getFileContent(
+            "/home/kacper/Projects/speech-recognition/dataset/variants/words_4.txt");
+    str_replace(record4Content, ",", "");
+
+    std::string record5Content = getFileContent(
+            "/home/kacper/Projects/speech-recognition/dataset/variants/words_5.txt");
+    str_replace(record5Content, ",", "");
+
     std::vector<std::string> transcriptions;
+    transcriptions.push_back(record0Content);
+    transcriptions.push_back(record1Content);
     transcriptions.push_back(record2Content);
     transcriptions.push_back(record3Content);
     transcriptions.push_back(record3Content);
+    transcriptions.push_back(record4Content);
+    transcriptions.push_back(record5Content);
 
     std::vector<DataSource<short>> dataSources;
     for (auto it = sourceFiles.begin(); it != sourceFiles.end(); it++) {
@@ -150,9 +174,12 @@ int main(int argc, char **argv) {
             new HMM(numberOfPhonems, letters));
     LanguageModel<short> languageModel(vectorizerPtr, clusteringMethodPtr, spellingMethodPtr);
 
+//    std::ifstream input("/home/kacper/voice/model_Wed May 27 22:30:27 2015.lm");
+//    LanguageModel<short> languageModel(input);
+
     try {
         // fit the model using data taken from source files
-        languageModel.fit(dataSources, transcriptions);
+//        languageModel.fit(dataSources, transcriptions);
 
         // add a new file to be checked
         dataSources.push_back(
@@ -161,22 +188,30 @@ int main(int argc, char **argv) {
         dataSources.push_back(
                 WaveFileDataSource<short>("/home/kacper/voice/samogloski_1_2_3_4_5_6_7_8_9_10_11_12-25.wav",
                                           singleSampleLength));
+        dataSources.push_back(
+                WaveFileDataSource<short>("/home/kacper/voice/dziadzio.wav",
+                                          singleSampleLength));
+        dataSources.push_back(
+                WaveFileDataSource<short>("/home/kacper/voice/sala.wav",
+                                          singleSampleLength));
 
         // test files one by one and try to predict the transcription
         for (auto it = dataSources.begin(); it != dataSources.end(); it++) {
             std::cout << "predicted: " << languageModel.predict(*it) << std::endl;
         }
 
-        std::ofstream output("/home/kacper/voice/model_2_3_3a.lm");
-        output << languageModel;
-        output.close();
-        // @todo store a model into a file to be loaded and used for classification purposes
+//        char *modelFilename = new char[100];
+//        sprintf(modelFilename, "/home/kacper/voice/model_%s.lm", __TIMESTAMP__);
+//        std::ofstream output(modelFilename);
+//        output << languageModel;
+//        output.close();
+//        delete[] modelFilename;
 
         // the model is fitted and can be used to transcript another data sources (validation)
         // @todo: add a validation
     } catch (speech::clustering::exception::TooLessVectorsException &ex) {
         std::cerr << "You need to provide at least " << numberOfPhonems
-                                                        << " vectors to perform the clustering" << std::endl;
+                  << " vectors to perform the clustering" << std::endl;
     }
 
     return 0;

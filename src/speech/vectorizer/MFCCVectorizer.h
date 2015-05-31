@@ -87,7 +87,7 @@ namespace speech {
             double maxCepstrumFrequency;
 
             /** Transform between time and frequency domain */
-            IFrequencyTransform<FrameType> *frequencyTransform = new DiscreteFourierTransform<FrameType>(); // TODO: should be more dynamic
+            IFrequencyTransform<FrameType> *frequencyTransform = new FastFourierTransform<FrameType>();//  new DiscreteFourierTransform<FrameType>(); // TODO: should be more dynamic
 
             /** Bank of Mel filters */
             std::vector<MelFilter> filterBank;

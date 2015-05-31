@@ -24,7 +24,8 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(F
         result[i] = cepstrum[i];
     }
 
-    // TODO: check the implementation and add another features calculated from coefficients
+    Spectrum spectrum(sample);
+    result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum(); // energy
 
     return result;
 }
@@ -44,8 +45,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         Spectrum spectrum(*it);
-        double energy = spectrum.getValues().sum();
-        result[this->cepstralCoefficientsNumber] = energy;
+        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum(); // energy
 
         // stores the vector
         results.push_back(result);
@@ -105,14 +105,11 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         // calculates MFCC coefficients
         std::valarray<double> cepstrum = calculateCepstrumCoefficients(frequencySample);
         for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
-            result[i] = cepstrum[i]; // TODO: check if there should be logarithm here
+            result[i] = cepstrum[i];
         }
 
         Spectrum spectrum(frequencySample);
-        double energy = spectrum.getValues().sum();
-        result[this->cepstralCoefficientsNumber] = energy;
-
-//        std::cout << "result[this->cepstralCoefficientsNumber]: " << result[this->cepstralCoefficientsNumber] << std::endl;
+        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum(); // energy
 
         // stores the vector
         results.push_back(result);
@@ -173,7 +170,7 @@ int speech::vectorizer::MFCCVectorizer<FrameType>::getVectorSize() const {
 }
 
 template<typename FrameType>
-std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCepstrumCoefficients( // TODO: do not use DataSample, it is just a vector of features!
+std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCepstrumCoefficients(
         const FrequencySample<FrameType> &sample) {
     // spectrum of the sample
     Spectrum spectrum(sample);
@@ -184,7 +181,7 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCe
     int position = 0;
     for (auto filterIt = this->filterBank.begin(); filterIt != this->filterBank.end(); filterIt++) {
         // calculate the log of energy in this particular filter
-        logEnergies[position] = log((*filterIt)(spectrum));
+        logEnergies[position] = log((*filterIt)(spectrum) + 10e-12);
         position++;
     }
 
@@ -197,11 +194,6 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCe
         }
         cepstralCoefficients[i] = coefficient;
     }
-
-//    std::cout << "Cepstral coefficients: ";
-//    for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
-//        std::cout << cepstralCoefficients[i] << " ";
-//    }
 
     return std::move(cepstralCoefficients);
 }

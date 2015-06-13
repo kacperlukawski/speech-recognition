@@ -202,6 +202,11 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCe
         cepstralCoefficients[i] = coefficient;
     }
 
+//    for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
+//        std::cout << cepstralCoefficients[i] << ' ';
+//    }
+//    std::cout << std::endl;
+
     return std::move(cepstralCoefficients);
 }
 

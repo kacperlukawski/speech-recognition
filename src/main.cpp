@@ -119,8 +119,8 @@ int main(int argc, char **argv) {
     sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_2.wav");
     sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_3.wav");
     sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_3_a.wav");
-    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_4.wav");
-    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_5.wav");
+//    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_4.wav");
+//    sourceFiles.push_back("/home/kacper/Projects/speech-recognition/dataset/records/record_5.wav");
 //    sourceFiles.push_back("/home/kacper/voice/samogloski.wav");
 
     std::string record0Content = getFileContent(
@@ -153,8 +153,8 @@ int main(int argc, char **argv) {
     transcriptions.push_back(record2Content);
     transcriptions.push_back(record3Content);
     transcriptions.push_back(record3Content);
-    transcriptions.push_back(record4Content);
-    transcriptions.push_back(record5Content);
+//    transcriptions.push_back(record4Content);
+//    transcriptions.push_back(record5Content);
 
     std::vector<DataSource<short>> dataSources;
     for (auto it = sourceFiles.begin(); it != sourceFiles.end(); it++) {
@@ -179,7 +179,7 @@ int main(int argc, char **argv) {
 
     try {
         // fit the model using data taken from source files
-//        languageModel.fit(dataSources, transcriptions);
+        languageModel.fit(dataSources, transcriptions);
 
         // add a new file to be checked
         dataSources.push_back(

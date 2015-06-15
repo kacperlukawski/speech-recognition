@@ -23,7 +23,8 @@ add_executable(
         speech/raw_data/DataSample.cpp
         speech/raw_data/FrequencySample.cpp
         speech/raw_data/Spectrum.cpp
-        speech/HMMLexicon.cpp)
+        speech/HMMLexicon.cpp
+        speech/operators.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Main LINK_PUBLIC VLFeat)
@@ -53,7 +54,8 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         speech/raw_data/Spectrum.cpp
-        speech/HMMLexicon.cpp)
+        speech/HMMLexicon.cpp
+        speech/operators.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Filters LINK_PUBLIC VLFeat)
@@ -84,7 +86,8 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         speech/raw_data/Spectrum.cpp
-        speech/HMMLexicon.cpp)
+        speech/HMMLexicon.cpp
+        speech/operators.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Harmonics LINK_PUBLIC VLFeat)
@@ -115,7 +118,8 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         speech/raw_data/Spectrum.cpp
-        speech/HMMLexicon.cpp)
+        speech/HMMLexicon.cpp
+        speech/operators.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Harmonics_filter LINK_PUBLIC VLFeat)

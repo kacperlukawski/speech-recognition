@@ -84,6 +84,8 @@ namespace speech {
 
         /** Dimensionality of a single data vector */
         int dimensionality;
+        /** Number of mixture Gaussians used for the probability approximation */
+        static const unsigned int gaussians = 1;
         /** Collection of Hidden Markov Models, each one represents a single language unit */
         map<string, MultivariateGaussianHMM *> unitModels;
 
@@ -163,6 +165,28 @@ namespace speech {
             double operator()(const valarray<double> &observation);
 
             /**
+             * Calculates the probability of being in the state modelled
+             * by the k-th component of this likelihood function, when given vector was observed.
+             * @param k mixture
+             * @param observation observed acoustic vector
+             * @return probability of being in this state
+             * @throws std::out_of_range when given vector size is wrong
+             */
+            double operator()(unsigned int k, const valarray<double> &observation);
+
+            const double &getWeight(unsigned int k) const {
+                return weights[k];
+            }
+
+            const valarray<double> &getMeans(unsigned int k) const {
+                return means[k];
+            }
+
+            const valarray<double> &getVariances(unsigned int k) const {
+                return variances[k];
+            }
+
+            /**
              * Sets new weight of the selected Gaussian mixture
              * @param mixture
              * @param weight new weight
@@ -177,7 +201,7 @@ namespace speech {
             }
 
             /**
-             * Sets new means of the selected Gaussian mixture and dimension
+             * Sets new mean of the selected Gaussian mixture and dimension
              * @param mixture
              * @param dimension
              * @param mean new mean
@@ -193,6 +217,20 @@ namespace speech {
                 }
 
                 this->means[mixture][dimension] = mean;
+            }
+
+            /**
+             * Sets new means of the selected Gaussian mixture
+             * @param mixture
+             * @param means new means
+             * @throws std::out_of_range when given vector has wrong size
+             */
+            inline void setMeans(int mixture, valarray<double> means) {
+                if (means.size() != this->D) {
+                    throw std::out_of_range("Wrong size of given means vector");
+                }
+
+                this->means[mixture] = means;
             }
 
             /**
@@ -212,6 +250,20 @@ namespace speech {
                 }
 
                 this->variances[mixture][dimension] = variance;
+            }
+
+            /**
+             * Sets new variances of the selected Gaussian mixture
+             * @param mixture
+             * @param variances new variances
+             * @throws std::out_of_range when selected dimension does not exist
+             */
+            inline void setVariances(int mixture, valarray<double> variances) {
+                if (variances.size() != this->D) {
+                    throw std::out_of_range("Wrong size of given variance vector");
+                }
+
+                this->variances[mixture] = variances;
             }
 
         protected:
@@ -285,6 +337,83 @@ namespace speech {
             double *pi;
             /** Probabilities of transition from state X to Y */
             double **transition;
+
+            /**
+             * Initializes HMM parameters
+             */
+            void initialize();
+
+            /**
+             * Calculates forward terms of Baum-Welch algorithm
+             * @param utterance
+             * @return this->states * times array containting terms
+             */
+            double **calculateForwardTerms(Observation &utterance);
+
+            /**
+             * Calculates backward terms of Baum-Welch algorithm
+             * @param utterance
+             * @return this->states * times array containting terms
+             */
+            double **calculateBackwardTerms(Observation &utterance);
+
+            /**
+             * Calculates state s in time t occupation probabilities
+             * @param backward
+             * @param forward
+             * @param utterance
+             * @return this->states * times array containing the probabilities
+             */
+            double **calculatePosteriorOccupationProbabilities(double **forward, double **backward,
+                                                               Observation &utterance);
+
+            /**
+             * Calculates a posteriori probability given the utterance, that the process was in state s1 at time t,
+             * and subsequently in state s2 at time t+1
+             * @param backward
+             * @param forward
+             * @param utterance
+             * @return this->states * this->states * times array containing the probabilities
+             */
+            double ***calculatePosteriorTransitionProbabilities(double **forward, double **backward,
+                                                                Observation &utterance);
+
+            /**
+             * Calculates a posterior probability of m-th Gaussian in state s,
+             * given observation vector.
+             * @param m
+             * @param s
+             * @param vector
+             * @return probability
+             */
+            inline double calculatePosteriorProbability(unsigned int m, unsigned int s, const valarray<double> &vector);
+
+            /**
+             * @param vector an observed acoustic vector in (t + 1) time
+             */
+            inline double calculatePosteriorTransitionProbability(unsigned int s1, unsigned s2, unsigned t,
+                                                                  double **forward, double **backward,
+                                                                  const valarray<double> &vector);
+
+            /**
+             * Displays the transition matrix
+             */
+            void displayTransitionsMatrix() const;
+
+            /**
+             * Displays the intial probabilities vector
+             */
+            void displayPi() const;
+
+            /**
+             * Normalizes a transition matrix
+             */
+            void normalizeTransitionsMatrix();
+
+            /**
+             * Normalizes a initial probabilities vector
+             */
+            void normalizePiVector();
         };
     };
 

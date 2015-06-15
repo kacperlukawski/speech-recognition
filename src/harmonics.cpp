@@ -61,18 +61,35 @@ int main(int argc, char **argv) {
     HMMLexicon::Observation lorem;
     lorem.push_back(v1);
     lorem.push_back(v1);
-    lorem.push_back(v2);
-    lorem.push_back(v2);
+    lorem.push_back(v1);
+    lorem.push_back(v1);
+    lorem.push_back(-v1);
+    lorem.push_back(-v1);
+    lorem.push_back(-v1);
+    lorem.push_back(-v1);
+
+    HMMLexicon::Observation lorem_2;
+    lorem_2.push_back(v1 * 2.0);
+    lorem_2.push_back(v1 * 2.0);
+    lorem_2.push_back(v1 * 2.0);
+    lorem_2.push_back(v1 * - 2.0);
+    lorem_2.push_back(v1 * - 2.0);
+    lorem_2.push_back(v1 * - 2.0);
 
     HMMLexicon::Observation ipsum;
     ipsum.push_back(v2);
     ipsum.push_back(v2);
-    ipsum.push_back(v1);
-    ipsum.push_back(v1);
+    ipsum.push_back(v2);
+    ipsum.push_back(v2);
+    ipsum.push_back(-v2);
+    ipsum.push_back(-v2);
+    ipsum.push_back(-v2);
+    ipsum.push_back(-v2);
 
     HMMLexicon lexicon(dimensionality);
     lexicon.addUtterance(lorem, "lo|rem");
-    lexicon.addUtterance(ipsum, "ip|sum");
+//    lexicon.addUtterance(lorem_2, "lo|rem");
+//    lexicon.addUtterance(ipsum, "ip|sum");
     lexicon.fit();
 
     std::cout << "lexicon size: " << lexicon.size() << std::endl << std::endl;

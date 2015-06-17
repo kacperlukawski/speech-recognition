@@ -85,7 +85,7 @@ namespace speech {
         /** Dimensionality of a single data vector */
         int dimensionality;
         /** Number of mixture Gaussians used for the probability approximation */
-        static const unsigned int gaussians = 1;
+        static const unsigned int gaussians = 1; // TODO: move it out of the class
         /** Collection of Hidden Markov Models, each one represents a single language unit */
         map<string, MultivariateGaussianHMM *> unitModels;
 
@@ -121,24 +121,6 @@ namespace speech {
             }
 
             return std::move(chunks);
-        }
-
-        /**
-         * Init a single row of transitions matrix randomly. The sum of transitions in a single
-         * row sum up to 1 (so the overall probability is correct).
-         * @param transitions pointer to the array containing the transitions row
-         * @param number of states in the array
-         */
-        inline static void initTransitionsRandomly(double *transitions, int states) {
-            double sum = 0.0;
-            for (int i = 0; i < states; i++) {
-                transitions[i] = (double) random();
-                sum += transitions[i];
-            }
-
-            for (int i = 0; i < states; i++) {
-                transitions[i] /= sum;
-            }
         }
 
         /**
@@ -339,61 +321,14 @@ namespace speech {
             double **transition;
 
             /**
-             * Initializes HMM parameters
+             * Initializes the mixtures using random values, but based on the dataset
              */
-            void initialize();
+            void initializeMixtures();
 
             /**
-             * Calculates forward terms of Baum-Welch algorithm
-             * @param utterance
-             * @return this->states * times array containting terms
+             * Initializes model configuration (initial probabilities and transitions matrix)
              */
-            double **calculateForwardTerms(Observation &utterance);
-
-            /**
-             * Calculates backward terms of Baum-Welch algorithm
-             * @param utterance
-             * @return this->states * times array containting terms
-             */
-            double **calculateBackwardTerms(Observation &utterance);
-
-            /**
-             * Calculates state s in time t occupation probabilities
-             * @param backward
-             * @param forward
-             * @param utterance
-             * @return this->states * times array containing the probabilities
-             */
-            double **calculatePosteriorOccupationProbabilities(double **forward, double **backward,
-                                                               Observation &utterance);
-
-            /**
-             * Calculates a posteriori probability given the utterance, that the process was in state s1 at time t,
-             * and subsequently in state s2 at time t+1
-             * @param backward
-             * @param forward
-             * @param utterance
-             * @return this->states * this->states * times array containing the probabilities
-             */
-            double ***calculatePosteriorTransitionProbabilities(double **forward, double **backward,
-                                                                Observation &utterance);
-
-            /**
-             * Calculates a posterior probability of m-th Gaussian in state s,
-             * given observation vector.
-             * @param m
-             * @param s
-             * @param vector
-             * @return probability
-             */
-            inline double calculatePosteriorProbability(unsigned int m, unsigned int s, const valarray<double> &vector);
-
-            /**
-             * @param vector an observed acoustic vector in (t + 1) time
-             */
-            inline double calculatePosteriorTransitionProbability(unsigned int s1, unsigned s2, unsigned t,
-                                                                  double **forward, double **backward,
-                                                                  const valarray<double> &vector);
+            void initializeModel();
 
             /**
              * Displays the transition matrix
@@ -404,16 +339,6 @@ namespace speech {
              * Displays the intial probabilities vector
              */
             void displayPi() const;
-
-            /**
-             * Normalizes a transition matrix
-             */
-            void normalizeTransitionsMatrix();
-
-            /**
-             * Normalizes a initial probabilities vector
-             */
-            void normalizePiVector();
         };
     };
 

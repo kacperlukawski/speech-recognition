@@ -390,26 +390,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 }
             }
 
-            // TODO: Accumulate all values
-
-            // TODO: REMOVE THIS DEBUG CODE BELOW
-//        std::cout << "DEBUG A[i,j]:\n";
-//        for (int i = 0; i < this->states; ++i) {
-//            for (int j = 0; j < this->states; ++j) {
-//                // calculate a_ij
-//                double n = 0.0;
-//                double d = 0.0;
-//                for (int t = 0; t < T; ++t) {
-//                    n += transitions[i][j][t];
-//                    d += occupation[i][0][t]; // there is only one mixture, so let leave it hardcoded
-//                }
-//
-//                std::cout << (n / d) << '\t';
-//            }
-//            std::cout << std::endl;
-//        }
-//        std::cout << std::endl;
-
             // Remove the temporary structure for transition estimates
             for (int s1 = 0; s1 < this->states; ++s1) {
                 for (int s2 = 0; s2 < this->states; ++s2) {
@@ -437,32 +417,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
             delete[] backward;
         }
 
-//    double sum = 0.0;
-//    std::cout << "OCCUPATIONS:" << std::endl;
-//    for (int s = 0; s < this->states; ++s) {
-//        for (int m = 0; m < this->M; ++m) {
-//            std::cout << occupationsAcc[s][m] << ' ';
-//            sum += occupationsAcc[s][m];
-//        }
-//        std::cout << std::endl;
-//    }
-//    std::cout << "\tOCCUPATIONS SUM = " << sum << std::endl;
-//
-//    sum = 0.0;
-//    std::cout << "TRANSITIONS:" << std::endl;
-//    for (int s1 = 0; s1 < this->states; ++s1) {
-//        double rowSum = 0.0;
-//        for (int s2 = 0; s2 < this->states; ++s2) {
-//            std::cout << transitionsAcc[s1][s2] << ' ';
-//            sum += transitionsAcc[s1][s2];
-//            rowSum += transitionsAcc[s1][s2];
-//        }
-//        std::cout << "\tROW SUM = " << rowSum << std::endl;
-//    }
-//    std::cout << "\tTRANSITIONS SUM = " << sum << std::endl;
-
-        // TODO: check why using these values lead to really low or really high values insted of returning something summing up to 1
-
         // Update initial probabilities
         for (int s = 0; s < this->states; ++s) {
             if (utterancesNb == 0) {
@@ -483,8 +437,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                     globalOccupation += occupationsAcc[s1][m];
                 }
 
-//            std::cout << "transitionsAcc[" << s1 << "][" << s2 << "] = " << transitionsAcc[s1][s2] << std::endl;
-//            std::cout << "globalOccupation = " << globalOccupation << std::endl;
                 if (globalOccupation == 0.0) {
                     // If the global occupation is equal to zero, then set the transition probability to zero,
                     // in order to avoid having NaNs due to division by zero.
@@ -664,5 +616,16 @@ void speech::HMMLexicon::MultivariateGaussianHMM::normalizeTransitionsMatrix() {
             this->transition[s1][s2] += EPS;
             this->transition[s1][s2] /= sum; // TODO: check if normalization makes a problem
         }
+    }
+}
+
+void speech::HMMLexicon::MultivariateGaussianHMM::normalizePi() {
+    double sum = 0.0;
+    for (int s = 0; s < this->states; ++s) {
+        sum += this->pi[s];
+    }
+
+    for (int s = 0; s < this->states; ++s) {
+        this->pi[s] /= sum;
     }
 }

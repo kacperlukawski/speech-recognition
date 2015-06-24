@@ -368,16 +368,7 @@ namespace speech {
             /**
              * Normalizes a vector of initial probabilities of being in different states
              */
-            void normalizePi() {
-                double sum = 0.0;
-                for (int s = 0; s < this->states; ++s) {
-                    sum += this->pi[s];
-                }
-
-                for (int s = 0; s < this->states; ++s) {
-                    this->pi[s] /= sum;
-                }
-            }
+            void normalizePi();
         };
     };
 

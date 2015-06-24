@@ -25,6 +25,8 @@ using std::map;
 
 using speech::raw_data::DataSource;
 
+#include "operators.h"
+
 namespace speech {
 
     /**
@@ -331,6 +333,22 @@ namespace speech {
             void initializeModel();
 
             /**
+             * Displays Gaussians
+             * TODO: move this code out of the headers
+             */
+            void displayHiddenStates() const {
+                for (int s = 0; s < this->states; ++s) {
+                    GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(s);
+                    for (int m = 0; m < this->M; ++m) {
+                        std::cout << "state " << s << " / " << m << " info" << std::endl;
+                        std::cout << "weight: " << stateGMM.getWeight(m) << std::endl;
+                        std::cout << "means: " << stateGMM.getMeans(m) << std::endl;
+                        std::cout << "variances: " << stateGMM.getVariances(m) << std::endl;
+                    }
+                }
+            }
+
+            /**
              * Displays the transition matrix
              */
             void displayTransitionsMatrix() const;
@@ -339,6 +357,27 @@ namespace speech {
              * Displays the intial probabilities vector
              */
             void displayPi() const;
+
+            /**
+             * Normalizes transitions matrix. Numbers calculated by the Baum-Welch
+             * algorithm are just expected numbers of transitions from state i to state j
+             * relative to the expected total number of transitions away from state i.
+             */
+            void normalizeTransitionsMatrix();
+
+            /**
+             * Normalizes a vector of initial probabilities of being in different states
+             */
+            void normalizePi() {
+                double sum = 0.0;
+                for (int s = 0; s < this->states; ++s) {
+                    sum += this->pi[s];
+                }
+
+                for (int s = 0; s < this->states; ++s) {
+                    this->pi[s] /= sum;
+                }
+            }
         };
     };
 

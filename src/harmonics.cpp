@@ -62,12 +62,13 @@ int main(int argc, char **argv) {
     lorem.push_back(v1);
 //    lorem.push_back(v1);
 //    lorem.push_back(v1);
-//    lorem.push_back(v1);
+    lorem.push_back(v1);
 //    lorem.push_back(-v1);
 //    lorem.push_back(-v1);
 //    lorem.push_back(-v1);
-    lorem.push_back(-v1);
-    lorem.push_back(0.0 * v1); // silence at the end
+    lorem.push_back(-v2);
+//    lorem.push_back(0.0 * v1); // silence at the end
+    lorem.push_back(2.7 * v2 - 0.4 * v1);
 
     HMMLexicon::Observation lorem_2;
     lorem_2.push_back(v1 * 2.0);

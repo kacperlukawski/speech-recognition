@@ -129,7 +129,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
     this->initializeModel();
 
     // TODO: model should stop when converged, change the loop into while!
-    for (int iteration = 0; iteration < 100; ++iteration) {
+    for (int iteration = 0; iteration < 1000; ++iteration) {
         // Create temporary structures used to accumulate data between iterations
         double *initialAcc = new double[this->states];
         double **transitionsAcc = new double *[this->states];
@@ -262,12 +262,12 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                         double vectorProbabilityInMixture = stateGMM(m, vector);
                         occupation[j][m][t] = globalOccupation * (vectorProbabilityInMixture / vectorProbability);
 
-                        std::cout << "forward[" << j << "][" << t << "] = " << forward[j][t] << std::endl;
-                        std::cout << "backward[" << j << "][" << t << "] = " << backward[j][t] << std::endl;
-                        std::cout << "vectorProbabilityInMixture = " << vectorProbabilityInMixture << std::endl;
-                        std::cout << "vectorProbability = " << vectorProbability << std::endl;
-                        std::cout << "occupation[" << j << "][" << m << "][" << t << "] = " << occupation[j][m][t] <<
-                                                                                               std::endl << std::endl;
+//                        std::cout << "forward[" << j << "][" << t << "] = " << forward[j][t] << std::endl;
+//                        std::cout << "backward[" << j << "][" << t << "] = " << backward[j][t] << std::endl;
+//                        std::cout << "vectorProbabilityInMixture = " << vectorProbabilityInMixture << std::endl;
+//                        std::cout << "vectorProbability = " << vectorProbability << std::endl;
+//                        std::cout << "occupation[" << j << "][" << m << "][" << t << "] = " << occupation[j][m][t] <<
+//                                                                                               std::endl << std::endl;
                     }
                 }
             }
@@ -378,12 +378,12 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                         valarray<double> product = difference * difference;
                         weightedVarianceAcc[s][m] += occupation[s][m][t] * product;
 
-                        std::cout << "\tWVA weightedVarianceAcc[" << s << "][" << m << "] = " << weightedVarianceAcc[s][m] << std::endl;
-                        std::cout << "\t\tmixtureMean = " << mixtureMean << std::endl;
-                        std::cout << "\t\tobservation[" << t << "] = " << observation[t] << std::endl;
-                        std::cout << "\t\tdifference = " << difference << std::endl;
-                        std::cout << "\t\tproduct = " << product << std::endl;
-                        std::cout << "\t\toccupation[" << s << "][" << m << "][" << t << "] = " << occupation[s][m][t] << std::endl;
+//                        std::cout << "\tWVA weightedVarianceAcc[" << s << "][" << m << "] = " << weightedVarianceAcc[s][m] << std::endl;
+//                        std::cout << "\t\tmixtureMean = " << mixtureMean << std::endl;
+//                        std::cout << "\t\tobservation[" << t << "] = " << observation[t] << std::endl;
+//                        std::cout << "\t\tdifference = " << difference << std::endl;
+//                        std::cout << "\t\tproduct = " << product << std::endl;
+//                        std::cout << "\t\toccupation[" << s << "][" << m << "][" << t << "] = " << occupation[s][m][t] << std::endl;
                     }
 
                     occupationsAcc[s][m] += sum;
@@ -511,19 +511,43 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
 
 void speech::HMMLexicon::MultivariateGaussianHMM::initializeMixtures() {
     // Get the minimal and maximal values of each dimension of the input vectors.
+    int observationsNb = 0;
     valarray<double> min(0.0, this->dimensionality);
     valarray<double> max(0.0, this->dimensionality);
+    valarray<double> mean(0.0, this->dimensionality);
+    valarray<double> variance(0.0, this->dimensionality);
     for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
         Observation &observation = *it;
         for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
             valarray<double> &vector = *vectorIt;
             min = minItems(min, vector);
             max = maxItems(max, vector);
+            observationsNb++;
+        }
+    }
+
+    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
+        Observation &observation = *it;
+        for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
+            valarray<double> &vector = *vectorIt;
+            mean += vector / (double) observationsNb;
+        }
+    }
+
+    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
+        Observation &observation = *it;
+        for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
+            valarray<double> &vector = *vectorIt;
+            valarray<double> difference = vector - mean;
+            valarray<double> product = difference * difference;
+            variance += product / (double) observationsNb;
         }
     }
 
     std::cout << "min vector: " << min << std::endl;
     std::cout << "max vector: " << max << std::endl;
+    std::cout << "mean vector: " << mean << std::endl;
+    std::cout << "variance: " << variance << std::endl;
 
     // For each hidden state representing language unit, generate each mixture mean randomly, but from the range
     // defined by min and max value of each dimension. Variance is defined as range / M, where M is number of mixtures
@@ -534,17 +558,17 @@ void speech::HMMLexicon::MultivariateGaussianHMM::initializeMixtures() {
         for (int m = 0; m < this->M; ++m) {
             stateGMM.setWeight(m, 1.0 / this->M);
             for (int d = 0; d < this->dimensionality; ++d) {
-//                double range = max[d] - min[d];
-//                double variance = range / (this->states * this->M); // TODO: use some smarter way to initialize the variance
-//                double mean = (rand() / (double) RAND_MAX) * range + min[d];
+                // TODO: random means lead to long time of running - it is better idea to use KMeans to initialize or even use the initial data
+                double range = max[d] - min[d];
+                double currentMean = (rand() / (double) RAND_MAX) * range + min[d];
 
                 auto observation = this->utterances->at(0);
                 valarray<double>& vector = observation[s];
-                double variance = 1.0;
-                double mean = vector[d];
+                double currentVariance = variance[d];//1.0;
+//                double currentMean = vector[d];
 
-                stateGMM.setMean(m, d, mean);
-                stateGMM.setVariance(m, d, variance);
+                stateGMM.setMean(m, d, currentMean);
+                stateGMM.setVariance(m, d, currentVariance);
             }
         }
     }

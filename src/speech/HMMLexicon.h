@@ -87,7 +87,7 @@ namespace speech {
         /** Dimensionality of a single data vector */
         int dimensionality;
         /** Number of mixture Gaussians used for the probability approximation */
-        static const unsigned int gaussians = 1; // TODO: move it out of the class
+        static const unsigned int gaussians = 2; // TODO: move it out of the class
         /** Collection of Hidden Markov Models, each one represents a single language unit */
         map<string, MultivariateGaussianHMM *> unitModels;
 

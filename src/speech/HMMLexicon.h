@@ -40,8 +40,9 @@ namespace speech {
         /**
          * Constructs an object
          * @param dimensionality dimensionality of a single acoustic vector
+         * @param gaussians number of Gaussian mixtures in a single state of HMM
          */
-        HMMLexicon(int dimensionality);
+        HMMLexicon(int dimensionality, unsigned int gaussians = 16);
 
         /**
          * Destructs the object
@@ -79,15 +80,13 @@ namespace speech {
             return unitModels.size();
         }
 
-//    protected:
-//    TODO: make fields private / protected
-//    private:
+    protected:
         class MultivariateGaussianHMM;
 
         /** Dimensionality of a single data vector */
         int dimensionality;
         /** Number of mixture Gaussians used for the probability approximation */
-        static const unsigned int gaussians = 2; // TODO: move it out of the class
+        unsigned int gaussians;
         /** Collection of Hidden Markov Models, each one represents a single language unit */
         map<string, MultivariateGaussianHMM *> unitModels;
 
@@ -137,7 +136,7 @@ namespace speech {
              * @param M number of Gaussians
              * @param D dimensionality of a single input vector
              */
-            explicit GMMLikelihoodFunction(unsigned int M, unsigned int D);
+            GMMLikelihoodFunction(unsigned int M, unsigned int D);
 
             /**
              * Calculates the probability of being in the state modelled
@@ -158,14 +157,26 @@ namespace speech {
              */
             double operator()(unsigned int k, const valarray<double> &observation);
 
+            /**
+             * Gets a weight of selected mixture
+             * @param k mixture number
+             */
             const double &getWeight(unsigned int k) const {
                 return weights[k];
             }
 
+            /**
+             * Get means of selected mixture
+             * @param k mixture number
+             */
             const valarray<double> &getMeans(unsigned int k) const {
                 return means[k];
             }
 
+            /**
+             * Get variances of selected mixture
+             * @param k mixture number
+             */
             const valarray<double> &getVariances(unsigned int k) const {
                 return variances[k];
             }
@@ -279,7 +290,7 @@ namespace speech {
              * @param states number of hidden states
              * @param M number of Gaussian in each GMM
              */
-            explicit MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states, unsigned int M);
+            MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states, unsigned int M);
 
             /**
              * Destructs the object
@@ -307,6 +318,12 @@ namespace speech {
             double predict(const Observation &utterance);
 
         protected:
+            /** An upper limit of iterations for the model in learning phase */
+            static const unsigned int MAX_ITERATIONS = 10000;
+            /** Low value used to avoid mathematical errors */
+            static constexpr double EPS = 1e-64;
+            /** Minimal variance of a single dimension in the Gaussian mixture */
+            static constexpr double MIN_VARIANCE = 1e-16;
             /** Dimensionality of a single input vector */
             unsigned int dimensionality;
             /** Number of hidden states (language units, like phones) */
@@ -334,19 +351,8 @@ namespace speech {
 
             /**
              * Displays Gaussians
-             * TODO: move this code out of the headers
              */
-            void displayHiddenStates() const {
-                for (int s = 0; s < this->states; ++s) {
-                    GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(s);
-                    for (int m = 0; m < this->M; ++m) {
-                        std::cout << "state " << s << " / " << m << " info" << std::endl;
-                        std::cout << "weight: " << stateGMM.getWeight(m) << std::endl;
-                        std::cout << "means: " << stateGMM.getMeans(m) << std::endl;
-                        std::cout << "variances: " << stateGMM.getVariances(m) << std::endl;
-                    }
-                }
-            }
+            void displayHiddenStates() const;
 
             /**
              * Displays the transition matrix

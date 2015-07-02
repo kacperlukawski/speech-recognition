@@ -46,7 +46,10 @@ using speech::HMMLexicon;
  * @see http://en.wikipedia.org/wiki/Spectrogram
  */
 int main(int argc, char **argv) {
-    const int dimensionality = 3;
+    std::cout.precision(15);
+
+    const int dimensionality = 3; // dimenstionality of a single data vector
+    const int gaussians = 16; // number of Gaussians in a single state of HMM
 
     valarray<double> v1(0.0, dimensionality);
     v1[0] = 1.0;
@@ -58,11 +61,16 @@ int main(int argc, char **argv) {
     v2[1] = 1.5;
     v2[2] = -50;
 
+    valarray<double> v3(0.0, dimensionality);
+    v3[0] = 17.0;
+    v3[1] = -1.5;
+    v3[2] = 1.354;
+
     HMMLexicon::Observation lorem;
     lorem.push_back(v1);
 //    lorem.push_back(v1);
 //    lorem.push_back(v1);
-    lorem.push_back(v1);
+//    lorem.push_back(v1);
 //    lorem.push_back(-v1);
 //    lorem.push_back(-v1);
 //    lorem.push_back(-v1);
@@ -72,31 +80,30 @@ int main(int argc, char **argv) {
 
     HMMLexicon::Observation lorem_2;
     lorem_2.push_back(v1 * 2.0);
-    lorem_2.push_back(v1 * 2.0);
-    lorem_2.push_back(v1 * 2.0);
-    lorem_2.push_back(v1 * - 2.0);
-    lorem_2.push_back(v1 * - 2.0);
+//    lorem_2.push_back(v1 * 2.0);
+//    lorem_2.push_back(v1 * 2.0);
+//    lorem_2.push_back(v1 * - 2.0);
+//    lorem_2.push_back(v1 * - 2.0);
     lorem_2.push_back(v1 * - 2.0);
 
     HMMLexicon::Observation ipsum;
-    ipsum.push_back(v2);
-    ipsum.push_back(v2);
-    ipsum.push_back(v2);
-    ipsum.push_back(v2);
-    ipsum.push_back(-v2);
-    ipsum.push_back(-v2);
-    ipsum.push_back(-v2);
-    ipsum.push_back(-v2);
+    ipsum.push_back(v3);
+    ipsum.push_back(v3);
+    ipsum.push_back(v3);
+    ipsum.push_back(1.75 * v2);
+    ipsum.push_back(1.75 * v2);
+    ipsum.push_back(1.75 * v2);
+    lorem_2.push_back(v1 * 10.0);
 
-    HMMLexicon lexicon(dimensionality);
+    HMMLexicon lexicon(dimensionality, gaussians);
     lexicon.addUtterance(lorem, "lo|rem");
-//    lexicon.addUtterance(lorem_2, "lo|rem");
-//    lexicon.addUtterance(ipsum, "ip|sum");
+    lexicon.addUtterance(lorem_2, "lo|rem");
+    lexicon.addUtterance(ipsum, "ip|sum");
     lexicon.fit();
 
     std::cout << "lexicon size: " << lexicon.size() << std::endl << std::endl;
-
     std::cout << "lexicon.predict(lorem) = " << lexicon.predict(lorem) << std::endl;
+    std::cout << "lexicon.predict(lorem_2) = " << lexicon.predict(lorem_2) << std::endl;
     std::cout << "lexicon.predict(ipsum) = " << lexicon.predict(ipsum) << std::endl;
 
 //    int gaussians = 3;

@@ -76,10 +76,11 @@ template<typename FrameType>
 void speech::raw_data::WaveFileDataSource<FrameType>::saveToFile(string _fileName) {
     FILE *outfile = fopen(_fileName.c_str(), "wb");
 
+    showFileInfo();
     fwrite(meta_data, 1, sizeof(*meta_data), outfile);
 
     for (auto it = this->getSamplesIteratorBegin(); it != this->getSamplesIteratorEnd(); ++it) {
-        fwrite(it->getValues().get(), 1, it->getSize(), outfile);
+        fwrite(it->getValues().get(), 1, it->getSize() * sizeof(FrameType), outfile);
     }
     fclose(outfile);
 }
@@ -94,15 +95,13 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
 
     fread(meta_data, 1, sizeof(*meta_data), file);
 
-    showFileInfo();
-
     const unsigned int BUFFER_SIZE = getBufferSize();
 
     int numberOfRead = 0;
 
     while (!feof(file)) {
         std::shared_ptr<FrameType> buffer(new FrameType[BUFFER_SIZE], std::default_delete<FrameType[]>());
-        numberOfRead = fread(buffer.get(), 1, BUFFER_SIZE, file);
+        numberOfRead = fread(buffer.get(), 1, BUFFER_SIZE, file) / sizeof(FrameType);
 
         pair<shared_ptr<FrameType>, int> mono;
         if (convertToMono) {
@@ -166,8 +165,9 @@ void speech::raw_data::WaveFileDataSource<FrameType>::addSample(DataSample<Frame
     DataSource<FrameType>::addSample(sample);
 
     int sampleSize = sample.getSize();
-    meta_data->chunk_size += sampleSize;
-    meta_data->subchunk2_size += sampleSize * meta_data->num_channels * meta_data->bits_per_sample / 8;
+    int sizeToAdd = sampleSize * meta_data->num_channels * meta_data->bits_per_sample / 8;
+    meta_data->chunk_size += sizeToAdd;
+    meta_data->subchunk2_size += sizeToAdd;
 }
 
 template

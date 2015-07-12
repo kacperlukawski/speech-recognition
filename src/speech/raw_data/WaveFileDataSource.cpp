@@ -6,27 +6,51 @@
 #include "WaveFileDataSource.h"
 
 template<typename FrameType>
+speech::raw_data::wav_header speech::raw_data::WaveFileDataSource<FrameType>::createPcmWavHeader(short numChannels,
+                                                                                                 int sampleRate,
+                                                                                                 short bitsPerSample) {
+    wav_header header = {
+            {'R', 'I', 'F', 'F'},                               //chunk_id
+            36,                                                 //chunk_size
+            {'W', 'A', 'V', 'E'},                               //format
+            {'f', 'm', 't', ' '},                               //subchunk1_id
+            16,                                                 //subchunk1_size
+            1,                                                  //audio_format
+            numChannels,                                        //num_channels
+            sampleRate,                                         //sample_rate
+            sampleRate * numChannels * bitsPerSample / 8,       //byte_rate
+            numChannels * bitsPerSample / 8,                    //block_align
+            bitsPerSample,                                      //bits_per_sample
+            {'d', 'a', 't', 'a'},                               //subchunk2_id
+            0                                                   //subchunk2_size
+    };
+
+    return header;
+}
+
+template<typename FrameType>
 speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName, int sampleLength)
         : DataSource<FrameType>() {
     this->fileName = _fileName;
     this->sampleLength = sampleLength;
     meta_data = new wav_header;
     readFromFile(true);
-//    showFileInfo();
+    showFileInfo();
 }
 
 template<typename FrameType>
 void speech::raw_data::WaveFileDataSource<FrameType>::showFileInfo() {
-    std::cout<<"meta_data size:\t\t\t\t"<<sizeof(*meta_data)<<std::endl;
-    std::cout<<"chunk size:\t\t\t\t"<<meta_data->chunk_size<<std::endl;
-    std::cout<<"subchunk1_size:\t\t\t"<<meta_data->subchunk1_size<<std::endl;
-    std::cout<<"subchunk2_size:\t\t\t"<<meta_data->subchunk2_size<<std::endl;
-    std::cout<<"audio_format:\t\t\t"<<meta_data->audio_format<<std::endl;
-    std::cout<<"num_channels:\t\t\t"<<meta_data->num_channels<<std::endl;
-    std::cout<<"sample_rate:\t\t\t"<<meta_data->sample_rate<<std::endl;
-    std::cout<<"byte_rate:\t\t\t\t"<<meta_data->byte_rate<<std::endl;
-    std::cout<<"block_align:\t\t\t"<<meta_data->block_align<<std::endl;
-    std::cout<<"bits_per_sample:\t\t"<<meta_data->bits_per_sample<<std::endl;
+    std::cout << "meta_data size:\t\t\t\t" << sizeof(*meta_data) << std::endl;
+    std::cout << "chunk size:\t\t\t\t" << meta_data->chunk_size << std::endl;
+    std::cout << "subchunk1_size:\t\t\t" << meta_data->subchunk1_size << std::endl;
+    std::cout << "subchunk2_size:\t\t\t" << meta_data->subchunk2_size << std::endl;
+    std::cout << "audio_format:\t\t\t" << meta_data->audio_format << std::endl;
+    std::cout << "num_channels:\t\t\t" << meta_data->num_channels << std::endl;
+    std::cout << "sample_rate:\t\t\t" << meta_data->sample_rate << std::endl;
+    std::cout << "byte_rate:\t\t\t\t" << meta_data->byte_rate << std::endl;
+    std::cout << "block_align:\t\t\t" << meta_data->block_align << std::endl;
+    std::cout << "bits_per_sample:\t\t" << meta_data->bits_per_sample << std::endl;
+    std::cout << std::endl;
 }
 
 template<typename FrameType>
@@ -70,6 +94,8 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
 
     fread(meta_data, 1, sizeof(*meta_data), file);
 
+    showFileInfo();
+
     const unsigned int BUFFER_SIZE = getBufferSize();
 
     int numberOfRead = 0;
@@ -89,6 +115,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
         buffer.reset(); // TODO: use offset and allow to change the windowing
     }
 
+    //
     if (convertToMono && meta_data->num_channels > 1) {
         meta_data->subchunk2_size /= meta_data->num_channels;
         meta_data->chunk_size = 36 + meta_data->subchunk2_size;
@@ -132,6 +159,15 @@ template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
     // TODO: fix wrong Fourier transform when buffer size is not a power of 2
     return 1024; //meta_data->byte_rate * sampleLength / 1000;
+}
+
+template<typename FrameType>
+void speech::raw_data::WaveFileDataSource<FrameType>::addSample(DataSample<FrameType> sample) {
+    DataSource<FrameType>::addSample(sample);
+
+    int sampleSize = sample.getSize();
+    meta_data->chunk_size += sampleSize;
+    meta_data->subchunk2_size += sampleSize * meta_data->num_channels * meta_data->bits_per_sample / 8;
 }
 
 template

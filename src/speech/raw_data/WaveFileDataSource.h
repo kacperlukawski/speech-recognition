@@ -79,8 +79,8 @@ namespace speech {
         protected:
             /** Path to the WAV file */
             string fileName;
-            /** Length of the single sample in milliseconds */
-            int sampleLength;
+
+            virtual unsigned int getDataSampleSize(int sizeInMilliseconds);
         private:
             wav_header *meta_data;
 

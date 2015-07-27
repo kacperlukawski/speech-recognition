@@ -30,7 +30,7 @@ speech::raw_data::wav_header speech::raw_data::WaveFileDataSource<FrameType>::cr
 
 template<typename FrameType>
 speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _fileName, int sampleLength)
-        : DataSource<FrameType>() {
+        : DataSource<FrameType>(sampleLength) {
     this->fileName = _fileName;
     this->sampleLength = sampleLength;
     meta_data = new wav_header;
@@ -54,7 +54,8 @@ void speech::raw_data::WaveFileDataSource<FrameType>::showFileInfo() {
 }
 
 template<typename FrameType>
-speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data, int sampleLength) {
+speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(wav_header _meta_data, int sampleLength)
+        : DataSource<FrameType>(sampleLength) {
     this->meta_data = new wav_header;
     memcpy(this->meta_data, &_meta_data, sizeof(*this->meta_data));
     this->sampleLength = sampleLength;
@@ -110,8 +111,8 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
             mono = std::make_pair(buffer, numberOfRead);
         }
 
-        this->samples->push_back(DataSample<FrameType>(mono.second, sampleLength, mono.first));
-        buffer.reset(); // TODO: use offset and allow to change the windowing
+        this->samples->push_back(DataSample<FrameType>(mono.second, this->sampleLength, mono.first));
+        buffer.reset();
     }
 
     //
@@ -156,8 +157,14 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    return meta_data->byte_rate * sampleLength / 1000;
+    return getDataSampleSize(this->sampleLength);
 }
+
+template<typename FrameType>
+unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getDataSampleSize(int sizeInMilliseconds) {
+    return meta_data->byte_rate * sizeInMilliseconds / 1000;
+}
+
 
 template<typename FrameType>
 void speech::raw_data::WaveFileDataSource<FrameType>::addSample(DataSample<FrameType> sample) {

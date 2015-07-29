@@ -49,10 +49,9 @@ using speech::vectorizer::MFCCVectorizer;
 
 #include "speech/helpers.h"
 
-
-
 int main(int argc, char **argv) {
-
+    // Get the list of the words' transcriptions and assigned files
+    // Load all the files and 
 
     return 0;
 }

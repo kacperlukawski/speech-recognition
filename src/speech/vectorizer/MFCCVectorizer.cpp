@@ -109,7 +109,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
             result[i] = cepstrum[i];
         }
 
-        Spectrum spectrum(frequencySample); // TODO: change energy calculation
+        Spectrum spectrum(frequencySample); // TODO: change energy calculation - it should be a logarithm of the sum
         result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / frequencySample.getSize();
         if (result[this->cepstralCoefficientsNumber] > maxEnergy) {
             maxEnergy = result[this->cepstralCoefficientsNumber];

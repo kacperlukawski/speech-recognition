@@ -10,10 +10,15 @@ speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
 template<typename FrameType>
 FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
     std::shared_ptr<FrameType> values = vector.getValues();
-    valarray<complex<double>> comp(vector.getSize());
+
+    int nearestTwoPower = pow(2, ceil(log(vector.getSize())/log(2)));
+    valarray<complex<double>> comp(nearestTwoPower);
 
     for (int i = 0; i < vector.getSize(); ++i) {
         comp[i] = complex<double>(((double) values.get()[i]) / MAX_VALUE, 0.0);
+    }
+    for (int i = vector.getSize(); i < nearestTwoPower; ++i) {
+        comp[i] = complex<double>(0.0, 0.0);
     }
 
     fft(comp);
@@ -34,10 +39,14 @@ DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::revers
     std::shared_ptr<double> amplitude = vector.getAmplitude();
     std::shared_ptr<double> phase = vector.getPhase();
 
-    valarray<complex<double>> comp(vector.getSize());
+    int nearestTwoPower = pow(2, ceil(log(vector.getSize())/log(2)));
+    valarray<complex<double>> comp(nearestTwoPower);
 
     for (int i = 0; i < vector.getSize(); ++i) {
         comp[i] = calculateSignal(amplitude.get()[i], phase.get()[i]);
+    }
+    for (int i = vector.getSize(); i < nearestTwoPower; ++i) {
+        comp[i] = complex<double>(0.0, 0.0);
     }
 
     ifft(comp);

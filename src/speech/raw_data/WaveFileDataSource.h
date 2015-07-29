@@ -65,11 +65,22 @@ namespace speech {
 
             virtual wav_header getMetaData();
 
+            /**
+             * Creates wave header representing pcm wave file with empty data.
+             *
+             * @param numChannels
+             * @param sampleRate
+             * @param bitsPerSample
+             */
+            static wav_header createPcmWavHeader(short numChannels, int sampleRate, short bitsPerSample);
+
+            virtual void addSample(DataSample<FrameType> sample);
+
         protected:
             /** Path to the WAV file */
             string fileName;
-            /** Length of the single sample in milliseconds */
-            int sampleLength;
+
+            virtual unsigned int getDataSampleSize(int sizeInMilliseconds);
         private:
             wav_header *meta_data;
 

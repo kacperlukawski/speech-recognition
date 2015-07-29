@@ -1,8 +1,9 @@
 #include "DataSource.h"
 
 template<typename FrameType>
-speech::raw_data::DataSource<FrameType>::DataSource() {
+speech::raw_data::DataSource<FrameType>::DataSource(int sampleLength) {
     samples = std::make_shared<list<DataSample<FrameType>>>();
+    this->sampleLength = sampleLength;
 }
 
 template<typename FrameType>
@@ -23,6 +24,18 @@ typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<Fram
 template<typename FrameType>
 typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<FrameType>::getSamplesIteratorEnd() {
     return samples->end();
+}
+
+template<typename FrameType>
+typename speech::raw_data::DataSource<FrameType>::iterator speech::raw_data::DataSource<FrameType>::getSamplesOffsetIteratorEnd(
+        int windowSizeInMilliseconds, int offsetInMilliseconds) {
+    return DataSource::iterator(*this, samples->end(), offsetInMilliseconds, windowSizeInMilliseconds, true);
+}
+
+template<typename FrameType>
+typename speech::raw_data::DataSource<FrameType>::iterator speech::raw_data::DataSource<FrameType>::getSamplesOffsetIteratorBegin(
+        int windowSizeInMilliseconds, int offsetInMilliseconds) {
+    return DataSource<FrameType>::iterator(*this, samples->begin(), offsetInMilliseconds, windowSizeInMilliseconds);
 }
 
 template

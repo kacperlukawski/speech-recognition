@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.8.11)
 project(SPEECH_RECOGNITION)
 
 # enable c++11 standard and pthread library
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -pthread -fopenmp -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -pthread -fopenmp")
 
 # set "build" as a directory for executable files
 set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)

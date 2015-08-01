@@ -375,6 +375,52 @@ namespace speech {
              * Normalizes a vector of initial probabilities of being in different states
              */
             void normalizePi();
+
+        private:
+            /**
+             * Calculates forward probabilities of each vector from the observation and each state of HMM
+             * @param forward an array storing the values of forward probabilities
+             * @param observation collection of observed vectors
+             */
+            void calculateForwardProbabilities(double **forward, Observation &observation);
+
+            /**
+             * Calculates backward probabilities of each vector from the observation and each state of HMM
+             * @param backward an array storing the values of backward probabilities
+             * @param observation collection of observed vectors
+             */
+            void calculateBackwardProbabilities(double **backward, Observation &observation);
+
+            /**
+             * Calculates the probabilities of being in each state in each time frame
+             * @param occcupation an array where store the probabilities in
+             * @param forward forward probablities
+             * @param backward backward probabilities
+             * @param observation collection of observed vectors
+             */
+            void calculateOccupationEstimates(double ***occupation, double **forward, double **backward,
+                                              Observation &observation);
+
+            /**
+             * Calculates the probabilties of transition from each state into another one
+             * @param transitions an array where store the probabilities in
+             * @param occcupation state occupation probabilities
+             * @param forward forward probablities
+             * @param backward backward probabilities
+             * @param observation collection of observed vectors
+             */
+            void calculateTransitionEstimates(double ***transitions, double **forward, double **backward,
+                                              double ***occupation, Observation &observation);
+
+            /**
+             * Updates the parameters of Gaussian mixtures
+             * @param occupationsAcc accumulated occupation probabilities
+             * @param weightedObservationAcc weighted means of the observation using the importance of the mixtures
+             * @param weightedVarianceAcc weighted variance using the importance of the mixtures
+             */
+            void updateMixtures(double **occupationsAcc, valarray<double> **weightedObservationAcc,
+                                valarray<double> **weightedVarianceAcc);
+
         };
     };
 

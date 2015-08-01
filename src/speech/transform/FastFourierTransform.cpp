@@ -1,6 +1,7 @@
 #include "FastFourierTransform.h"
 #include <cmath>
 #include <limits>
+#include "./window/DefaultWindow.h"
 
 template<typename FrameType>
 speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
@@ -9,13 +10,23 @@ speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
 
 template<typename FrameType>
 FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
+    //TODO
+    Window *window = new speech::transform::window::DefaultWindow(vector.getSize());
+    auto result = transform(vector, window);
+    delete window;
+    return result;
+}
+
+template<typename FrameType>
+FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector,
+                                                                                         Window *window) {
     std::shared_ptr<FrameType> values = vector.getValues();
 
-    int nearestTwoPower = pow(2, ceil(log(vector.getSize())/log(2)));
+    int nearestTwoPower = pow(2, ceil(log(vector.getSize()) / log(2)));
     valarray<complex<double>> comp(nearestTwoPower);
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(((double) values.get()[i]) / MAX_VALUE, 0.0);
+        comp[i] = complex<double>(((double) values.get()[i]) * (*window)[i] / MAX_VALUE, 0.0);
     }
     for (int i = vector.getSize(); i < nearestTwoPower; ++i) {
         comp[i] = complex<double>(0.0, 0.0);
@@ -35,11 +46,12 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
 }
 
 template<typename FrameType>
-DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::reverseTransform(FrequencySample<FrameType> vector) {
+DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::reverseTransform(
+        FrequencySample<FrameType> vector) {
     std::shared_ptr<double> amplitude = vector.getAmplitude();
     std::shared_ptr<double> phase = vector.getPhase();
 
-    int nearestTwoPower = pow(2, ceil(log(vector.getSize())/log(2)));
+    int nearestTwoPower = pow(2, ceil(log(vector.getSize()) / log(2)));
     valarray<complex<double>> comp(nearestTwoPower);
 
     for (int i = 0; i < vector.getSize(); ++i) {

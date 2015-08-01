@@ -4,9 +4,19 @@
 
 #include <complex>
 #include "DiscreteFourierTransform.h"
+#include "./window/DefaultWindow.h"
 
 template<typename FrameType>
 FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
+    //TODO
+    Window* window = new speech::transform::window::DefaultWindow(vector.getSize());
+    auto result = transform(vector, window);
+    delete window;
+    return result;
+}
+
+template<typename FrameType>
+FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::transform(DataSample<FrameType> vector, Window* window) {
     int vectorSize = vector.getSize();
     int vectorLength = vector.getLength();
 
@@ -17,7 +27,7 @@ FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType
     for (int k = 0; k < vectorSize; k++) {
         std::complex<double> value;
         for (int n = 0; n < vectorSize; n++) {
-            value += std::exp(std::complex<double>(0.0, (- 2 * M_PI * k * n) / vectorSize)) * std::complex<double>(values[n], 0.0);
+            value += std::exp(std::complex<double>(0.0, (- 2 * M_PI * k * n) / vectorSize)) * std::complex<double>(values[n] * (*window)[n], 0.0);
         }
 
         amplitude[k] = std::abs(value);

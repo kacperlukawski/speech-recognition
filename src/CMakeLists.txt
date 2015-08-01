@@ -25,7 +25,12 @@ add_executable(
         speech/raw_data/Spectrum.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
-        speech/helpers.cpp)
+        speech/helpers.cpp
+        speech/transform/window/HammingWindow.cpp
+        speech/transform/window/HammingWindow.h
+        speech/transform/window/Window.cpp
+        speech/transform/window/DefaultWindow.cpp
+        speech/transform/window/DefaultWindow.h)
 
 # add VLFeat library usage
 target_link_libraries(Main LINK_PUBLIC VLFeat)

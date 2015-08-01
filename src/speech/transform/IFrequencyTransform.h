@@ -3,9 +3,11 @@
 
 #include "../raw_data/DataSample.h"
 #include "../raw_data/FrequencySample.h"
+#include "./window/Window.h"
 
 using speech::raw_data::DataSample;
 using speech::raw_data::FrequencySample;
+using speech::transform::window::Window;
 
 namespace speech {
 
@@ -21,6 +23,8 @@ namespace speech {
             virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector) = 0;
 
             virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector) = 0;
+
+            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector, Window* window) = 0;
         };
     }
 

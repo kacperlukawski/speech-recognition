@@ -26,6 +26,8 @@ namespace speech {
 
             virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector);
 
+            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector, Window* window);
+
             virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector);
 
         protected:

@@ -157,14 +157,18 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
 
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getBufferSize() {
-    return getDataSampleSize(this->sampleLength);
+    return getDataSampleSize(this->sampleLength) * sizeof(FrameType);
 }
 
 template<typename FrameType>
 unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getDataSampleSize(int sizeInMilliseconds) {
-    return meta_data->byte_rate * sizeInMilliseconds / 1000;
+    return (meta_data->byte_rate * sizeInMilliseconds) / (1000 * sizeof(FrameType));
 }
 
+template<typename FrameType>
+unsigned int speech::raw_data::WaveFileDataSource<FrameType>::getDataSampleLengthInMilliseconds(int size) {
+    return (size * 1000 * sizeof(FrameType)) / (meta_data->byte_rate);
+}
 
 template<typename FrameType>
 void speech::raw_data::WaveFileDataSource<FrameType>::addSample(DataSample<FrameType> sample) {

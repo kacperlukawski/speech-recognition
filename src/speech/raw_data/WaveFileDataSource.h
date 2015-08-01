@@ -81,6 +81,8 @@ namespace speech {
             string fileName;
 
             virtual unsigned int getDataSampleSize(int sizeInMilliseconds);
+
+            virtual unsigned int getDataSampleLengthInMilliseconds(int size);
         private:
             wav_header *meta_data;
 

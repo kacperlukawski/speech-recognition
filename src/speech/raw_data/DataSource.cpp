@@ -27,15 +27,14 @@ typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<Fram
 }
 
 template<typename FrameType>
-typename speech::raw_data::DataSource<FrameType>::iterator speech::raw_data::DataSource<FrameType>::getSamplesOffsetIteratorEnd(
-        int windowSizeInMilliseconds, int offsetInMilliseconds) {
-    return DataSource::iterator(*this, samples->end(), offsetInMilliseconds, windowSizeInMilliseconds, true);
+typename speech::raw_data::DataSource<FrameType>::offsetIterator speech::raw_data::DataSource<FrameType>::getOffsetIteratorEnd() {
+    return DataSource::offsetIterator(*this, 0, 1, true);
 }
 
 template<typename FrameType>
-typename speech::raw_data::DataSource<FrameType>::iterator speech::raw_data::DataSource<FrameType>::getSamplesOffsetIteratorBegin(
+typename speech::raw_data::DataSource<FrameType>::offsetIterator speech::raw_data::DataSource<FrameType>::getOffsetIteratorBegin(
         int windowSizeInMilliseconds, int offsetInMilliseconds) {
-    return DataSource<FrameType>::iterator(*this, samples->begin(), offsetInMilliseconds, windowSizeInMilliseconds);
+    return DataSource<FrameType>::offsetIterator(*this, offsetInMilliseconds, windowSizeInMilliseconds);
 }
 
 template

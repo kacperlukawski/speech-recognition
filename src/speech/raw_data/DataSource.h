@@ -27,14 +27,27 @@ namespace speech {
             /** Length of the single sample in milliseconds */
             int sampleLength;
 
+            /**
+             * Returns size of single sample with length 'sizeInMilliseconds'.
+             */
             virtual unsigned int getDataSampleSize(int sizeInMilliseconds) = 0;
+
+            /**
+             * Returns length of sample with size 'size'.
+             */
+            virtual unsigned int getDataSampleLengthInMilliseconds(int size) = 0;
 
         public:
 
-            class iterator {
+            /**
+             *
+             */
+            class offsetIterator {
             private:
+                friend class DataSource;
                 DataSource<FrameType> &_dataSource;
                 typename list<DataSample<FrameType>>::iterator samplesIterator;
+                typename list<DataSample<FrameType>>::iterator samplesIteratorEnd;
                 int offset;
                 int dataSampleSize;
                 int offsetInMilliseconds;
@@ -46,21 +59,17 @@ namespace speech {
 
                 std::vector<FrameType> *windowVector;
 
-            public:
-                iterator(DataSource<FrameType> &dataSource,
-                         typename list<DataSample<FrameType>>::iterator samplesIterator, int offsetInMilliseconds,
-                         int dataSampleSizeInMilliseconds) : iterator(dataSource, samplesIterator, offsetInMilliseconds,
+                offsetIterator(DataSource<FrameType> &dataSource, int offsetInMilliseconds,
+                         int dataSampleSizeInMilliseconds) : offsetIterator(dataSource, offsetInMilliseconds,
                                                                       dataSampleSizeInMilliseconds, false) {
                 }
 
-                iterator(DataSource<FrameType> &dataSource,
-                         typename list<DataSample<FrameType>>::iterator samplesIterator, int offsetInMilliseconds,
+                offsetIterator(DataSource<FrameType> &dataSource, int offsetInMilliseconds,
                          int dataSampleSizeInMilliseconds, bool endIterator) : _dataSource(dataSource) {
                     if (offsetInMilliseconds >= dataSampleSizeInMilliseconds) {
                         throw std::invalid_argument("Sample size must be bigger than offset size.");
                     }
 
-                    this->samplesIterator = samplesIterator;
                     this->offsetInMilliseconds = offsetInMilliseconds;
                     this->dataSampleSizeInMilliseconds = dataSampleSizeInMilliseconds;
 
@@ -70,12 +79,16 @@ namespace speech {
                     this->windowVector = new std::vector<FrameType>();
 
                     if (endIterator) {
+                        this->samplesIterator = this->samplesIteratorEnd = dataSource.getSamplesIteratorEnd();
                         samplesIterator--;
-                        this->currDataSamplePosition = samplesIterator->getSize() - 1;
+                        this->currDataSamplePosition = samplesIterator->getSize();
+                        this->currDataSamplePosition += 2;
                         this->currIterationPtr = samplesIterator->getValues();
                         this->currDataSampleSize = samplesIterator->getSize();
                         samplesIterator++;
                     } else {
+                        this->samplesIterator = dataSource.getSamplesIteratorBegin();
+                        this->samplesIteratorEnd = --dataSource.getSamplesIteratorEnd();
                         this->currIterationPtr = samplesIterator->getValues();
                         this->currDataSampleSize = samplesIterator->getSize();
                         this->currDataSamplePosition = 0;
@@ -83,20 +96,19 @@ namespace speech {
                     }
                 }
 
-                ~iterator() {
+            public:
+                ~offsetIterator() {
+                    windowVector->clear();
                     delete windowVector;
                     currIterationPtr.reset();
                 }
 
-                bool operator==(const iterator &it) {
-                    throw std::logic_error("DataSample::iterator::operator== not yet implemented.");
-
-                    // TODO
-                    return (this->currIterationPtr.get() == it.currIterationPtr.get()
-                            && this->currDataSamplePosition == it.currDataSamplePosition);
+                bool operator==(const offsetIterator &it) {
+                    return (this->currIterationPtr.get() == it.currIterationPtr.get() &&
+                            this->currDataSamplePosition == it.currDataSamplePosition);
                 }
 
-                bool operator!=(const iterator &it) {
+                bool operator!=(const offsetIterator &it) {
                     return !(*this == it);
                 }
 
@@ -112,26 +124,33 @@ namespace speech {
                     windowVector->insert(windowVector->begin(), vectorTmp.begin(), vectorTmp.end());
 
                     while (windowVector->size() < dataSampleSize) {
-                        for (; currDataSamplePosition < currDataSampleSize; ++currDataSamplePosition) {
+                        for (; currDataSamplePosition < currDataSampleSize &&
+                               windowVector->size() < dataSampleSize; ++currDataSamplePosition) {
                             windowVector->push_back(currIterationPtr.get()[currDataSamplePosition]);
                         }
                         if (currDataSamplePosition >= currDataSampleSize) {
-                            ++samplesIterator;
-                            currIterationPtr = samplesIterator->getValues();
-                            currDataSampleSize = samplesIterator->getSize();
-                            currDataSamplePosition = 0;
+                            if (samplesIterator != samplesIteratorEnd) {
+                                ++samplesIterator;
+                                currIterationPtr = samplesIterator->getValues();
+                                currDataSampleSize = samplesIterator->getSize();
+                                currDataSamplePosition = 0;
+                            } else {
+                                ++currDataSamplePosition;
+                                return;
+                            }
                         }
                     }
                 }
 
                 DataSample<FrameType> operator*() {
                     int windowSize = (*windowVector).size();
-                    FrameType *vals = new FrameType[windowSize];
+                    std::shared_ptr<FrameType> windowVectorPtr(new FrameType[windowSize],
+                                                               std::default_delete<FrameType[]>());
                     for (int i = 0; i < windowSize; ++i) {
-                        vals[i] = (*windowVector)[i];
+                        windowVectorPtr.get()[i] = (*windowVector)[i];
                     }
-                    std::shared_ptr<FrameType> windowVectorPtr(vals, std::default_delete<FrameType[]>());
-                    return DataSample<FrameType>(dataSampleSize, dataSampleSizeInMilliseconds, windowVectorPtr);
+                    auto size = _dataSource.getDataSampleLengthInMilliseconds(windowSize);
+                    return DataSample<FrameType>(windowSize, size, windowVectorPtr);
                 }
             };
 
@@ -145,11 +164,10 @@ namespace speech {
 
             virtual typename list<DataSample<FrameType>>::iterator getSamplesIteratorEnd();
 
-            virtual DataSource<FrameType>::iterator getSamplesOffsetIteratorBegin(int windowSizeInMilliseconds,
-                                                                                  int offsetInMilliseconds);
+            virtual DataSource<FrameType>::offsetIterator getOffsetIteratorBegin(int windowSizeInMilliseconds,
+                                                                           int offsetInMilliseconds);
 
-            virtual DataSource<FrameType>::iterator getSamplesOffsetIteratorEnd(int windowSizeInMilliseconds,
-                                                                                int offsetInMilliseconds);
+            virtual DataSource<FrameType>::offsetIterator getOffsetIteratorEnd();
         };
 
     }

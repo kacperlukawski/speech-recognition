@@ -151,6 +151,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
     double logLikelihood = -INFINITY;
     double lastLogLikelihood = 0.0;
     unsigned long int iteration = 0;
+    // TODO: change a way of stopping the loop - logLikelihood will be usually the same at the beginning
     while (logLikelihood != lastLogLikelihood && iteration < MAX_ITERATIONS) {
         // Reset values for the next iteration
         lastLogLikelihood = logLikelihood;
@@ -191,6 +192,8 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 continue;
             }
 
+            unsigned int T = vectorsNb - 1; // max time frame
+
             // Create a structures necessary for the forward and backward estimates
             double **forward = new double *[this->states];
             double **backward = new double *[this->states];
@@ -199,48 +202,8 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 backward[s] = new double[vectorsNb]; // beta_t(i) -> backward[i][t]
             }
 
-            // Calculate the forward estimates for the first time frame
-            valarray<double> &firstVector = observation[0];
-            for (int i = 0; i < this->states; ++i) {
-                GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(i);
-                double stateOccupation = stateGMM(firstVector);
-                forward[i][0] = this->pi[i] * stateOccupation;
-            }
-
-            unsigned int T = vectorsNb - 1;
-            // Calculate the forward estimates for all other time frames
-            for (int t = 1; t <= T; ++t) {
-                valarray<double> &vector = observation[t];
-                for (int j = 0; j < this->states; j++) {
-                    GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                    double stateOccupation = stateGMM(vector); // stateOccupation is sometimes 0
-
-                    double sum = 0.0;
-                    for (int i = 0; i < this->states; i++) {
-                        sum += forward[i][t - 1] * this->transition[i][j];
-                    }
-
-                    forward[j][t] = sum * stateOccupation + EPS;
-                }
-            }
-
-            // Calculate the backward estimates for the last time frame
-            for (int i = 0; i < this->states; i++) {
-                backward[i][T] = 1.0;
-            }
-
-            // Calculate the backward estimates for all other time frames
-            for (int t = T - 1; t >= 0; --t) {
-                valarray<double> &nextVector = observation[t + 1];
-                for (int i = 0; i < this->states; ++i) {
-                    backward[i][t] = EPS;
-                    for (int j = 0; j < this->states; ++j) {
-                        GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                        double stateOccupation = stateGMM(nextVector);
-                        backward[i][t] += this->transition[i][j] * stateOccupation * backward[j][t + 1];
-                    }
-                }
-            }
+            this->calculateForwardProbabilities(forward, observation);
+            this->calculateBackwardProbabilities(backward, observation);
 
             // Create a structure necessary for occupation estimates
             double ***occupation = new double **[this->states];
@@ -251,33 +214,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 }
             }
 
-            // Fill the state occupation estimates
-            for (int j = 0; j < this->states; ++j) {
-                GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                for (int t = 0; t <= T; ++t) {
-                    double denominator = EPS;
-                    for (int i = 0; i < this->states; ++i) {
-                        denominator += forward[i][t] * backward[i][t];
-                    }
-
-                    valarray<double> &vector = observation[t];
-                    double vectorProbability = stateGMM(vector) + EPS;
-                    double globalOccupation = forward[j][t] * backward[j][t] / denominator;
-                    double alternative = exp(log(forward[j][t]) + log(backward[j][t]) - log(denominator));
-
-                    for (int m = 0; m < this->M; ++m) {
-                        if (vectorProbability == 0.0) {
-                            // If the vector probability is equal to zero, then set the probability manually to
-                            // zero, in order to avoid having NaN due to division by zero.
-                            occupation[j][m][t] = 0.0;
-                            continue;
-                        }
-
-                        double vectorProbabilityInMixture = stateGMM(m, vector);
-                        occupation[j][m][t] = globalOccupation * (vectorProbabilityInMixture / vectorProbability);
-                    }
-                }
-            }
+            this->calculateOccupationEstimates(occupation, forward, backward, observation);
 
             // Create a structure necessary for transition estimates
             double ***transitions = new double **[this->states];
@@ -288,52 +225,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 }
             }
 
-            // Calculate the transition estimates
-            for (int i = 0; i < this->states; ++i) {
-                for (int j = 0; j < this->states; ++j) {
-                    GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                    for (int t = 0; t < T; ++t) {
-                        double globalOccupation = 0.0;
-                        for (int m = 0; m < this->M; ++m) {
-                            globalOccupation += occupation[i][m][t];
-                        }
-
-                        valarray<double> &nextVector = observation[t + 1];
-                        double nextVectorProbability = stateGMM(nextVector);
-
-                        double alternativeDenominator = 0.0;
-                        for (int k = 0; k < this->states; ++k) {
-                            for (int l = 0; l < this->states; ++l) {
-                                GMMLikelihoodFunction &nextStateGMM = this->hiddenStates->at(l);
-                                double nextStateProbabilityOfVector = nextStateGMM(nextVector);
-                                alternativeDenominator +=
-                                        forward[k][t] * this->transition[k][l] * nextStateProbabilityOfVector *
-                                        backward[l][t + 1];
-                            }
-                        }
-
-                        double transition =
-                                globalOccupation * nextVectorProbability * this->transition[i][j] * backward[j][t + 1] /
-                                backward[i][t];
-
-                        if (alternativeDenominator == 0.0) {
-                            // If the global occupation is equal to zero, then set the transition probability to zero,
-                            // in order to avoid having NaNs due to division by zero.`
-                            transitions[i][j][t] = 0.0;
-                            continue;
-                        }
-
-                        double alternativeTransition =
-                                forward[i][t] * this->transition[i][j] * nextVectorProbability * backward[j][t + 1] /
-                                alternativeDenominator;
-
-                        double test = exp(
-                                log(globalOccupation) + log(nextVectorProbability) + log(this->transition[i][j]) +
-                                log(backward[j][t + 1]) - log(backward[i][t]));
-                        transitions[i][j][t] = alternativeTransition; // was transition before
-                    }
-                }
-            }
+            this->calculateTransitionEstimates(transitions, forward, backward, occupation, observation);
 
             // Accumulate initial probabilities
             for (int s = 0; s < this->states; ++s) {
@@ -448,34 +340,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
         this->normalizePi();
         this->normalizeTransitionsMatrix();
 
-        // Update mixtures
-        for (int s = 0; s < this->states; ++s) {
-            // Calculate occupation of whole GMM
-            double gmmOccupation = EPS;
-            for (int m = 0; m < this->M; ++m) {
-                gmmOccupation += occupationsAcc[s][m];
-            }
-
-            GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(s);
-
-            // Update mixture weights
-            for (int m = 0; m < this->M; ++m) {
-                double mixtureWeight = occupationsAcc[s][m] / gmmOccupation;
-                stateGMM.setWeight(m, mixtureWeight);
-            }
-
-            // Update mixture means
-            for (int m = 0; m < this->M; ++m) {
-                stateGMM.setMeans(m, weightedObservationAcc[s][m] / (occupationsAcc[s][m] + EPS));
-            }
-
-            // Update mixture variances
-            for (int m = 0; m < this->M; ++m) {
-                // In order to avoid having variances equal to 0, what may happen when there is only
-                // one vector assigned to a particular Gaussian, we use a const minimal variance.
-                stateGMM.setVariances(m, weightedVarianceAcc[s][m] / (occupationsAcc[s][m] + EPS));
-            }
-        }
+        this->updateMixtures(occupationsAcc, weightedObservationAcc, weightedVarianceAcc);
 
         // Remove accumulators
         delete[] initialAcc;
@@ -684,5 +549,179 @@ void speech::HMMLexicon::MultivariateGaussianHMM::normalizePi() {
 
     for (int s = 0; s < this->states; ++s) {
         this->pi[s] /= sum;
+    }
+}
+
+void speech::HMMLexicon::MultivariateGaussianHMM::calculateForwardProbabilities(double **forward,
+                                                                                Observation &observation) {
+    unsigned int vectorsNb = observation.size();
+    unsigned int T = vectorsNb - 1;
+
+    valarray<double> &firstVector = observation[0];
+    for (int i = 0; i < this->states; ++i) {
+        GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(i);
+        double stateOccupation = stateGMM(firstVector);
+        forward[i][0] = this->pi[i] * stateOccupation;
+    }
+
+    // Calculate the forward estimates for all other time frames
+    for (int t = 1; t <= T; ++t) {
+        valarray<double> &vector = observation[t];
+        for (int j = 0; j < this->states; j++) {
+            GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
+            double stateOccupation = stateGMM(vector); // stateOccupation is sometimes 0
+
+            double sum = 0.0;
+            for (int i = 0; i < this->states; i++) {
+                sum += forward[i][t - 1] * this->transition[i][j];
+            }
+
+            forward[j][t] = sum * stateOccupation + EPS;
+        }
+    }
+}
+
+void speech::HMMLexicon::MultivariateGaussianHMM::calculateBackwardProbabilities(double **backward,
+                                                                                 Observation &observation) {
+    unsigned int vectorsNb = observation.size();
+    unsigned int T = vectorsNb - 1;
+
+    // Calculate the backward estimates for the last time frame
+    for (int i = 0; i < this->states; i++) {
+        backward[i][T] = 1.0;
+    }
+
+    // Calculate the backward estimates for all other time frames
+    for (int t = T - 1; t >= 0; --t) {
+        valarray<double> &nextVector = observation[t + 1];
+        for (int i = 0; i < this->states; ++i) {
+            backward[i][t] = EPS;
+            for (int j = 0; j < this->states; ++j) {
+                GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
+                double stateOccupation = stateGMM(nextVector);
+                backward[i][t] += this->transition[i][j] * stateOccupation * backward[j][t + 1];
+            }
+        }
+    }
+}
+
+void speech::HMMLexicon::MultivariateGaussianHMM::calculateOccupationEstimates(double ***occupation, double **forward,
+                                                                               double **backward,
+                                                                               Observation &observation) {
+    unsigned int T = observation.size() - 1;
+    // Fill the state occupation estimates
+    for (int j = 0; j < this->states; ++j) {
+        GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
+        for (int t = 0; t <= T; ++t) {
+            double denominator = EPS;
+            for (int i = 0; i < this->states; ++i) {
+                denominator += forward[i][t] * backward[i][t];
+            }
+
+            valarray<double> &vector = observation[t];
+            double vectorProbability = stateGMM(vector) + EPS;
+            double globalOccupation = forward[j][t] * backward[j][t] / denominator;
+            double alternative = exp(log(forward[j][t]) + log(backward[j][t]) - log(denominator));
+
+            for (int m = 0; m < this->M; ++m) {
+                if (vectorProbability == 0.0) {
+                    // If the vector probability is equal to zero, then set the probability manually to
+                    // zero, in order to avoid having NaN due to division by zero.
+                    occupation[j][m][t] = 0.0;
+                    continue;
+                }
+
+                double vectorProbabilityInMixture = stateGMM(m, vector);
+                occupation[j][m][t] = globalOccupation * (vectorProbabilityInMixture / vectorProbability);
+            }
+        }
+    }
+}
+
+void speech::HMMLexicon::MultivariateGaussianHMM::calculateTransitionEstimates(double ***transitions, double **forward,
+                                                                               double **backward,
+                                                                               double ***occupation,
+                                                                               Observation &observation) {
+    unsigned int T = observation.size() - 1;
+    // Calculate the transition estimates
+    for (int i = 0; i < this->states; ++i) {
+        for (int j = 0; j < this->states; ++j) {
+            GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
+            for (int t = 0; t < T; ++t) {
+                double globalOccupation = 0.0;
+                for (int m = 0; m < this->M; ++m) {
+                    globalOccupation += occupation[i][m][t];
+                }
+
+                valarray<double> &nextVector = observation[t + 1];
+                double nextVectorProbability = stateGMM(nextVector);
+
+                double alternativeDenominator = 0.0;
+                for (int k = 0; k < this->states; ++k) {
+                    for (int l = 0; l < this->states; ++l) {
+                        GMMLikelihoodFunction &nextStateGMM = this->hiddenStates->at(l);
+                        double nextStateProbabilityOfVector = nextStateGMM(nextVector);
+                        alternativeDenominator +=
+                                forward[k][t] * this->transition[k][l] * nextStateProbabilityOfVector *
+                                backward[l][t + 1];
+                    }
+                }
+
+                double transition =
+                        globalOccupation * nextVectorProbability * this->transition[i][j] * backward[j][t + 1] /
+                        backward[i][t];
+
+                if (alternativeDenominator == 0.0) {
+                    // If the global occupation is equal to zero, then set the transition probability to zero,
+                    // in order to avoid having NaNs due to division by zero.`
+                    transitions[i][j][t] = 0.0;
+                    continue;
+                }
+
+                double alternativeTransition =
+                        forward[i][t] * this->transition[i][j] * nextVectorProbability * backward[j][t + 1] /
+                        alternativeDenominator;
+
+                double test = exp(
+                        log(globalOccupation) + log(nextVectorProbability) + log(this->transition[i][j]) +
+                        log(backward[j][t + 1]) - log(backward[i][t]));
+                transitions[i][j][t] = alternativeTransition; // was transition before
+            }
+        }
+    }
+}
+
+void speech::HMMLexicon::MultivariateGaussianHMM::updateMixtures(double **occupationsAcc,
+                                                                 valarray<double> **weightedObservationAcc,
+                                                                 valarray<double> **weightedVarianceAcc) {
+    // Update mixtures
+    for (int s = 0; s < this->states; ++s) {
+        // Calculate occupation of whole GMM
+        double gmmOccupation = speech::HMMLexicon::MultivariateGaussianHMM::EPS;
+        for (int m = 0; m < this->M; ++m) {
+            gmmOccupation += occupationsAcc[s][m];
+        }
+
+        speech::HMMLexicon::GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(s);
+
+        // Update mixture weights
+        for (int m = 0; m < this->M; ++m) {
+            double mixtureWeight = occupationsAcc[s][m] / gmmOccupation;
+            stateGMM.setWeight(m, mixtureWeight);
+        }
+
+        // Update mixture means
+        for (int m = 0; m < this->M; ++m) {
+            stateGMM.setMeans(m, weightedObservationAcc[s][m] /
+                                 (occupationsAcc[s][m] + speech::HMMLexicon::MultivariateGaussianHMM::EPS));
+        }
+
+        // Update mixture variances
+        for (int m = 0; m < this->M; ++m) {
+            // In order to avoid having variances equal to 0, what may happen when there is only
+            // one vector assigned to a particular Gaussian, we use a const minimal variance.
+            stateGMM.setVariances(m, weightedVarianceAcc[s][m] /
+                                     (occupationsAcc[s][m] + speech::HMMLexicon::MultivariateGaussianHMM::EPS));
+        }
     }
 }

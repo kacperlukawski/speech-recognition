@@ -47,11 +47,48 @@ using speech::vectorizer::FormantVectorizer;
 using speech::vectorizer::ThirdsPowerVectorizer;
 using speech::vectorizer::MFCCVectorizer;
 
+#include "speech/HMMLexicon.h"
+
+using speech::HMMLexicon;
+
 #include "speech/helpers.h"
 
 int main(int argc, char **argv) {
     // Get the list of the words' transcriptions and assigned files
-    // Load all the files and 
+    // Load all the files and
+
+
+    const int SAMPLE_LENGTH = 20; // in milliseconds
+    const int MFCC_BINS = 26; // number of Mel filters in a bank
+    const int MFCC_CEPSTRAL_COEFFICIENTS = 12; // number of cepstral coefficients used for analysis
+    const double MFCC_MIN_FREQUENCY = 64.0; // in Herzs
+    const double MFCC_MAX_FREQUENCY = 10000.0; // in Herzs
+    const int LEXICON_DIMENSIONALITY = 3 * (MFCC_CEPSTRAL_COEFFICIENTS + 1);
+    const int LEXICON_GAUSSIANS = 16;
+
+    HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS);
+    MFCCVectorizer<short int> *mfccVectorizer = new MFCCVectorizer<short int>(MFCC_BINS, MFCC_CEPSTRAL_COEFFICIENTS,
+                                                                              MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY);
+
+    std::string filename("/home/kacper/Test/sala_21.wav");
+    std::string transcription("s|a|l|a");
+    // do the following process for each file from the collection
+    {
+        WaveFileDataSource<short int> dataSource(filename, SAMPLE_LENGTH);
+        HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
+        lexicon.addUtterance(utterance, transcription, "|");
+    }
+
+    lexicon.fit();
+
+    // get the same set once again and test what the model guesses about each utterance
+    {
+        WaveFileDataSource<short int> dataSource(filename, SAMPLE_LENGTH);
+        HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
+        lexicon.predict(utterance);
+    }
+
+    delete mfccVectorizer;
 
     return 0;
 }

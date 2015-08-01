@@ -58,10 +58,6 @@ void speech::HMMLexicon::fit() {
         std::cout << "Fitting model: " << it->first << std::endl;
         it->second->fit();
     }
-
-    for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
-
-    }
 }
 
 constexpr double speech::HMMLexicon::GMMLikelihoodFunction::MIN_VARIANCE;
@@ -207,38 +203,41 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
             valarray<double> &firstVector = observation[0];
             for (int i = 0; i < this->states; ++i) {
                 GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(i);
-                forward[i][0] = this->pi[i] * stateGMM(firstVector);
+                double stateOccupation = stateGMM(firstVector);
+                forward[i][0] = this->pi[i] * stateOccupation;
             }
 
+            unsigned int T = vectorsNb - 1;
             // Calculate the forward estimates for all other time frames
-            for (int j = 0; j < this->states; j++) {
-                GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                for (int t = 1; t < vectorsNb; ++t) {
-                    valarray<double> &vector = observation[t];
+            for (int t = 1; t <= T; ++t) {
+                valarray<double> &vector = observation[t];
+                for (int j = 0; j < this->states; j++) {
+                    GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
+                    double stateOccupation = stateGMM(vector); // stateOccupation is sometimes 0
 
                     double sum = 0.0;
                     for (int i = 0; i < this->states; i++) {
                         sum += forward[i][t - 1] * this->transition[i][j];
                     }
 
-                    forward[j][t] = sum * stateGMM(vector) + EPS;
+                    forward[j][t] = sum * stateOccupation + EPS;
                 }
             }
 
             // Calculate the backward estimates for the last time frame
-            unsigned int T = vectorsNb - 1;
             for (int i = 0; i < this->states; i++) {
                 backward[i][T] = 1.0;
             }
 
             // Calculate the backward estimates for all other time frames
-            for (int i = 0; i < this->states; ++i) {
-                for (int t = T - 1; t >= 0; --t) {
-                    valarray<double> &nextVector = observation[t + 1];
+            for (int t = T - 1; t >= 0; --t) {
+                valarray<double> &nextVector = observation[t + 1];
+                for (int i = 0; i < this->states; ++i) {
                     backward[i][t] = EPS;
                     for (int j = 0; j < this->states; ++j) {
                         GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                        backward[i][t] += this->transition[i][j] * stateGMM(nextVector) * backward[j][t + 1];
+                        double stateOccupation = stateGMM(nextVector);
+                        backward[i][t] += this->transition[i][j] * stateOccupation * backward[j][t + 1];
                     }
                 }
             }
@@ -252,12 +251,10 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 }
             }
 
-//            std::cout << std::endl;
-
             // Fill the state occupation estimates
             for (int j = 0; j < this->states; ++j) {
                 GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
-                for (int t = 0; t < vectorsNb; ++t) {
+                for (int t = 0; t <= T; ++t) {
                     double denominator = EPS;
                     for (int i = 0; i < this->states; ++i) {
                         denominator += forward[i][t] * backward[i][t];

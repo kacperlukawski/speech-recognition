@@ -10,11 +10,7 @@ speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
 
 template<typename FrameType>
 FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
-    //TODO
-    Window *window = new speech::transform::window::DefaultWindow(vector.getSize());
-    auto result = transform(vector, window);
-    delete window;
-    return result;
+    return transform(vector, speech::transform::window::DefaultWindow::getInstance());
 }
 
 template<typename FrameType>

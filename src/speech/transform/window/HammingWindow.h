@@ -2,6 +2,7 @@
 #define SPEECH_RECOGNITION_HAMMINGWINDOW_H
 
 #include "Window.h"
+#include <vector>
 
 namespace speech {
 
@@ -10,8 +11,10 @@ namespace speech {
         namespace window {
 
             class HammingWindow : public Window {
+            private:
+                std::vector<double> window;
             protected:
-                virtual std::vector<double>* createWindow(unsigned int windowSize);
+                virtual const double getWindowMultiplier(unsigned int index);
             public:
                 HammingWindow(unsigned int windowSize);
             };

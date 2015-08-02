@@ -1,9 +1,14 @@
 #include "DefaultWindow.h"
 
+speech::transform::window::DefaultWindow speech::transform::window::DefaultWindow::INSTANCE = speech::transform::window::DefaultWindow();
 
-speech::transform::window::DefaultWindow::DefaultWindow(unsigned int windowSize) : Window(windowSize) {
+speech::transform::window::DefaultWindow* speech::transform::window::DefaultWindow::getInstance() {
+    return &INSTANCE;
 }
 
-std::vector<double>* speech::transform::window::DefaultWindow::createWindow(unsigned int windowSize) {
-    return new std::vector<double>(windowSize, 1.0);
+speech::transform::window::DefaultWindow::DefaultWindow() : Window(0) {
+}
+
+const double speech::transform::window::DefaultWindow::getWindowMultiplier(unsigned int index) {
+    return 1.0;
 }

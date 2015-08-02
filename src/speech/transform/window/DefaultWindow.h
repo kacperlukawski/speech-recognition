@@ -15,10 +15,14 @@ namespace speech {
         namespace window {
 
             class DefaultWindow : public Window {
+            private:
+                static DefaultWindow INSTANCE;
             protected:
-                virtual std::vector<double>* createWindow(unsigned int windowSize);
+                virtual const double getWindowMultiplier(unsigned int index);
             public:
-                DefaultWindow(unsigned int windowSize);
+                DefaultWindow();
+
+                static DefaultWindow* getInstance();
             };
         }
     }

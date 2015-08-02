@@ -27,10 +27,10 @@ add_executable(
         speech/operators.cpp
         speech/helpers.cpp
         speech/transform/window/HammingWindow.cpp
-        speech/transform/window/HammingWindow.h
         speech/transform/window/Window.cpp
         speech/transform/window/DefaultWindow.cpp
-        speech/transform/window/DefaultWindow.h)
+        speech/transform/window/HannWindow.cpp
+        speech/transform/window/GaussWindow.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Main LINK_PUBLIC VLFeat)

@@ -25,7 +25,7 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(F
     }
 
     Spectrum spectrum(sample);
-    result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / sample.getSize();
+    result[this->cepstralCoefficientsNumber] = log(spectrum.getValues().sum());
 
     return result;
 }
@@ -45,7 +45,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         Spectrum spectrum(*it);
-        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / it->getSize();
+        result[this->cepstralCoefficientsNumber] = log(spectrum.getValues().sum());
 
         // stores the vector
         results.push_back(result);
@@ -96,8 +96,9 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         DataSource<FrameType> &dataSource) {
     int vectorSize = this->getVectorSize();
     std::vector<std::valarray<double>> results;
-    for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
-        DataSample<FrameType> &dataSample = *it;
+    for (auto it = dataSource.getOffsetIteratorBegin(this->windowMsSize, this->offsetMsSize);
+         it != dataSource.getOffsetIteratorEnd(); ++it) {
+        const DataSample<FrameType> &dataSample = *it;
         FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample);
 
         // creates empty vectors for sample
@@ -196,11 +197,6 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCe
         }
         cepstralCoefficients[i] = coefficient;
     }
-
-//    for (int i = 0; i < this->cepstralCoefficientsNumber; i++) {
-//        std::cout << cepstralCoefficients[i] << ' ';
-//    }
-//    std::cout << std::endl;
 
     return std::move(cepstralCoefficients);
 }

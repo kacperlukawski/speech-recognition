@@ -112,6 +112,8 @@ namespace speech {
                     return !(*this == it);
                 }
 
+                // TODO: postfix operator++ is not defined
+
                 void operator++() {
                     std::vector<FrameType> vectorTmp;
                     if (windowVector->size() > offset) {

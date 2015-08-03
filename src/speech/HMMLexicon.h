@@ -382,14 +382,14 @@ namespace speech {
              * @param forward an array storing the values of forward probabilities
              * @param observation collection of observed vectors
              */
-            void calculateForwardProbabilities(double **forward, Observation &observation);
+            void calculateForwardProbabilities(double **forward, const Observation &observation);
 
             /**
              * Calculates backward probabilities of each vector from the observation and each state of HMM
              * @param backward an array storing the values of backward probabilities
              * @param observation collection of observed vectors
              */
-            void calculateBackwardProbabilities(double **backward, Observation &observation);
+            void calculateBackwardProbabilities(double **backward, const Observation &observation);
 
             /**
              * Calculates the probabilities of being in each state in each time frame
@@ -399,7 +399,7 @@ namespace speech {
              * @param observation collection of observed vectors
              */
             void calculateOccupationEstimates(double ***occupation, double **forward, double **backward,
-                                              Observation &observation);
+                                              const Observation &observation);
 
             /**
              * Calculates the probabilties of transition from each state into another one
@@ -410,7 +410,7 @@ namespace speech {
              * @param observation collection of observed vectors
              */
             void calculateTransitionEstimates(double ***transitions, double **forward, double **backward,
-                                              double ***occupation, Observation &observation);
+                                              double ***occupation, const Observation &observation);
 
             /**
              * Updates the parameters of Gaussian mixtures

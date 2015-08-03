@@ -51,11 +51,13 @@ namespace speech {
              * @param maxFrequency
              */
             MFCCVectorizer(int bins, int cepstralCoefficientsNumber, double minFrequency = 64.0,
-                           double maxFrequency = 16000.0) :
+                           double maxFrequency = 16000.0, int windowMsSize = 20, int offsetMsSize = 10) :
                     bins(bins),
                     cepstralCoefficientsNumber(cepstralCoefficientsNumber),
                     minCepstrumFrequency(minFrequency),
-                    maxCepstrumFrequency(maxFrequency) {
+                    maxCepstrumFrequency(maxFrequency),
+                    windowMsSize(windowMsSize),
+                    offsetMsSize(offsetMsSize) {
                 buildFilterBank();
             }
 
@@ -166,6 +168,10 @@ namespace speech {
 
         private:
             static constexpr double EPS = 10e-12;
+            /** Size of a single window in milliseconds */
+            int windowMsSize = 20;
+            /** The offset between two frames in milliseconds */
+            int offsetMsSize = 10;
 
             /**
              * Creates a bank of filters used in vectorizing

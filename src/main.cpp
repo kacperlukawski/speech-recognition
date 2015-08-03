@@ -59,6 +59,7 @@ int main(int argc, char **argv) {
 
 
     const int SAMPLE_LENGTH = 20; // in milliseconds
+    const int SAMPLE_OFFSET = 10; // in milliseconds
     const int MFCC_BINS = 26; // number of Mel filters in a bank
     const int MFCC_CEPSTRAL_COEFFICIENTS = 12; // number of cepstral coefficients used for analysis
     const double MFCC_MIN_FREQUENCY = 64.0; // in Herzs
@@ -68,7 +69,8 @@ int main(int argc, char **argv) {
 
     HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS);
     MFCCVectorizer<short int> *mfccVectorizer = new MFCCVectorizer<short int>(MFCC_BINS, MFCC_CEPSTRAL_COEFFICIENTS,
-                                                                              MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY);
+                                                                              MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
+                                                                              SAMPLE_LENGTH, SAMPLE_OFFSET);
 
     std::string filename("/home/kacper/Test/sala_21.wav");
     std::string transcription("s|a|l|a");

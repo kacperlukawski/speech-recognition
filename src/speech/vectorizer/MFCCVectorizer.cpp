@@ -25,7 +25,7 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(F
     }
 
     Spectrum spectrum(sample);
-    result[this->cepstralCoefficientsNumber] =  spectrum.getValues().sum() / sample.getSize();
+    result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / sample.getSize();
 
     return result;
 }
@@ -60,9 +60,9 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         // gets vectors with results
-        std::valarray<double>& result = results.at(it - samples.begin());
-        std::valarray<double>& prevResults = results.at(it - samples.begin() - 1);
-        std::valarray<double>& nextResults = results.at(it - samples.begin() + 1);
+        std::valarray<double> &result = results.at(it - samples.begin());
+        std::valarray<double> &prevResults = results.at(it - samples.begin() - 1);
+        std::valarray<double> &nextResults = results.at(it - samples.begin() + 1);
 
         // calculates differences
         for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {
@@ -78,9 +78,9 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         // gets vectors with results
-        std::valarray<double>& result = results.at(it - samples.begin());
-        std::valarray<double>& prevResults = results.at(it - samples.begin() - 1);
-        std::valarray<double>& nextResults = results.at(it - samples.begin() + 1);
+        std::valarray<double> &result = results.at(it - samples.begin());
+        std::valarray<double> &prevResults = results.at(it - samples.begin() - 1);
+        std::valarray<double> &nextResults = results.at(it - samples.begin() + 1);
 
         // calculates differences
         for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {
@@ -92,12 +92,12 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
 }
 
 template<typename FrameType>
-std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(DataSource<FrameType> &dataSource) {
+std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(
+        DataSource<FrameType> &dataSource) {
     int vectorSize = this->getVectorSize();
     std::vector<std::valarray<double>> results;
-    double maxEnergy = 0.0;
     for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
-        DataSample<FrameType>& dataSample = *it;
+        DataSample<FrameType> &dataSample = *it;
         FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample);
 
         // creates empty vectors for sample
@@ -109,11 +109,8 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
             result[i] = cepstrum[i];
         }
 
-        Spectrum spectrum(frequencySample); // TODO: change energy calculation - it should be a logarithm of the sum
-        result[this->cepstralCoefficientsNumber] = spectrum.getValues().sum() / frequencySample.getSize();
-        if (result[this->cepstralCoefficientsNumber] > maxEnergy) {
-            maxEnergy = result[this->cepstralCoefficientsNumber];
-        }
+        Spectrum spectrum(frequencySample);
+        result[this->cepstralCoefficientsNumber] = log(spectrum.getValues().sum());
 
         // stores the vector
         results.push_back(result);
@@ -128,11 +125,9 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         // gets vectors with results
-        std::valarray<double>& result = results.at(it - results.begin());
-        std::valarray<double>& prevResults = results.at(it - results.begin() - 1);
-        std::valarray<double>& nextResults = results.at(it - results.begin() + 1);
-
-        result[this->cepstralCoefficientsNumber] /= maxEnergy; // normalizing energies
+        std::valarray<double> &result = results.at(it - results.begin());
+        std::valarray<double> &prevResults = results.at(it - results.begin() - 1);
+        std::valarray<double> &nextResults = results.at(it - results.begin() + 1);
 
         // calculates differences
         for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {
@@ -148,9 +143,9 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         // gets vectors with results
-        std::valarray<double>& result = results.at(it - results.begin());
-        std::valarray<double>& prevResults = results.at(it - results.begin() - 1);
-        std::valarray<double>& nextResults = results.at(it - results.begin() + 1);
+        std::valarray<double> &result = results.at(it - results.begin());
+        std::valarray<double> &prevResults = results.at(it - results.begin() - 1);
+        std::valarray<double> &nextResults = results.at(it - results.begin() + 1);
 
         // calculates differences
         for (int i = 0; i < this->cepstralCoefficientsNumber + 1; i++) {

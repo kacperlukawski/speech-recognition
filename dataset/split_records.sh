@@ -25,16 +25,17 @@ else
   fi
 
   tmp="$destination_dir/tmp_.wav"
-  sox $file_to_split $tmp silence 1 0.5 1% 1 $silence_duration 1% : newfile : restart
+  sox $file_to_split $tmp silence 1 0.2 1% 1 $silence_duration 1% : newfile : restart
  
   words=$(head -n 1 $description_file)
-  wordsArr=(${words//,/ })
-  
+  IFS=',' read -a wordsArr <<< "$words"
+
   index=1
   for i in "${wordsArr[@]}"
   do
-    echo $index $i
-    mv "$destination_dir/tmp_`printf %03d $index`.wav" "$destination_dir/$i.wav"
+    trim=$( echo "$i" | sed -e "s/^\ *//g" -e "s/\ *$//g")
+    echo "$index $trim"
+    mv "$destination_dir/tmp_`printf %03d $index`.wav" "$destination_dir/$trim.wav"
     ((++index))
   done
 fi

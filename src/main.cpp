@@ -27,12 +27,12 @@ using speech::spelling::HMM;
 
 #include <vector>
 
-#include "speech/clustering/exception/TooLessVectorsException.h"
 #include "speech/LanguageModel.h"
-#include "speech/transform/IFrequencyTransform.h"
-#include "speech/transform/FastFourierTransform.h"
 
 using speech::LanguageModel;
+
+#include "speech/clustering/exception/TooLessVectorsException.h"
+
 using namespace speech::transform;
 
 #include "speech/vectorizer/IVectorizer.h"
@@ -57,7 +57,6 @@ int main(int argc, char **argv) {
     // Get the list of the words' transcriptions and assigned files
     // Load all the files and
 
-
     const int SAMPLE_LENGTH = 20; // in milliseconds
     const int SAMPLE_OFFSET = 10; // in milliseconds
     const int MFCC_BINS = 26; // number of Mel filters in a bank
@@ -72,11 +71,16 @@ int main(int argc, char **argv) {
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
                                                                               SAMPLE_LENGTH, SAMPLE_OFFSET);
 
-    std::string filename("/home/kacper/Test/sala_21.wav");
+    int filesNumber = 1;
+    std::string filenames[] = {
+            "/home/kacper/Test/sala_21.wav"//,
+//            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/sala.wav"
+    };
     std::string transcription("s|a|l|a");
+
     // do the following process for each file from the collection
-    {
-        WaveFileDataSource<short int> dataSource(filename, SAMPLE_LENGTH);
+    for (int i = 0; i < filesNumber; ++i){
+        WaveFileDataSource<short int> dataSource(filenames[i], SAMPLE_LENGTH);
         HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
         lexicon.addUtterance(utterance, transcription, "|");
     }
@@ -84,8 +88,8 @@ int main(int argc, char **argv) {
     lexicon.fit();
 
     // get the same set once again and test what the model guesses about each utterance
-    {
-        WaveFileDataSource<short int> dataSource(filename, SAMPLE_LENGTH);
+    for (int i = 0; i < filesNumber; ++i){
+        WaveFileDataSource<short int> dataSource(filenames[i], SAMPLE_LENGTH);
         HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
         lexicon.predict(utterance);
     }

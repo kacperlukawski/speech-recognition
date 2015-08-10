@@ -24,7 +24,7 @@ speech::raw_data::DataSample<FrameType>::~DataSample() {
 }
 
 template<typename FrameType>
-int speech::raw_data::DataSample<FrameType>::getSize() {
+int speech::raw_data::DataSample<FrameType>::getSize() const {
     return this->size;
 }
 

@@ -26,7 +26,7 @@ namespace speech {
 
             virtual ~DataSample();
 
-            int getSize();
+            int getSize() const;
 
             int getLength();
 

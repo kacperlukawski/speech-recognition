@@ -46,4 +46,68 @@ std::string getFileContent(const std::string &filepath);
  */
 void str_replace(std::string &s, const std::string &search, const std::string &replace);
 
+/**
+ * Creates a two dimensional array of given type
+ * @param d1 first dimension
+ * @param d2 second dimension
+ * @return two dimensional array
+ */
+template<typename T>
+T **createArray(int d1, int d2) {
+    T **array = new T *[d1];
+    for (int i = 0; i < d1; ++i) {
+        array[i] = new T[d2];
+    }
+
+    return array;
+}
+
+/**
+ * Creates a three dimensional array of given type
+ * @param d1 first dimension
+ * @param d2 second dimension
+ * @param d3 third dimension
+ * @return three dimensional array
+ */
+template<typename T>
+T ***createArray(int d1, int d2, int d3) {
+    T ***array = new T **[d1];
+    for (int i = 0; i < d1; ++i) {
+        array[i] = new T *[d2];
+        for (int j = 0; j < d2; ++j) {
+            array[i][j] = new T[d3];
+        }
+    }
+
+    return array;
+}
+
+/**
+ * Destroys two dimensional array
+ * @param d1 first dimension of the array
+ */
+template<typename T>
+void removeArray(T **array, int d1) {
+    for (int i = 0; i < d1; ++i) {
+        delete[] array[i];
+    }
+    delete[] array;
+}
+
+/**
+ * Destroys three dimensional array
+ * @param d1 first dimension of the array
+ * @param d2 second dimension of the array
+ */
+template<typename T>
+void removeArray(T ***array, int d1, int d2) {
+    for (int i = 0; i < d1; ++i) {
+        for (int j = 0; j < d2; ++j) {
+            delete[] array[i][j];
+        }
+        delete[] array[i];
+    }
+    delete[] array;
+}
+
 #endif //SPEECH_RECOGNITION_HELPERS_H

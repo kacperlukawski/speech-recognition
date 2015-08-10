@@ -22,10 +22,12 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
     valarray<complex<double>> comp(nearestTwoPower);
 
     for (int i = 0; i < vector.getSize(); ++i) {
-        comp[i] = complex<double>(((double) values.get()[i]) * (*window)[i] / MAX_VALUE, 0.0);
+        double value = values.get()[i];
+        double coeff = (*window)[i];
+        comp[i] = complex<double>(value * coeff / MAX_VALUE, 0.0);
     }
     for (int i = vector.getSize(); i < nearestTwoPower; ++i) {
-        comp[i] = complex<double>(0.0, 0.0);
+        comp[i] = complex<double>(0.0, 0.0); // TODO: check if it is a problem that the frame has zeros only on the right boundary
     }
 
     fft(comp);
@@ -33,8 +35,9 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
     std::shared_ptr<double> amplitude(new double[vector.getSize()], std::default_delete<double[]>());
     std::shared_ptr<double> phase(new double[vector.getSize()], std::default_delete<double[]>());
 
+    double *amplitudePtr = amplitude.get();
     for (int i = 0; i < vector.getSize(); ++i) {
-        amplitude.get()[i] = calculateAmplitude(comp[i]);
+        amplitudePtr[i] = calculateAmplitude(comp[i]);
         phase.get()[i] = calculatePhase(comp[i]);
     }
 

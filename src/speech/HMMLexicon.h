@@ -26,6 +26,7 @@ using std::map;
 using speech::raw_data::DataSource;
 
 #include "operators.h"
+#include "helpers.h"
 
 namespace speech {
 
@@ -411,6 +412,47 @@ namespace speech {
              */
             void calculateTransitionEstimates(double ***transitions, double **forward, double **backward,
                                               double ***occupation, const Observation &observation);
+
+            /**
+             * Accumulates the initial probabilities of being in each state
+             * @param initialAcc an array where store the probabilities in
+             * @param occupation state occupation probabilities
+             */
+            void accumulateInitialProbabilities(double *initialAcc, double ***occupation);
+
+            /**
+             * Accumulates the transition probabilities from state to state, without taking care of the time frames.
+             * @param transitionsAcc an array where store the probabilities in
+             * @param transitions array of transitions probabilities in time frames
+             * @param observation collection of observed vectors
+             */
+            void accumulateTransitions(double **transitionsAcc, double ***transitions, const Observation &observation);
+
+            /**
+             * Accumulates the mixture occupation probabilities
+             * @param occupationsAcc an array where store the probabilities in
+             * @param weightedVarianceAcc an array where store the weighted variance of mixtures
+             * @param occupation state occupation probabilities
+             * @param observation collection of observed vectors
+             */
+            void accumulateMixtureOccupations(double **occupationsAcc, double ***occupation,
+                                              const Observation &observation);
+
+            /**
+             * Accumulates new means of mixtures
+             * @param weightedObservationAcc an array where store the weighted means of mixtures
+             * @param occupation state occupation probabilities with time frames
+             * @param occupationsAcc state occupation probabilities
+             * @param observation collection of observed vectors
+             */
+            void accumulateMixtureMeans(valarray<double> **weightedObservationAcc, double ***occupation,
+                                        double **occupationsAcc, const Observation &observation);
+
+
+            // TODO: write doc
+            void accumulateMixtureVariances(valarray<double> **weightedVarianceAcc,
+                                            valarray<double> **weightedObservationAcc, double ***occupation,
+                                            double **occupationsAcc, const Observation &observation);
 
             /**
              * Updates the parameters of Gaussian mixtures

@@ -99,7 +99,12 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
     for (auto it = dataSource.getOffsetIteratorBegin(this->windowMsSize, this->offsetMsSize);
          it != dataSource.getOffsetIteratorEnd(); ++it) {
         const DataSample<FrameType> &dataSample = *it;
-        FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample);
+
+        // TODO: add a container of the windows, to avoid creating too many objects
+        int sampleSize = dataSample.getSize();
+        Window* frameWindow = new HammingWindow(sampleSize);
+        FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample, frameWindow);
+        delete frameWindow;
 
         // creates empty vectors for sample
         std::valarray<double> result(0.0, vectorSize);
@@ -153,6 +158,10 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
             result[2 * offset + i] = (nextResults[offset + i] - prevResults[offset + i]) / 2.0;
         }
     }
+
+    // TODO: check if necessary to remove them
+    results.erase(results.begin(), results.begin() + 1);
+    results.erase(results.end() - 1, results.end());
 
     return std::move(results);
 }

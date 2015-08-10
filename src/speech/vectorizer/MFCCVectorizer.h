@@ -15,10 +15,14 @@ using speech::raw_data::Spectrum;
 #include "../transform/IFrequencyTransform.h"
 #include "../transform/FastFourierTransform.h"
 #include "../transform/DiscreteFourierTransform.h"
+#include "../transform/window/Window.h"
+#include "../transform/window/HammingWindow.h"
 
 using speech::transform::IFrequencyTransform;
 using speech::transform::FastFourierTransform;
 using speech::transform::DiscreteFourierTransform;
+using speech::transform::window::Window;
+using speech::transform::window::HammingWindow;
 
 #include "IVectorizer.h"
 

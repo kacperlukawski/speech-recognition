@@ -311,7 +311,7 @@ namespace speech {
             void fit();
 
             /**
-             * Calculates a likelihood that given utterance is a language unit
+             * Calculates a log-likelihood that given utterance is a language unit
              * described by this model.
              * @param utterance observed sequence of vectors
              * @return likelihood of being this language word
@@ -322,7 +322,7 @@ namespace speech {
             /** An upper limit of iterations for the model in learning phase */
             static const unsigned int MAX_ITERATIONS = 10000;
             /** Low value used to avoid mathematical errors */
-            static constexpr double EPS = 1e-64;
+            static constexpr double EPS = 1e-256;
             /** Minimal variance of a single dimension in the Gaussian mixture */
             static constexpr double MIN_VARIANCE = 1e-16;
             /** Dimensionality of a single input vector */
@@ -382,15 +382,17 @@ namespace speech {
              * Calculates forward probabilities of each vector from the observation and each state of HMM
              * @param forward an array storing the values of forward probabilities
              * @param observation collection of observed vectors
+             * @param normalize determines if each time frame should have the probabilities summing up to 1
              */
-            void calculateForwardProbabilities(double **forward, const Observation &observation);
+            void calculateForwardProbabilities(double **forward, const Observation &observation, bool normalize = false);
 
             /**
              * Calculates backward probabilities of each vector from the observation and each state of HMM
              * @param backward an array storing the values of backward probabilities
              * @param observation collection of observed vectors
+             * @param normalize determines if each time frame should have the probabilities summing up to 1
              */
-            void calculateBackwardProbabilities(double **backward, const Observation &observation);
+            void calculateBackwardProbabilities(double **backward, const Observation &observation, bool normalize = false);
 
             /**
              * Calculates the probabilities of being in each state in each time frame

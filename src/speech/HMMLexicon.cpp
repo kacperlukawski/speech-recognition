@@ -198,8 +198,8 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
             double **backward = createArray<double>(this->states, vectorsNb);
 
             // Calculate the forward and backward probabilities
-            this->calculateForwardProbabilities(forward, observation);
-            this->calculateBackwardProbabilities(backward, observation);
+            this->calculateForwardProbabilities(forward, observation, true);
+            this->calculateBackwardProbabilities(backward, observation, true);
 
             // Create a structure necessary for occupation estimates
             double ***occupation = createArray<double>(this->states, this->M, vectorsNb);
@@ -240,6 +240,10 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 std::cout << std::endl;
             }
             std::cout << std::endl;
+
+            // Calculate forward probabilities once again in order to have the
+            // probabilities of the whole sequence
+            this->calculateForwardProbabilities(forward, observation);
 
             // Accumulate logprob
             double sum = EPS;
@@ -304,7 +308,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
         delete[] initialAcc;
 
         // Displays current configuration of the model
-//        this->displayHiddenStates();
+        this->displayHiddenStates();
         this->displayPi();
         this->displayTransitionsMatrix();
 
@@ -334,7 +338,7 @@ double speech::HMMLexicon::MultivariateGaussianHMM::predict(const Observation &o
     // Remove the temporary structure
     removeArray(forward, this->states);
 
-    return likelihood;
+    return log(likelihood);
 }
 
 void speech::HMMLexicon::MultivariateGaussianHMM::initializeMixtures() {
@@ -496,20 +500,32 @@ void speech::HMMLexicon::MultivariateGaussianHMM::normalizePi() {
 }
 
 void speech::HMMLexicon::MultivariateGaussianHMM::calculateForwardProbabilities(double **forward,
-                                                                                const Observation &observation) {
+                                                                                const Observation &observation,
+                                                                                bool normalize) {
     unsigned int vectorsNb = observation.size();
     unsigned int T = vectorsNb - 1;
 
     const valarray<double> &firstVector = observation.at(0);
+
+    double probabilitiesSum = 0.0;
     for (int i = 0; i < this->states; ++i) {
         GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(i);
         double stateOccupation = stateGMM(firstVector);
         forward[i][0] = this->pi[i] * stateOccupation;
+        probabilitiesSum += forward[i][0];
+    }
+
+    if (normalize) {
+        for (int i = 0; i < this->states; ++i) {
+            forward[i][0] /= probabilitiesSum;
+        }
     }
 
     // Calculate the forward estimates for all other time frames
     for (int t = 1; t <= T; ++t) {
         const valarray<double> &vector = observation.at(t);
+
+        double probabilitiesSum = 0.0;
         for (int j = 0; j < this->states; j++) {
             GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
             double stateOccupation = stateGMM(vector); // stateOccupation is sometimes 0
@@ -520,30 +536,55 @@ void speech::HMMLexicon::MultivariateGaussianHMM::calculateForwardProbabilities(
             }
 
             forward[j][t] = sum * stateOccupation + EPS;
+            probabilitiesSum += forward[j][t];
+        }
+
+        if (normalize) {
+            for (int j = 0; j < this->states; j++) {
+                forward[j][t] /= probabilitiesSum;
+            }
         }
     }
 }
 
 void speech::HMMLexicon::MultivariateGaussianHMM::calculateBackwardProbabilities(double **backward,
-                                                                                 const Observation &observation) {
+                                                                                 const Observation &observation,
+                                                                                 bool normalize) {
     unsigned int vectorsNb = observation.size();
     unsigned int T = vectorsNb - 1;
 
     // Calculate the backward estimates for the last time frame
+    double probabilitiesSum = 0.0;
     for (int i = 0; i < this->states; i++) {
-        GMMLikelihoodFunction&stateGMM = this->hiddenStates->at(i);
+        GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(i);
         backward[i][T] = 1.0; //stateGMM(observation[T]);// 1.0;
+        probabilitiesSum += backward[i][T];
+    }
+
+    if (normalize) {
+        for (int i = 0; i < this->states; i++) {
+            backward[i][T] /= probabilitiesSum;
+        }
     }
 
     // Calculate the backward estimates for all other time frames
     for (int t = T - 1; t >= 0; --t) {
         const valarray<double> &nextVector = observation.at(t + 1);
+
+        double probabilitiesSum = 0.0;
         for (int i = 0; i < this->states; ++i) {
             backward[i][t] = EPS;
             for (int j = 0; j < this->states; ++j) {
                 GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(j);
                 double stateOccupation = stateGMM(nextVector);
                 backward[i][t] += this->transition[i][j] * stateOccupation * backward[j][t + 1];
+                probabilitiesSum += backward[i][t];
+            }
+        }
+
+        if (normalize) {
+            for (int i = 0; i < this->states; i++) {
+                backward[i][t] /= probabilitiesSum;
             }
         }
     }

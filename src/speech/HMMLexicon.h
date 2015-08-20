@@ -324,7 +324,7 @@ namespace speech {
             /** Low value used to avoid mathematical errors */
             static constexpr double EPS = 1e-256;
             /** Minimal variance of a single dimension in the Gaussian mixture */
-            static constexpr double MIN_VARIANCE = 1e-16;
+            static constexpr double MIN_VARIANCE = 1e-64;
             /** Dimensionality of a single input vector */
             unsigned int dimensionality;
             /** Number of hidden states (language units, like phones) */
@@ -378,6 +378,9 @@ namespace speech {
             void normalizePi();
 
         private:
+            // TODO: comment the methood
+            double calculateLogLikelihood(const Observation& observation);
+
             /**
              * Calculates forward probabilities of each vector from the observation and each state of HMM
              * @param forward an array storing the values of forward probabilities

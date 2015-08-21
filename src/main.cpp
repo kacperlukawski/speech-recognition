@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
     const int MFCC_BINS = 26; // number of Mel filters in a bank
     const int MFCC_CEPSTRAL_COEFFICIENTS = 12; // number of cepstral coefficients used for analysis
     const double MFCC_MIN_FREQUENCY = 64.0; // in Herzs
-    const double MFCC_MAX_FREQUENCY = 10000.0; // in Herzs
+    const double MFCC_MAX_FREQUENCY = 16000.0; // in Herzs
     const int LEXICON_DIMENSIONALITY = 3 * (MFCC_CEPSTRAL_COEFFICIENTS + 1);
     const int LEXICON_GAUSSIANS = 16;
 
@@ -71,16 +71,18 @@ int main(int argc, char **argv) {
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
                                                                               SAMPLE_LENGTH, SAMPLE_OFFSET);
 
-    int trainFilesNumber = 2;
-    int testFilesNumber = 3;
+    int trainFilesNumber = 3;
+    int testFilesNumber = 4;
     std::string filenames[] = {
             "/home/kacper/Test/sala_21.wav",
             "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/sala.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/baba.wav"
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/chory.wav",
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/dziadzio.wav"
     };
     std::string transcriptions[] = {
             "s|a|l|a",
-            "s|a|l|a"
+            "s|a|l|a",
+            "ch|o|r|y"
     };
 
     // do the following process for each file from the collection

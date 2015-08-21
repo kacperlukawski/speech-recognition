@@ -158,26 +158,20 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
 
         // Create temporary structures used to accumulate data between iterations
         double *initialAcc = new double[this->states];
-        double **transitionsAcc = new double *[this->states];
-        double **occupationsAcc = new double *[this->states]; // [state][mixture]
-        valarray<double> **weightedObservationAcc = new valarray<double> *[this->states];
-        valarray<double> **weightedVarianceAcc = new valarray<double> *[this->states];
+        double **transitionsAcc = createArray<double>(this->states, this->states);
+        double **occupationsAcc = createArray<double>(this->states, this->M); // [state][mixture]
+        valarray<double> **weightedObservationAcc = createArray<valarray<double>>(this->states, this->M);
+        valarray<double> **weightedVarianceAcc = createArray<valarray<double>>(this->states, this->M);
         for (int s1 = 0; s1 < this->states; ++s1) {
             initialAcc[s1] = 0.0;
-            transitionsAcc[s1] = new double[this->states];
+
             for (int s2 = 0; s2 < this->states; ++s2) {
                 transitionsAcc[s1][s2] = 0.0;
             }
-            occupationsAcc[s1] = new double[this->M];
+
             for (int m = 0; m < this->M; ++m) {
                 occupationsAcc[s1][m] = 0.0;
-            }
-            weightedObservationAcc[s1] = new valarray<double>[this->M];
-            for (int m = 0; m < this->M; ++m) {
                 weightedObservationAcc[s1][m] = valarray<double>(0.0, this->dimensionality);
-            }
-            weightedVarianceAcc[s1] = new valarray<double>[this->M];
-            for (int m = 0; m < this->M; ++m) {
                 weightedVarianceAcc[s1][m] = valarray<double>(MIN_VARIANCE, this->dimensionality);
             }
         }
@@ -456,6 +450,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::normalizePi() {
 }
 
 double speech::HMMLexicon::MultivariateGaussianHMM::calculateLogLikelihood(const Observation &observation) {
+    // TODO: find a way to calculate log-likelihood more precisely
     unsigned int vectorsNb = observation.size();
     unsigned int T = vectorsNb - 1;
     if (T <= 0) {

@@ -12,10 +12,14 @@ set(EXECUTABLE_OUTPUT_PATH ${SPEECH_RECOGNITION_SOURCE_DIR}/build)
 
 enable_testing()
 
+# specify a path to the libraries
+include_directories(lib)
+
 # add all libraries
 add_subdirectory(lib/gtest-1.7.0)
 
 # add directories to be used in compilation
 add_subdirectory(lib/vl)
+add_subdirectory(lib/jsoncpp)
 add_subdirectory(tests)
 add_subdirectory(src)

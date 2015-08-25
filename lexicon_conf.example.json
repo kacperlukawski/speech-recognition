@@ -1,0 +1,19 @@
+{
+  "sample_length": 20,
+  "sample_offset": 10,
+  "mfcc_bins": 26,
+  "mfcc_cepstral_coefficients": 12,
+  "mfcc_min_frequency": 64.0,
+  "mfcc_max_frequency": 16000.0,
+  "lexicon_gaussians": 16,
+  "words": [
+    {
+      "spelling": "lorem",
+      "transcription": "lo|rem",
+      "utterances": [
+        "utterance_1.wav",
+        "utterance_2.wav"
+      ]
+    }
+  ]
+}

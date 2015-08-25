@@ -2,6 +2,7 @@
 #include <memory>
 #include <list>
 #include <streambuf>
+#include <fstream>
 
 using std::shared_ptr;
 
@@ -53,9 +54,25 @@ using speech::HMMLexicon;
 
 #include "speech/helpers.h"
 
+#include <jsoncpp/json/json.h>
+
 int main(int argc, char **argv) {
+    // Check if there is a configuration file path passed as a first
+    // parameter of the application and serve the error if there is not
+    if (argc != 2) {
+        std::cerr << "This application should be run with a path "
+                     "to JSON file containing the configuration "
+                     "of the model" << std::endl;
+        return 1;
+    }
+
     // Get the list of the words' transcriptions and assigned files
-    // Load all the files and
+    // Load all the files and build a model for each utterance
+    Json::CharReaderBuilder charReaderBuilder;
+    std::ifstream inputFile("input.json");
+    Json::Value root;
+    std::string errors;
+    Json::parseFromStream(charReaderBuilder, inputFile, &root, &errors);
 
     const int SAMPLE_LENGTH = 20; // in milliseconds
     const int SAMPLE_OFFSET = 10; // in milliseconds
@@ -71,22 +88,27 @@ int main(int argc, char **argv) {
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
                                                                               SAMPLE_LENGTH, SAMPLE_OFFSET);
 
-    int trainFilesNumber = 3;
-    int testFilesNumber = 4;
+    int trainFilesNumber = 4;
+    int testFilesNumber = 5;
     std::string filenames[] = {
-            "/home/kacper/Test/sala_21.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/sala.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/chory.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record11/dziadzio.wav"
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record1/sala.wav",
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record2/sala.wav",
+//            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record3/sala.wav",
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record4/sala.wav",
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record5/sala.wav",
+            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record6/sala.wav"
     };
     std::string transcriptions[] = {
             "s|a|l|a",
             "s|a|l|a",
-            "ch|o|r|y"
+            "s|a|l|a",
+            "s|a|l|a",
+            "s|a|l|a",
+            "s|a|l|a"
     };
 
     // do the following process for each file from the collection
-    for (int i = 0; i < trainFilesNumber; ++i){
+    for (int i = 0; i < trainFilesNumber; ++i) {
         WaveFileDataSource<short int> dataSource(filenames[i], SAMPLE_LENGTH);
         HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
         lexicon.addUtterance(utterance, transcriptions[i], "|");
@@ -95,7 +117,7 @@ int main(int argc, char **argv) {
     lexicon.fit();
 
     // get the same set once again and test what the model guesses about each utterance
-    for (int i = 0; i < testFilesNumber; ++i){
+    for (int i = 0; i < testFilesNumber; ++i) {
         WaveFileDataSource<short int> dataSource(filenames[i], SAMPLE_LENGTH);
         HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
         lexicon.predict(utterance);

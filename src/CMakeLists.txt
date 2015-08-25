@@ -33,7 +33,7 @@ add_executable(
         speech/transform/window/GaussWindow.cpp)
 
 # add VLFeat library usage
-target_link_libraries(Main LINK_PUBLIC VLFeat)
+target_link_libraries(Main LINK_PUBLIC VLFeat JsonCpp)
 
 # add the executable "Filters"
 add_executable(

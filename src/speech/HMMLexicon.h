@@ -56,7 +56,7 @@ namespace speech {
          * @param transcription text representing the observation
          * @param unitSeparator separator used for splitting the transcription
          */
-        void addUtterance(const Observation &utterance,
+        void addUtterance(Observation utterance,
                           string transcription,
                           string unitSeparator = "|");
 

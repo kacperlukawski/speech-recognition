@@ -15,7 +15,7 @@ speech::HMMLexicon::~HMMLexicon() {
     }
 }
 
-void speech::HMMLexicon::addUtterance(const Observation &utterance,
+void speech::HMMLexicon::addUtterance(Observation utterance,
                                       string transcription,
                                       string unitSeparator) {
     if (unitModels.find(transcription) == unitModels.end()) {

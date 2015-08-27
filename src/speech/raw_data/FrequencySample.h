@@ -28,7 +28,7 @@ namespace speech {
 
             int getSize() const;
 
-            int getLength();
+            int getLength() const;
 
             std::shared_ptr<double> getAmplitude() const;
 

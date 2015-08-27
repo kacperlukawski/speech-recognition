@@ -156,6 +156,12 @@ namespace speech {
                 }
             };
 
+            /**
+             * The default constructor of DataSource is here just to have
+             * a possibility to declare arrays of such objects
+             */
+            DataSource() : DataSource(0) {}
+
             DataSource(int sampleLength);
 
             virtual ~DataSource();

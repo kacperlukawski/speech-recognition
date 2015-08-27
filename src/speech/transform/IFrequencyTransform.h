@@ -20,11 +20,11 @@ namespace speech {
         template<typename FrameType>
         class IFrequencyTransform {
         public:
-            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector) = 0;
+            virtual FrequencySample<FrameType> transform(const DataSample<FrameType> &vector) = 0;
 
-            virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector) = 0;
+            virtual DataSample<FrameType> reverseTransform(const FrequencySample<FrameType> &vector) = 0;
 
-            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector, Window* window) = 0;
+            virtual FrequencySample<FrameType> transform(const DataSample<FrameType> &vector, Window* window) = 0;
         };
     }
 

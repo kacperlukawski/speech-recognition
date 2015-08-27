@@ -111,8 +111,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::readFromFile(bool convertT
             mono = std::make_pair(buffer, numberOfRead);
         }
 
-        this->samples->push_back(DataSample<FrameType>(mono.second, this->sampleLength, mono.first));
-        buffer.reset();
+        this->samples->emplace_back(mono.second, this->sampleLength, mono.first);
     }
 
     //
@@ -147,7 +146,7 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
     std::shared_ptr<FrameType> monoBuffer(new FrameType[newSize], std::default_delete<FrameType[]>());
 
     int monoBufferIndex = 0;
-    for (int i = 0; i < bufferSize; i += num_channels) {
+    for (int i = 0; monoBufferIndex < newSize ; i += num_channels) {
         monoBuffer.get()[monoBufferIndex] = arithemticMean<FrameType>(buffer, i, i + num_channels);
         ++monoBufferIndex;
     }

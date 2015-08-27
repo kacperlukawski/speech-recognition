@@ -7,12 +7,14 @@
 #include "./window/DefaultWindow.h"
 
 template<typename FrameType>
-FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
+FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::transform(
+        const DataSample<FrameType> &vector) {
     return transform(vector, speech::transform::window::DefaultWindow::getInstance());
 }
 
 template<typename FrameType>
-FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::transform(DataSample<FrameType> vector, Window* window) {
+FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::transform(
+        const DataSample<FrameType> &vector, Window* window) {
     int vectorSize = vector.getSize();
     int vectorLength = vector.getLength();
 
@@ -37,7 +39,8 @@ FrequencySample<FrameType> speech::transform::DiscreteFourierTransform<FrameType
 }
 
 template<typename FrameType>
-DataSample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::reverseTransform(FrequencySample<FrameType> vector) {
+DataSample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::reverseTransform(
+        const FrequencySample<FrameType> &vector) {
     int vectorSize = vector.getSize();
     int vectorLength = vector.getLength();
 
@@ -55,9 +58,10 @@ DataSample<FrameType> speech::transform::DiscreteFourierTransform<FrameType>::re
         values[n] = (FrameType) std::real(value);
     }
 
+    std::shared_ptr<FrameType> valuesPtr(values, std::default_delete<FrameType[]>());
     return DataSample<FrameType>(vectorSize,
                                  vectorLength,
-                                 std::shared_ptr<FrameType>(values, std::default_delete<FrameType[]>()));
+                                 valuesPtr);
 }
 
 template

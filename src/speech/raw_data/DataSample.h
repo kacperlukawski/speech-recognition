@@ -20,7 +20,7 @@ namespace speech {
             int length;
             std::shared_ptr<FrameType> values;
         public:
-            DataSample(int _size, int _length, std::shared_ptr<FrameType> _values);
+            DataSample(int _size, int _length, const std::shared_ptr<FrameType> &_values);
 
             DataSample(const DataSample<FrameType>& ref);
 
@@ -28,9 +28,9 @@ namespace speech {
 
             int getSize() const;
 
-            int getLength();
+            int getLength() const;
 
-            std::shared_ptr<FrameType> getValues();
+            const std::shared_ptr<FrameType> getValues() const;
         };
 
     }

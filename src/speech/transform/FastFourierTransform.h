@@ -24,11 +24,11 @@ namespace speech {
         public:
             FastFourierTransform();
 
-            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector);
+            virtual FrequencySample<FrameType> transform(const DataSample<FrameType> &vector);
 
-            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector, Window* window);
+            virtual FrequencySample<FrameType> transform(const DataSample<FrameType> &vector, Window* window);
 
-            virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector);
+            virtual DataSample<FrameType> reverseTransform(const FrequencySample<FrameType> &vector);
 
         protected:
             void fft(valarray<complex<double >> &x);

@@ -3,10 +3,10 @@
 #include <cstring>
 
 template<typename FrameType>
-speech::raw_data::DataSample<FrameType>::DataSample(int _size, int _length, std::shared_ptr<FrameType> _values) {
+speech::raw_data::DataSample<FrameType>::DataSample(int _size, int _length, const std::shared_ptr<FrameType> &_values)
+        : values(_values) {
     this->size = _size;
     this->length = _length;
-    this->values = _values;
 }
 
 template<typename FrameType>
@@ -29,12 +29,12 @@ int speech::raw_data::DataSample<FrameType>::getSize() const {
 }
 
 template<typename FrameType>
-int speech::raw_data::DataSample<FrameType>::getLength() {
+int speech::raw_data::DataSample<FrameType>::getLength() const {
     return this->length;
 }
 
 template<typename FrameType>
-std::shared_ptr<FrameType> speech::raw_data::DataSample<FrameType>::getValues() {
+const std::shared_ptr<FrameType> speech::raw_data::DataSample<FrameType>::getValues() const {
     return values;
 }
 

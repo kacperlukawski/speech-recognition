@@ -23,11 +23,11 @@ namespace speech {
         template<typename FrameType>
         class DiscreteFourierTransform : public IFrequencyTransform<FrameType> {
         public:
-            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector);
+            virtual FrequencySample<FrameType> transform(const DataSample<FrameType> &vector);
             
-            virtual DataSample<FrameType> reverseTransform(FrequencySample<FrameType> vector);
+            virtual DataSample<FrameType> reverseTransform(const FrequencySample<FrameType> &vector);
 
-            virtual FrequencySample<FrameType> transform(DataSample<FrameType> vector, Window* window);
+            virtual FrequencySample<FrameType> transform(const DataSample<FrameType> &vector, Window* window);
         };
 
     }

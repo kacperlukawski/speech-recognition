@@ -35,7 +35,7 @@ int speech::raw_data::FrequencySample<FrameType>::getSize() const {
 }
 
 template<typename FrameType>
-int speech::raw_data::FrequencySample<FrameType>::getLength() {
+int speech::raw_data::FrequencySample<FrameType>::getLength() const {
     return length;
 }
 

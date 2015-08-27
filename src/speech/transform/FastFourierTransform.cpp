@@ -9,13 +9,14 @@ speech::transform::FastFourierTransform<FrameType>::FastFourierTransform() {
 }
 
 template<typename FrameType>
-FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector) {
+FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(
+        const DataSample<FrameType> &vector) {
     return transform(vector, speech::transform::window::DefaultWindow::getInstance());
 }
 
 template<typename FrameType>
-FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(DataSample<FrameType> vector,
-                                                                                         Window *window) {
+FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::transform(
+        const DataSample<FrameType> &vector, Window *window) {
     std::shared_ptr<FrameType> values = vector.getValues();
 
     int nearestTwoPower = pow(2, ceil(log(vector.getSize()) / log(2)));
@@ -46,7 +47,7 @@ FrequencySample<FrameType> speech::transform::FastFourierTransform<FrameType>::t
 
 template<typename FrameType>
 DataSample<FrameType> speech::transform::FastFourierTransform<FrameType>::reverseTransform(
-        FrequencySample<FrameType> vector) {
+        const FrequencySample<FrameType> &vector) {
     std::shared_ptr<double> amplitude = vector.getAmplitude();
     std::shared_ptr<double> phase = vector.getPhase();
 

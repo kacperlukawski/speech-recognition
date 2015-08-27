@@ -50,9 +50,7 @@ string speech::HMMLexicon::predict(const Observation &observation) {
 }
 
 void speech::HMMLexicon::fit() {
-#ifdef _OPENMP
-#pragma openmp parallel for
-#endif
+    #pragma openmp parallel for
     for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
         std::cout << "Fitting model: " << it->first << std::endl;
         it->second->fit();
@@ -221,6 +219,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                                              observation);
 
             // Display forward
+#ifdef SPEECH_VERBOSITY
             std::cout << "Forward / Backward:" << std::endl;
             for (int t = 0; t <= T; t++) {
                 for (int s = 0; s < this->states; s++) {
@@ -233,7 +232,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
                 std::cout << std::endl;
             }
             std::cout << std::endl;
-
+#endif
             // Calculate log-likelihood of the current observation
             logLikelihood += calculateLogLikelihood(observation);
 
@@ -759,20 +758,28 @@ void speech::HMMLexicon::MultivariateGaussianHMM::accumulateMixtureVariances(val
 void speech::HMMLexicon::MultivariateGaussianHMM::updateMixtures(double **occupationsAcc,
                                                                  valarray<double> **weightedObservationAcc,
                                                                  valarray<double> **weightedVarianceAcc) {
+    // TODO: normalize the mixture weights
     // Update mixtures
     for (int s = 0; s < this->states; ++s) {
         // Calculate occupation of whole GMM
-        double gmmOccupation = speech::HMMLexicon::MultivariateGaussianHMM::EPS;
+        double gmmOccupation = EPS * this->M;
         for (int m = 0; m < this->M; ++m) {
             gmmOccupation += occupationsAcc[s][m];
         }
 
         speech::HMMLexicon::GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(s);
 
+        double weightsSum = 0.0;
         // Update mixture weights
         for (int m = 0; m < this->M; ++m) {
-            double mixtureWeight = occupationsAcc[s][m] / gmmOccupation;
+            double mixtureWeight = (occupationsAcc[s][m] + EPS) / gmmOccupation;
             stateGMM.setWeight(m, mixtureWeight);
+            weightsSum += mixtureWeight;
+        }
+
+        if (weightsSum < 0.99) {
+            std::cout << "weightsSum = " << weightsSum << std::endl;
+            throw weightsSum;
         }
 
         // Update mixture means

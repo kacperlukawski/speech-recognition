@@ -112,49 +112,36 @@ int main(int argc, char **argv) {
             HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
             lexicon.addUtterance(utterance, transcription, "|");
         }
-
-        std::cout << spelling << " -> " << transcription << std::endl;
-    }
-
-    return 43;
-
-    int trainFilesNumber = 4;
-    int testFilesNumber = 5;
-    std::string filenames[] = {
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record1/sala.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record2/sala.wav",
-//            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record3/sala.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record4/sala.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record5/sala.wav",
-            "/home/kacper/Projects/speech-recognition/dataset/splitted_records/record6/sala.wav"
-    };
-    std::string transcriptions[] = {
-            "s|a|l|a",
-            "s|a|l|a",
-            "s|a|l|a",
-            "s|a|l|a",
-            "s|a|l|a",
-            "s|a|l|a"
-    };
-
-    // do the following process for each file from the collection
-    for (int i = 0; i < trainFilesNumber; ++i) {
-        WaveFileDataSource<short int> dataSource(filenames[i], SAMPLE_LENGTH);
-        HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
-        lexicon.addUtterance(utterance, transcriptions[i], "|");
     }
 
     lexicon.fit();
 
-    // get the same set once again and test what the model guesses about each utterance
-    for (int i = 0; i < testFilesNumber; ++i) {
-        WaveFileDataSource<short int> dataSource(filenames[i], SAMPLE_LENGTH);
-        HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
-        lexicon.predict(utterance);
+    int allUtterancesCount = 0;
+    int predictedUtterancesCount = 0;
+    for (int i = 0; i < words.size(); i++) {
+        const Json::Value word = words[i];
+        std::string transcription = word["transcription"].asString();
+        const Json::Value utterances = word["utterances"];
+
+        for (int j = 0; j < utterances.size(); j++) {
+            WaveFileDataSource<short int> dataSource(utterances[j].asString(), SAMPLE_LENGTH);
+            HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
+            std::string prediction = lexicon.predict(utterance);
+
+            std::cout << "Prediction: " << prediction << ", Transcription: " << transcription << std::endl;
+
+            allUtterancesCount++;
+            if (prediction.compare(transcription) == 0) {
+                predictedUtterancesCount++;
+            }
+        }
     }
 
-
     inputFile.close();
+
+    std::cout << "All utterances: " << allUtterancesCount << std::endl;
+    std::cout << "Predicted utterances: " << predictedUtterancesCount << std::endl;
+
     delete mfccVectorizer;
 
     return 0;

@@ -35,7 +35,9 @@ speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _file
     this->sampleLength = sampleLength;
     meta_data = new wav_header;
     readFromFile(true);
+#ifdef SPEECH_VERBOSITY
     showFileInfo();
+#endif
 }
 
 template<typename FrameType>

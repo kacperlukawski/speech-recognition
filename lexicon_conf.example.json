@@ -8,7 +8,7 @@
   "lexicon_gaussians": 16,
   "words": [
     {
-      "transcription": "wiośnie",
+      "transcription": "vi|i|o.|s'|n'|e",
       "spelling": "wiośnie",
       "utterances": [
         "./dataset/splitted_records/record0/wiośnie.wav",
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "transcription": "baba",
+      "transcription": "b|a|b|a",
       "spelling": "baba",
       "utterances": [
         "./dataset/splitted_records/record0/baba.wav",
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "transcription": "mały",
+      "transcription": "m|a|u_|y",
       "spelling": "mały",
       "utterances": [
         "./dataset/splitted_records/record0/mały.wav",
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "transcription": "zioło",
+      "transcription": "z'|o|u_|o",
       "spelling": "zioło",
       "utterances": [
         "./dataset/splitted_records/record0/zioło.wav",
@@ -140,7 +140,7 @@
       ]
     },
     {
-      "transcription": "drzewo",
+      "transcription": "d._|z^|e|v|o",
       "spelling": "drzewo",
       "utterances": [
         "./dataset/splitted_records/record0/drzewo.wav",
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "transcription": "Kongo",
+      "transcription": "k|~o|ny|g|o",
       "spelling": "Kongo",
       "utterances": [
         "./dataset/splitted_records/record0/Kongo.wav",
@@ -206,7 +206,7 @@
       ]
     },
     {
-      "transcription": "fala",
+      "transcription": "f|a|l|a",
       "spelling": "fala",
       "utterances": [
         "./dataset/splitted_records/record0/fala.wav",
@@ -239,7 +239,7 @@
       ]
     },
     {
-      "transcription": "garnczka",
+      "transcription": "g|a|r|n'._|c^|k|a",
       "spelling": "garnczka",
       "utterances": [
         "./dataset/splitted_records/record0/garnczka.wav",
@@ -272,7 +272,7 @@
       ]
     },
     {
-      "transcription": "jak",
+      "transcription": "i_|a|k",
       "spelling": "jak",
       "utterances": [
         "./dataset/splitted_records/record0/jak.wav",
@@ -305,7 +305,7 @@
       ]
     },
     {
-      "transcription": "Ewa",
+      "transcription": "e|v|a",
       "spelling": "Ewa",
       "utterances": [
         "./dataset/splitted_records/record0/Ewa.wav",
@@ -338,7 +338,7 @@
       ]
     },
     {
-      "transcription": "baśń",
+      "transcription": "b|a|s'|n:",
       "spelling": "baśń",
       "utterances": [
         "./dataset/splitted_records/record0/baśń.wav",
@@ -371,7 +371,7 @@
       ]
     },
     {
-      "transcription": "rytm",
+      "transcription": "r|y|t|m'_",
       "spelling": "rytm",
       "utterances": [
         "./dataset/splitted_records/record0/rytm.wav",
@@ -404,7 +404,7 @@
       ]
     },
     {
-      "transcription": "wąs",
+      "transcription": "v|~o|~u:|s",
       "spelling": "wąs",
       "utterances": [
         "./dataset/splitted_records/record0/wąs.wav",
@@ -437,7 +437,7 @@
       ]
     },
     {
-      "transcription": "Ala",
+      "transcription": "a|l|a",
       "spelling": "Ala",
       "utterances": [
         "./dataset/splitted_records/record0/Ala.wav",
@@ -470,7 +470,7 @@
       ]
     },
     {
-      "transcription": "amfora",
+      "transcription": "~a|u~_|f|o|r|a",
       "spelling": "amfora",
       "utterances": [
         "./dataset/splitted_records/record0/amfora.wav",
@@ -503,7 +503,7 @@
       ]
     },
     {
-      "transcription": "kosmki",
+      "transcription": "k|o|s|m'.|k'|i",
       "spelling": "kosmki",
       "utterances": [
         "./dataset/splitted_records/record0/kosmki.wav",
@@ -536,7 +536,7 @@
       ]
     },
     {
-      "transcription": "loggia",
+      "transcription": "l|o|dz'^|i_|a",
       "spelling": "loggia",
       "utterances": [
         "./dataset/splitted_records/record0/loggia.wav",
@@ -569,7 +569,7 @@
       ]
     },
     {
-      "transcription": "lala",
+      "transcription": "l|a|l|a",
       "spelling": "lala",
       "utterances": [
         "./dataset/splitted_records/record0/lala.wav",
@@ -602,7 +602,7 @@
       ]
     },
     {
-      "transcription": "kunszt",
+      "transcription": "k|~u|~u:|s^|t",
       "spelling": "kunszt",
       "utterances": [
         "./dataset/splitted_records/record0/kunszt.wav",
@@ -635,7 +635,7 @@
       ]
     },
     {
-      "transcription": "cif",
+      "transcription": "ci|i|f",
       "spelling": "cif",
       "utterances": [
         "./dataset/splitted_records/record0/cif.wav",
@@ -668,7 +668,7 @@
       ]
     },
     {
-      "transcription": "miś",
+      "transcription": "mi|i|s'",
       "spelling": "miś",
       "utterances": [
         "./dataset/splitted_records/record0/miś.wav",
@@ -701,7 +701,7 @@
       ]
     },
     {
-      "transcription": "zarys",
+      "transcription": "z|a|r|y|s",
       "spelling": "zarys",
       "utterances": [
         "./dataset/splitted_records/record0/zarys.wav",
@@ -734,7 +734,7 @@
       ]
     },
     {
-      "transcription": "nagi",
+      "transcription": "n|a|g'|i",
       "spelling": "nagi",
       "utterances": [
         "./dataset/splitted_records/record0/nagi.wav",
@@ -767,7 +767,7 @@
       ]
     },
     {
-      "transcription": "sala",
+      "transcription": "s|a|l|a",
       "spelling": "sala",
       "utterances": [
         "./dataset/splitted_records/record0/sala.wav",
@@ -799,7 +799,7 @@
       ]
     },
     {
-      "transcription": "działo",
+      "transcription": "dz'|a|u_|o",
       "spelling": "działo",
       "utterances": [
         "./dataset/splitted_records/record0/działo.wav",
@@ -832,7 +832,7 @@
       ]
     },
     {
-      "transcription": "mędrkiem",
+      "transcription": "m|~e|n|t|r'.|k'|~e|m",
       "spelling": "mędrkiem",
       "utterances": [
         "./dataset/splitted_records/record0/mędrkiem.wav",
@@ -865,7 +865,7 @@
       ]
     },
     {
-      "transcription": "jedz inaczej",
+      "transcription": "i_|e|dzi|~i|n|a|c^|e|i_",
       "spelling": "jedz inaczej",
       "utterances": [
         "./dataset/splitted_records/record0/jedz inaczej.wav",
@@ -898,7 +898,7 @@
       ]
     },
     {
-      "transcription": "judzić",
+      "transcription": "i_|u:|dz'|i|c'",
       "spelling": "judzić",
       "utterances": [
         "./dataset/splitted_records/record0/judzić.wav",
@@ -931,7 +931,7 @@
       ]
     },
     {
-      "transcription": "dzianina",
+      "transcription": "dzi|~a:|n'|~i|n|a",
       "spelling": "dzianina",
       "utterances": [
         "./dataset/splitted_records/record0/dzianina.wav",
@@ -964,7 +964,7 @@
       ]
     },
     {
-      "transcription": "nie",
+      "transcription": "n'|e",
       "spelling": "nie",
       "utterances": [
         "./dataset/splitted_records/record0/nie.wav",
@@ -997,7 +997,7 @@
       ]
     },
     {
-      "transcription": "ul",
+      "transcription": "u|l",
       "spelling": "ul",
       "utterances": [
         "./dataset/splitted_records/record0/ul.wav",
@@ -1030,7 +1030,7 @@
       ]
     },
     {
-      "transcription": "ława",
+      "transcription": "u_|a|v|a",
       "spelling": "ława",
       "utterances": [
         "./dataset/splitted_records/record0/ława.wav",
@@ -1063,7 +1063,7 @@
       ]
     },
     {
-      "transcription": "nos",
+      "transcription": "n|o|s",
       "spelling": "nos",
       "utterances": [
         "./dataset/splitted_records/record0/nos.wav",
@@ -1096,7 +1096,7 @@
       ]
     },
     {
-      "transcription": "dzwon",
+      "transcription": "dz|v|~o|n",
       "spelling": "dzwon",
       "utterances": [
         "./dataset/splitted_records/record0/dzwon.wav",
@@ -1129,7 +1129,7 @@
       ]
     },
     {
-      "transcription": "wionie",
+      "transcription": "vi|i|~u_|n'|e",
       "spelling": "wionie",
       "utterances": [
         "./dataset/splitted_records/record0/wionie.wav",
@@ -1162,7 +1162,7 @@
       ]
     },
     {
-      "transcription": "zebra",
+      "transcription": "z|e|b|r|a",
       "spelling": "zebra",
       "utterances": [
         "./dataset/splitted_records/record0/zebra.wav",
@@ -1195,7 +1195,7 @@
       ]
     },
     {
-      "transcription": "chodzą",
+      "transcription": "chi|o|dz|~o|u~_",
       "spelling": "chodzą",
       "utterances": [
         "./dataset/splitted_records/record0/chodzą.wav",
@@ -1228,7 +1228,7 @@
       ]
     },
     {
-      "transcription": "Chile",
+      "transcription": "cz'^|i|l|e",
       "spelling": "Chile",
       "utterances": [
         "./dataset/splitted_records/record0/Chile.wav",
@@ -1261,7 +1261,7 @@
       ]
     },
     {
-      "transcription": "siano",
+      "transcription": "s'|~a|n|o",
       "spelling": "siano",
       "utterances": [
         "./dataset/splitted_records/record0/siano.wav",
@@ -1294,7 +1294,7 @@
       ]
     },
     {
-      "transcription": "szafa",
+      "transcription": "s^|a|f|a",
       "spelling": "szafa",
       "utterances": [
         "./dataset/splitted_records/record0/szafa.wav",
@@ -1327,7 +1327,7 @@
       ]
     },
     {
-      "transcription": "pan Janek",
+      "transcription": "p|~a|ni|i_|~a|n|e|k",
       "spelling": "pan Janek",
       "utterances": [
         "./dataset/splitted_records/record0/pan Janek.wav",
@@ -1360,7 +1360,7 @@
       ]
     },
     {
-      "transcription": "piosnka",
+      "transcription": "pi|i_|o|s|ny._|k|a",
       "spelling": "piosnka",
       "utterances": [
         "./dataset/splitted_records/record0/piosnka.wav",
@@ -1393,7 +1393,7 @@
       ]
     },
     {
-      "transcription": "lis",
+      "transcription": "l'|i|s",
       "spelling": "lis",
       "utterances": [
         "./dataset/splitted_records/record0/lis.wav",
@@ -1426,7 +1426,7 @@
       ]
     },
     {
-      "transcription": "żaba",
+      "transcription": "z^|a|b|a",
       "spelling": "żaba",
       "utterances": [
         "./dataset/splitted_records/record0/żaba.wav",
@@ -1459,7 +1459,7 @@
       ]
     },
     {
-      "transcription": "umysł",
+      "transcription": "~u|m|y|s|u^_",
       "spelling": "umysł",
       "utterances": [
         "./dataset/splitted_records/record0/umysł.wav",
@@ -1492,7 +1492,7 @@
       ]
     },
     {
-      "transcription": "sinus",
+      "transcription": "si|~i|n|u|s",
       "spelling": "sinus",
       "utterances": [
         "./dataset/splitted_records/record0/sinus.wav",
@@ -1525,7 +1525,7 @@
       ]
     },
     {
-      "transcription": "chory",
+      "transcription": "chi|o|r|y",
       "spelling": "chory",
       "utterances": [
         "./dataset/splitted_records/record0/chory.wav",
@@ -1558,7 +1558,7 @@
       ]
     },
     {
-      "transcription": "cień",
+      "transcription": "c'|~e.|n'",
       "spelling": "cień",
       "utterances": [
         "./dataset/splitted_records/record0/cień.wav",
@@ -1591,7 +1591,7 @@
       ]
     },
     {
-      "transcription": "myślmy",
+      "transcription": "m|y|s'|l.|m|y",
       "spelling": "myślmy",
       "utterances": [
         "./dataset/splitted_records/record0/myślmy.wav",
@@ -1624,7 +1624,7 @@
       ]
     },
     {
-      "transcription": "tata",
+      "transcription": "t|a|t|a",
       "spelling": "tata",
       "utterances": [
         "./dataset/splitted_records/record0/tata.wav",
@@ -1657,7 +1657,7 @@
       ]
     },
     {
-      "transcription": "chcieć",
+      "transcription": "chi|c'|e.|c'",
       "spelling": "chcieć",
       "utterances": [
         "./dataset/splitted_records/record0/chcieć.wav",
@@ -1689,7 +1689,7 @@
       ]
     },
     {
-      "transcription": "kadr",
+      "transcription": "k|a|t|r.",
       "spelling": "kadr",
       "utterances": [
         "./dataset/splitted_records/record0/kadr.wav",
@@ -1722,7 +1722,7 @@
       ]
     },
     {
-      "transcription": "instytut",
+      "transcription": "~i|u~_|s|t|y|t|u|t",
       "spelling": "instytut",
       "utterances": [
         "./dataset/splitted_records/record0/instytut.wav",
@@ -1755,7 +1755,7 @@
       ]
     },
     {
-      "transcription": "wigor",
+      "transcription": "vi|i|g|o|r",
       "spelling": "wigor",
       "utterances": [
         "./dataset/splitted_records/record0/wigor.wav",
@@ -1788,7 +1788,7 @@
       ]
     },
     {
-      "transcription": "igła",
+      "transcription": "i|g|u_|a",
       "spelling": "igła",
       "utterances": [
         "./dataset/splitted_records/record0/igła.wav",
@@ -1821,7 +1821,7 @@
       ]
     },
     {
-      "transcription": "tiara",
+      "transcription": "ti|i_|a|r|a",
       "spelling": "tiara",
       "utterances": [
         "./dataset/splitted_records/record0/tiara.wav",
@@ -1854,7 +1854,7 @@
       ]
     },
     {
-      "transcription": "rower",
+      "transcription": "r|o|v|e|r",
       "spelling": "rower",
       "utterances": [
         "./dataset/splitted_records/record0/rower.wav",
@@ -1887,7 +1887,7 @@
       ]
     },
     {
-      "transcription": "koński",
+      "transcription": "k|~o|i'_|si|k'|i",
       "spelling": "koński",
       "utterances": [
         "./dataset/splitted_records/record0/koński.wav",
@@ -1920,7 +1920,7 @@
       ]
     },
     {
-      "transcription": "enzym",
+      "transcription": "~e|u~_|z|~y|m",
       "spelling": "enzym",
       "utterances": [
         "./dataset/splitted_records/record0/enzym.wav",
@@ -1953,7 +1953,7 @@
       ]
     },
     {
-      "transcription": "rynsztok",
+      "transcription": "r|~y|u~_|s^|t|o|k",
       "spelling": "rynsztok",
       "utterances": [
         "./dataset/splitted_records/record0/rynsztok.wav",
@@ -1986,7 +1986,7 @@
       ]
     },
     {
-      "transcription": "fikus",
+      "transcription": "fi|i|k|u|s",
       "spelling": "fikus",
       "utterances": [
         "./dataset/splitted_records/record0/fikus.wav",
@@ -2019,7 +2019,7 @@
       ]
     },
     {
-      "transcription": "blizn",
+      "transcription": "b|l'|i|s|n.",
       "spelling": "blizn",
       "utterances": [
         "./dataset/splitted_records/record0/blizn.wav",
@@ -2052,7 +2052,7 @@
       ]
     },
     {
-      "transcription": "umyślnie",
+      "transcription": "~u|m|y|s'|l'.|n'|e",
       "spelling": "umyślnie",
       "utterances": [
         "./dataset/splitted_records/record0/umyślnie.wav",
@@ -2085,7 +2085,7 @@
       ]
     },
     {
-      "transcription": "dżem",
+      "transcription": "dz^|~e|m",
       "spelling": "dżem",
       "utterances": [
         "./dataset/splitted_records/record0/dżem.wav",
@@ -2118,7 +2118,7 @@
       ]
     },
     {
-      "transcription": "goły",
+      "transcription": "g|o|u_|y",
       "spelling": "goły",
       "utterances": [
         "./dataset/splitted_records/record0/goły.wav",
@@ -2151,7 +2151,7 @@
       ]
     },
     {
-      "transcription": "weekend",
+      "transcription": "u'_|i|k|~e|n|t",
       "spelling": "weekend",
       "utterances": [
         "./dataset/splitted_records/record0/weekend.wav",
@@ -2184,7 +2184,7 @@
       ]
     },
     {
-      "transcription": "pisać",
+      "transcription": "pi|i|s|a|c'",
       "spelling": "pisać",
       "utterances": [
         "./dataset/splitted_records/record0/pisać.wav",
@@ -2217,7 +2217,7 @@
       ]
     },
     {
-      "transcription": "dach inny",
+      "transcription": "d|a|ch'|~i|n|y",
       "spelling": "dach inny",
       "utterances": [
         "./dataset/splitted_records/record0/dach inny.wav",
@@ -2250,7 +2250,7 @@
       ]
     },
     {
-      "transcription": "żigolo",
+      "transcription": "z'^|i|g|o|l|o",
       "spelling": "żigolo",
       "utterances": [
         "./dataset/splitted_records/record0/żigolo.wav",
@@ -2283,7 +2283,7 @@
       ]
     },
     {
-      "transcription": "dziadzio",
+      "transcription": "dzi|a:|dzi|o",
       "spelling": "dziadzio",
       "utterances": [
         "./dataset/splitted_records/record0/dziadzio.wav",
@@ -2316,7 +2316,7 @@
       ]
     },
     {
-      "transcription": "kara",
+      "transcription": "k|a|r|a",
       "spelling": "kara",
       "utterances": [
         "./dataset/splitted_records/record0/kara.wav",
@@ -2349,7 +2349,7 @@
       ]
     },
     {
-      "transcription": "pączek",
+      "transcription": "p|~o|n._|c^|e|k",
       "spelling": "pączek",
       "utterances": [
         "./dataset/splitted_records/record0/pączek.wav",
@@ -2382,7 +2382,7 @@
       ]
     },
     {
-      "transcription": "Hiroszima",
+      "transcription": "chi'|i|r|o|s'^|~i|m|a",
       "spelling": "Hiroszima",
       "utterances": [
         "./dataset/splitted_records/record0/Hiroszima.wav",
@@ -2415,7 +2415,7 @@
       ]
     },
     {
-      "transcription": "waza",
+      "transcription": "v|a|z|a",
       "spelling": "waza",
       "utterances": [
         "./dataset/splitted_records/record0/waza.wav",
@@ -2448,7 +2448,7 @@
       ]
     },
     {
-      "transcription": "diabeł",
+      "transcription": "di|i_|a|b|e|u_",
       "spelling": "diabeł",
       "utterances": [
         "./dataset/splitted_records/record0/diabeł.wav",
@@ -2481,7 +2481,7 @@
       ]
     },
     {
-      "transcription": "chirurg",
+      "transcription": "chi'|i|r|u|r|k",
       "spelling": "chirurg",
       "utterances": [
         "./dataset/splitted_records/record0/chirurg.wav",
@@ -2514,7 +2514,7 @@
       ]
     },
     {
-      "transcription": "ręki",
+      "transcription": "r|~e|ny'|k'|i",
       "spelling": "ręki",
       "utterances": [
         "./dataset/splitted_records/record0/ręki.wav",
@@ -2547,7 +2547,7 @@
       ]
     },
     {
-      "transcription": "czas",
+      "transcription": "c^|a|s",
       "spelling": "czas",
       "utterances": [
         "./dataset/splitted_records/record0/czas.wav",
@@ -2580,7 +2580,7 @@
       ]
     },
     {
-      "transcription": "riksza",
+      "transcription": "r'|i|k|s^|a",
       "spelling": "riksza",
       "utterances": [
         "./dataset/splitted_records/record0/riksza.wav",
@@ -2613,7 +2613,7 @@
       ]
     },
     {
-      "transcription": "dziadziunio",
+      "transcription": "dz'|a:|dz'|~u:|n'|o",
       "spelling": "dziadziunio",
       "utterances": [
         "./dataset/splitted_records/record0/dziadziunio.wav",
@@ -2646,7 +2646,7 @@
       ]
     },
     {
-      "transcription": "bigos",
+      "transcription": "bi|i|g|o|s",
       "spelling": "bigos",
       "utterances": [
         "./dataset/splitted_records/record0/bigos.wav",
@@ -2679,7 +2679,7 @@
       ]
     },
     {
-      "transcription": "zjawa",
+      "transcription": "zi|i_|a|v|a",
       "spelling": "zjawa",
       "utterances": [
         "./dataset/splitted_records/record0/zjawa.wav",
@@ -2712,7 +2712,7 @@
       ]
     },
     {
-      "transcription": "ciało",
+      "transcription": "c'|a|u_|o",
       "spelling": "ciało",
       "utterances": [
         "./dataset/splitted_records/record0/ciało.wav",
@@ -2745,7 +2745,7 @@
       ]
     },
     {
-      "transcription": "piosnki",
+      "transcription": "pi|i_|o|s|ny'._|k'|i",
       "spelling": "piosnki",
       "utterances": [
         "./dataset/splitted_records/record0/piosnki.wav",
@@ -2778,7 +2778,7 @@
       ]
     },
     {
-      "transcription": "orzech",
+      "transcription": "o|z^|e|chi",
       "spelling": "orzech",
       "utterances": [
         "./dataset/splitted_records/record0/orzech.wav",
@@ -2811,7 +2811,7 @@
       ]
     },
     {
-      "transcription": "klechda",
+      "transcription": "k|l|e|ch|d|a",
       "spelling": "klechda",
       "utterances": [
         "./dataset/splitted_records/record0/klechda.wav",
@@ -2844,7 +2844,7 @@
       ]
     },
     {
-      "transcription": "raki",
+      "transcription": "r|a|k'|i",
       "spelling": "raki",
       "utterances": [
         "./dataset/splitted_records/record0/raki.wav",
@@ -2877,7 +2877,7 @@
       ]
     },
     {
-      "transcription": "pole",
+      "transcription": "p|o|l|e",
       "spelling": "pole",
       "utterances": [
         "./dataset/splitted_records/record0/pole.wav",
@@ -2910,7 +2910,7 @@
       ]
     },
     {
-      "transcription": "trzask",
+      "transcription": "t._|s^|a|s|k",
       "spelling": "trzask",
       "utterances": [
         "./dataset/splitted_records/record0/trzask.wav",
@@ -2943,7 +2943,7 @@
       ]
     },
     {
-      "transcription": "dal",
+      "transcription": "d|a|l",
       "spelling": "dal",
       "utterances": [
         "./dataset/splitted_records/record0/dal.wav",
@@ -2976,7 +2976,7 @@
       ]
     },
     {
-      "transcription": "cegła",
+      "transcription": "c|e|g|u_|a",
       "spelling": "cegła",
       "utterances": [
         "./dataset/splitted_records/record0/cegła.wav",

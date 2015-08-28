@@ -40,7 +40,7 @@ string speech::HMMLexicon::predict(const Observation &observation) {
     for (auto it = modelLikelihood.begin(); it != modelLikelihood.end(); ++it) {
         std::cout << "PREDICTED: " << it->first << " -> " << it->second << std::endl;
 
-        if (it->second > maxLikelihood) {
+        if (it->second > maxLikelihood && !isinf(it->second)) {
             maxLikelihood = it->second;
             bestLabel = it->first;
         }
@@ -50,14 +50,18 @@ string speech::HMMLexicon::predict(const Observation &observation) {
 }
 
 void speech::HMMLexicon::fit() {
-    #pragma openmp parallel for
-    for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
-        std::cout << "Fitting model: " << it->first << std::endl;
-        it->second->fit();
+    #pragma omp parallel
+    #pragma omp single nowait
+    {
+        for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
+            #pragma omp task firstprivate(it)
+            {
+                std::cout << "Fitting model: " << it->first << std::endl;
+                it->second->fit();
+            }
+        }
     }
 }
-
-constexpr double speech::HMMLexicon::GMMLikelihoodFunction::MIN_VARIANCE;
 
 speech::HMMLexicon::GMMLikelihoodFunction::GMMLikelihoodFunction(unsigned int M, unsigned int D)
         : M(M), D(D), weights(valarray<double>(1.0 / M, M)), means(vector<valarray<double >>(M)),
@@ -76,11 +80,12 @@ double speech::HMMLexicon::GMMLikelihoodFunction::operator()(const valarray<doub
 
     double result = 0.0;
     for (int i = 0; i < this->M; i++) {
-        valarray<double> difference = observation - this->means[i];
-        valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[i];
-        double varianceNorm = invVariance.max(); // Euclidean norm of matrix is a highest eigenvalue, but eigenvalues of the diagonal matrix are their non-zero values
-        double power = ((difference / this->variances[i]) * difference).sum();
-        result += this->weights[i] * exp(-0.5 * power) / (pow(2 * M_PI, this->D / 2.0) * varianceNorm);
+        result += (*this)(i, observation);
+//        valarray<double> difference = observation - this->means[i];
+//        valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[i];
+//        double varianceNorm = invVariance.max(); // Euclidean norm of matrix is a highest eigenvalue, but eigenvalues of the diagonal matrix are their non-zero values
+//        double power = ((difference / this->variances[i]) * difference).sum();
+//        result += this->weights[i] * exp(-0.5 * power) / (pow(2 * M_PI, this->D / 2.0) * varianceNorm); // TODO: should varianceNorm be with sqrt?
     }
 
     return result;
@@ -96,10 +101,15 @@ double speech::HMMLexicon::GMMLikelihoodFunction::operator()(unsigned int k, con
     }
 
     valarray<double> difference = observation - this->means[k];
+    double varianceNorm = this->variances[k].max(); // Euclidean norm of matrix is a highest eigenvalue, but eigenvalues of the diagonal matrix are their non-zero values
     valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[k];
-    double varianceNorm = invVariance.max();
-    double power = ((difference / this->variances[k]) * difference).sum();
-    return this->weights[k] * exp(-0.5 * power) / (pow(2 * M_PI, this->D / 2.0) * varianceNorm);
+    double power = (difference * invVariance * difference).sum();
+    return this->weights[k] * exp(-0.5 * power) / sqrt(pow(2 * M_PI, this->D) * varianceNorm);
+//    valarray<double> difference = observation - this->means[k];
+//    valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[k];
+//    double varianceNorm = invVariance.max();
+//    double power = ((difference / this->variances[k]) * difference).sum();
+//    return this->weights[k] * exp(-0.5 * power) / (pow(2 * M_PI, this->D / 2.0) * varianceNorm);
 }
 
 constexpr double speech::HMMLexicon::MultivariateGaussianHMM::EPS;

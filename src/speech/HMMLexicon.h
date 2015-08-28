@@ -263,8 +263,6 @@ namespace speech {
             }
 
         protected:
-            /** Minimal variance of each dimension */
-            static constexpr double MIN_VARIANCE = 1e-10;
             /** Number of mixtures */
             unsigned int M;
             /** Dimensionality of an acoustic input vector */
@@ -320,11 +318,11 @@ namespace speech {
 
         protected:
             /** An upper limit of iterations for the model in learning phase */
-            static const unsigned int MAX_ITERATIONS = 25;
+            static const unsigned int MAX_ITERATIONS = 100;
             /** Low value used to avoid mathematical errors */
             static constexpr double EPS = 1e-256;
             /** Minimal variance of a single dimension in the Gaussian mixture */
-            static constexpr double MIN_VARIANCE = 1e-64;
+            static constexpr double MIN_VARIANCE = 1e-128;
             /** Dimensionality of a single input vector */
             unsigned int dimensionality;
             /** Number of hidden states (language units, like phones) */

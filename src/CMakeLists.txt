@@ -23,6 +23,7 @@ add_executable(
         speech/raw_data/DataSample.cpp
         speech/raw_data/FrequencySample.cpp
         speech/raw_data/Spectrum.cpp
+        speech/initializer/RandomInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
         speech/helpers.cpp
@@ -60,6 +61,7 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         speech/raw_data/Spectrum.cpp
+        speech/initializer/RandomInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
         speech/helpers.cpp)
@@ -93,6 +95,7 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         speech/raw_data/Spectrum.cpp
+        speech/initializer/RandomInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
         speech/helpers.cpp)
@@ -126,6 +129,7 @@ add_executable(
         speech/detector/NaiveSilenceDetector.cpp
         speech/vectorizer/ThirdsPowerVectorizer.cpp
         speech/raw_data/Spectrum.cpp
+        speech/initializer/RandomInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
         speech/helpers.cpp)

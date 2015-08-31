@@ -4,9 +4,9 @@
 
 #include "HMMLexicon.h"
 
-speech::HMMLexicon::HMMLexicon(int dimensionality, unsigned int gaussians)
-        : dimensionality(dimensionality), gaussians(gaussians) {
-
+speech::HMMLexicon::HMMLexicon(int dimensionality, unsigned int gaussians,
+                               std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer)
+        : dimensionality(dimensionality), gaussians(gaussians), initializer(initializer) {
 }
 
 speech::HMMLexicon::~HMMLexicon() {
@@ -22,7 +22,8 @@ void speech::HMMLexicon::addUtterance(Observation utterance,
         // given transcription was not passed before
         vector<string> substates = this->split(transcription, unitSeparator);
         int states = substates.size() + 1; // one additional state is for the end state
-        unitModels[transcription] = new MultivariateGaussianHMM(this->dimensionality, states, gaussians);
+        unitModels[transcription] = new MultivariateGaussianHMM(this->dimensionality, states, gaussians,
+                                                                this->initializer);
     }
 
     unitModels[transcription]->addUtterance(utterance);
@@ -50,11 +51,11 @@ string speech::HMMLexicon::predict(const Observation &observation) {
 }
 
 void speech::HMMLexicon::fit() {
-    #pragma omp parallel
-    #pragma omp single nowait
+#pragma omp parallel
+#pragma omp single nowait
     {
         for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
-            #pragma omp task firstprivate(it)
+#pragma omp task firstprivate(it)
             {
                 std::cout << "Fitting model: " << it->first << std::endl;
                 it->second->fit();
@@ -81,11 +82,6 @@ double speech::HMMLexicon::GMMLikelihoodFunction::operator()(const valarray<doub
     double result = 0.0;
     for (int i = 0; i < this->M; i++) {
         result += (*this)(i, observation);
-//        valarray<double> difference = observation - this->means[i];
-//        valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[i];
-//        double varianceNorm = invVariance.max(); // Euclidean norm of matrix is a highest eigenvalue, but eigenvalues of the diagonal matrix are their non-zero values
-//        double power = ((difference / this->variances[i]) * difference).sum();
-//        result += this->weights[i] * exp(-0.5 * power) / (pow(2 * M_PI, this->D / 2.0) * varianceNorm); // TODO: should varianceNorm be with sqrt?
     }
 
     return result;
@@ -105,19 +101,15 @@ double speech::HMMLexicon::GMMLikelihoodFunction::operator()(unsigned int k, con
     valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[k];
     double power = (difference * invVariance * difference).sum();
     return this->weights[k] * exp(-0.5 * power) / sqrt(pow(2 * M_PI, this->D) * varianceNorm);
-//    valarray<double> difference = observation - this->means[k];
-//    valarray<double> invVariance = valarray<double>(1.0, D) / this->variances[k];
-//    double varianceNorm = invVariance.max();
-//    double power = ((difference / this->variances[k]) * difference).sum();
-//    return this->weights[k] * exp(-0.5 * power) / (pow(2 * M_PI, this->D / 2.0) * varianceNorm);
 }
 
 constexpr double speech::HMMLexicon::MultivariateGaussianHMM::EPS;
 constexpr double speech::HMMLexicon::MultivariateGaussianHMM::MIN_VARIANCE;
 
 speech::HMMLexicon::MultivariateGaussianHMM::MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states,
-                                                                     unsigned int M)
-        : dimensionality(dimensionality), states(states), M(M) {
+                                                                     unsigned int M,
+                                                                     std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer)
+        : dimensionality(dimensionality), states(states), M(M), initializer(initializer) {
     this->utterances = new vector<Observation>();
     this->hiddenStates = new vector<GMMLikelihoodFunction>();
     this->pi = new double[states];
@@ -301,52 +293,53 @@ double speech::HMMLexicon::MultivariateGaussianHMM::predict(const Observation &o
 }
 
 void speech::HMMLexicon::MultivariateGaussianHMM::initializeMixtures() {
-    int observationsNb = 0;
-    valarray<double> mean(0.0, this->dimensionality);
-    valarray<double> variance(0.0, this->dimensionality);
-    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
-        Observation &observation = *it;
-        observationsNb += observation.size();
-    }
+//    int observationsNb = 0;
+//    valarray<double> mean(0.0, this->dimensionality);
+//    valarray<double> variance(0.0, this->dimensionality);
+//    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
+//        Observation &observation = *it;
+//        observationsNb += observation.size();
+//    }
+//
+//    // Calculates the mean of all observations
+//    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
+//        Observation &observation = *it;
+//        for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
+//            valarray<double> &vector = *vectorIt;
+//            mean += vector / (double) observationsNb;
+//        }
+//    }
+//
+//    // Calculates global variance of the data
+//    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
+//        Observation &observation = *it;
+//        for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
+//            valarray<double> &vector = *vectorIt;
+//            valarray<double> difference = vector - mean;
+//            valarray<double> product = difference * difference;
+//            variance += product / (double) observationsNb;
+//        }
+//    }
+//
+//    // Divide each utterance to have N parts, where N is a number of hidden states
+//    // Select M random vectors to be the initial means of the mixtures
+//    srand(time(NULL));
+//    unsigned int nbUtterances = this->utterances->size();
+//    for (int n = 0; n < this->states; ++n) {
+//        GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(n);
+//        for (int m = 0; m < this->M; ++m) {
+//            int utteranceIdx = random() % nbUtterances;
+//            Observation &utterance = this->utterances->at(utteranceIdx);
+//            int nbSamples = utterance.size();
+//            int rangeWidth = nbSamples / this->states;
+//            int beginIndex = n * rangeWidth;
+//            int randomStateIndex = rand() % rangeWidth + beginIndex; // random vector
+//            stateGMM.setMeans(m, utterance[randomStateIndex]); // set means of the mixture to randomly chosen vector
+//            stateGMM.setVariances(m, variance);
+//        }
+//    }
 
-    // Calculates the mean of all observations
-    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
-        Observation &observation = *it;
-        for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
-            valarray<double> &vector = *vectorIt;
-            mean += vector / (double) observationsNb;
-        }
-    }
-
-    // Calculates global variance of the data
-    for (auto it = this->utterances->begin(); it != this->utterances->end(); ++it) {
-        Observation &observation = *it;
-        for (auto vectorIt = observation.begin(); vectorIt != observation.end(); ++vectorIt) {
-            valarray<double> &vector = *vectorIt;
-            valarray<double> difference = vector - mean;
-            valarray<double> product = difference * difference;
-            variance += product / (double) observationsNb;
-        }
-    }
-
-    // Divide each utterance to have N parts, where N is a number of hidden states
-    // Select M random vectors to be the initial means of the mixtures
-    srand(time(NULL));
-    unsigned int nbUtterances = this->utterances->size();
-    for (int n = 0; n < this->states; ++n) {
-        GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(n);
-        for (int m = 0; m < this->M; ++m) {
-            int utteranceIdx = random() % nbUtterances;
-            Observation &utterance = this->utterances->at(utteranceIdx);
-            int nbSamples = utterance.size();
-            int rangeWidth = nbSamples / this->states;
-            int beginIndex = n * rangeWidth;
-            int randomStateIndex = rand() % rangeWidth + beginIndex; // random vector
-            stateGMM.setMeans(m, utterance[randomStateIndex]); // set means of the mixture to randomly chosen vector
-            stateGMM.setVariances(m, variance);
-        }
-    }
-
+    this->initializer->initialize(*this);
     this->displayHiddenStates();
 }
 
@@ -494,7 +487,8 @@ double speech::HMMLexicon::MultivariateGaussianHMM::calculateLogLikelihood(const
 
     double likelihood = 0.0;
     for (int i = 0; i < this->states; i++) {
-        likelihood += exp(logForward[i][T]); // TODO: it is a sum of log-probabilities - product of normal probabilities CORRECT
+        likelihood += exp(
+                logForward[i][T]); // TODO: it is a sum of log-probabilities - product of normal probabilities CORRECT
     }
 
     removeArray<double>(logForward, this->states);

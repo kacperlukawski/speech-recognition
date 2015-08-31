@@ -52,6 +52,11 @@ using speech::vectorizer::MFCCVectorizer;
 
 using speech::HMMLexicon;
 
+#include "speech/initializer/RandomInitializer.h"
+
+using speech::initializer::AbstractGaussianInitializer;
+using speech::initializer::RandomInitializer;
+
 #include "speech/helpers.h"
 
 #include <jsoncpp/json/json.h>
@@ -95,7 +100,8 @@ int main(int argc, char **argv) {
     const int LEXICON_DIMENSIONALITY = 3 * (MFCC_CEPSTRAL_COEFFICIENTS + 1);
     const int LEXICON_GAUSSIANS = root["lexicon_gaussians"].asInt();
 
-    HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS);
+    std::shared_ptr<AbstractGaussianInitializer> gaussianInitializer(new RandomInitializer());
+    HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS, gaussianInitializer);
     MFCCVectorizer<short int> *mfccVectorizer = new MFCCVectorizer<short int>(MFCC_BINS, MFCC_CEPSTRAL_COEFFICIENTS,
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
                                                                               SAMPLE_LENGTH, SAMPLE_OFFSET);

@@ -30,6 +30,10 @@ using speech::raw_data::DataSource;
 
 namespace speech {
 
+    namespace initializer {
+        class AbstractGaussianInitializer;
+    }
+
     /**
      * An acoustic model of the language built from HMMs for each
      * word / syllabe / phoneme from the dictionary.
@@ -39,11 +43,13 @@ namespace speech {
         typedef vector<valarray<double>> Observation;
 
         /**
-         * Constructs an object
+         * Constructs an object with a custom initializer
          * @param dimensionality dimensionality of a single acoustic vector
          * @param gaussians number of Gaussian mixtures in a single state of HMM
+         * @param initializer an instance of custom initializer
          */
-        HMMLexicon(int dimensionality, unsigned int gaussians = 16);
+        HMMLexicon(int dimensionality, unsigned int gaussians,
+                   std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer);
 
         /**
          * Destructs the object
@@ -56,9 +62,7 @@ namespace speech {
          * @param transcription text representing the observation
          * @param unitSeparator separator used for splitting the transcription
          */
-        void addUtterance(Observation utterance,
-                          string transcription,
-                          string unitSeparator = "|");
+        void addUtterance(Observation utterance, string transcription, string unitSeparator = "|");
 
         /**
          * Predicts a word which maximizes the probability of being
@@ -79,50 +83,6 @@ namespace speech {
          */
         inline unsigned long size() {
             return unitModels.size();
-        }
-
-    protected:
-        class MultivariateGaussianHMM;
-
-        /** Dimensionality of a single data vector */
-        int dimensionality;
-        /** Number of mixture Gaussians used for the probability approximation */
-        unsigned int gaussians;
-        /** Collection of Hidden Markov Models, each one represents a single language unit */
-        map<string, MultivariateGaussianHMM *> unitModels;
-
-        /**
-         * Splits given string using given separator
-         * @param text
-         * @param separator
-         * @return list of chunks
-         */
-        inline vector<string> split(const string &text, string &separator) {
-            vector<string> chunks;
-            unsigned long pos = 0;
-            unsigned long endPosition = 0;
-
-            while (true) {
-                endPosition = text.find(separator, pos);
-                if (string::npos == endPosition) {
-                    break;
-                }
-
-                string chunk = text.substr(pos, endPosition - pos);
-                if (chunk.length() > 0) {
-                    chunks.push_back(chunk);
-                }
-
-                pos = endPosition + separator.length();
-            }
-
-            unsigned long length = text.length();
-            if (pos < length) {
-                string chunk = text.substr(pos, length - pos);
-                chunks.push_back(chunk);
-            }
-
-            return std::move(chunks);
         }
 
         /**
@@ -288,8 +248,10 @@ namespace speech {
              * @param dimensionality size of a input vector
              * @param states number of hidden states
              * @param M number of Gaussian in each GMM
+             * @param initializer an instance of the Gaussian initializer
              */
-            MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states, unsigned int M);
+            MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states, unsigned int M,
+                                    std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer);
 
             /**
              * Destructs the object
@@ -316,6 +278,26 @@ namespace speech {
              */
             double predict(const Observation &utterance);
 
+            inline unsigned int getDimensionality() const {
+                return this->dimensionality;
+            }
+
+            inline unsigned int getStates() const {
+                return this->states;
+            }
+
+            inline unsigned int getNumberOfMixtures() const {
+                return this->M;
+            }
+
+            inline vector<Observation> *getUtterances() const {
+                return this->utterances;
+            }
+
+            inline GMMLikelihoodFunction& getHiddenState(int n) {
+                return this->hiddenStates->at(n);
+            }
+
         protected:
             /** An upper limit of iterations for the model in learning phase */
             static const unsigned int MAX_ITERATIONS = 100;
@@ -329,6 +311,8 @@ namespace speech {
             unsigned int states;
             /** Number of Gaussians used to approximate the distribution */
             unsigned int M;
+            /** Initializer of the Gaussians */
+            std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer;
             /** Collection of observed vectors of this language unit */
             vector<Observation> *utterances;
             /** Probability distributions of the emiting hidden states */
@@ -467,8 +451,55 @@ namespace speech {
                                 valarray<double> **weightedVarianceAcc);
 
         };
+
+    protected:
+        /** Dimensionality of a single data vector */
+        int dimensionality;
+        /** Number of mixture Gaussians used for the probability approximation */
+        unsigned int gaussians;
+        /** Initializer of the Gaussian mixtures */
+        std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer;
+        /** Collection of Hidden Markov Models, each one represents a single language unit */
+        map<string, MultivariateGaussianHMM *> unitModels;
+
+        /**
+         * Splits given string using given separator
+         * @param text
+         * @param separator
+         * @return list of chunks
+         */
+        inline vector<string> split(const string &text, string &separator) {
+            vector<string> chunks;
+            unsigned long pos = 0;
+            unsigned long endPosition = 0;
+
+            while (true) {
+                endPosition = text.find(separator, pos);
+                if (string::npos == endPosition) {
+                    break;
+                }
+
+                string chunk = text.substr(pos, endPosition - pos);
+                if (chunk.length() > 0) {
+                    chunks.push_back(chunk);
+                }
+
+                pos = endPosition + separator.length();
+            }
+
+            unsigned long length = text.length();
+            if (pos < length) {
+                string chunk = text.substr(pos, length - pos);
+                chunks.push_back(chunk);
+            }
+
+            return std::move(chunks);
+        }
+
     };
 
 }
+
+#include "initializer/AbstractGaussianInitializer.h"
 
 #endif //SPEECH_RECOGNITION_HMMLEXICON_H

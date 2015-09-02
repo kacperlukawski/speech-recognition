@@ -21,7 +21,7 @@ namespace speech {
         public:
             static const uint32_t TYPE_IDENTIFIER = 0x00000001;
             const unsigned int MAX_ITERATIONS = 100000000;
-            const double EPS = 10e-18;
+            const double EPS = 10e-64;
 
             /**
              * Construct a clustering method from a stream.
@@ -57,6 +57,10 @@ namespace speech {
              * @return predicted label
              */
             virtual int predict(const valarray<double> &vector);
+
+            inline std::vector<std::valarray<double>> *getCentroids() const {
+                return this->centroids;
+            }
 
             /**
              * Serialize a model into given stream.

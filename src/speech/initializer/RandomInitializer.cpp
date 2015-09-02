@@ -10,11 +10,7 @@ void speech::initializer::RandomInitializer::initialize(speech::HMMLexicon::Mult
     unsigned int mixtures = gaussianHMM.getNumberOfMixtures();
     std::vector<HMMLexicon::Observation> *utterances = gaussianHMM.getUtterances();
 
-    int observationsNb = 0;
-    for (auto it = utterances->begin(); it != utterances->end(); ++it) {
-        HMMLexicon::Observation &observation = *it;
-        observationsNb += observation.size();
-    }
+    unsigned int observationsNb = this->countObservations(utterances);
 
     // Calculates global variance of the data
     valarray<double> variance = this->calculateVariance(utterances, dimensionality, observationsNb);
@@ -36,6 +32,17 @@ void speech::initializer::RandomInitializer::initialize(speech::HMMLexicon::Mult
             stateGMM.setVariances(m, variance);
         }
     }
+}
+
+unsigned int speech::initializer::RandomInitializer::countObservations(
+        std::vector<HMMLexicon::Observation> *utterances) {
+    unsigned int observationsNb = 0;
+    for (auto it = utterances->begin(); it != utterances->end(); ++it) {
+        HMMLexicon::Observation &observation = *it;
+        observationsNb += observation.size();
+    }
+
+    return observationsNb;
 }
 
 std::valarray<double> speech::initializer::RandomInitializer::calculateMean(

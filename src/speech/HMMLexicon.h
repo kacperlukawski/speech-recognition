@@ -300,7 +300,7 @@ namespace speech {
 
         protected:
             /** An upper limit of iterations for the model in learning phase */
-            static const unsigned int MAX_ITERATIONS = 100;
+            static const unsigned int MAX_ITERATIONS = 1000;
             /** Low value used to avoid mathematical errors */
             static constexpr double EPS = 1e-256;
             /** Minimal variance of a single dimension in the Gaussian mixture */

@@ -16,6 +16,8 @@ namespace speech {
             virtual void initialize(speech::HMMLexicon::MultivariateGaussianHMM &gaussianHMM);
 
         protected:
+            unsigned int countObservations(std::vector<HMMLexicon::Observation> *utterances);
+
             std::valarray<double> calculateMean(std::vector<HMMLexicon::Observation> *utterances, int dimensionality,
                                                 int observationsNb);
 

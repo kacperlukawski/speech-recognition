@@ -53,9 +53,11 @@ using speech::vectorizer::MFCCVectorizer;
 using speech::HMMLexicon;
 
 #include "speech/initializer/RandomInitializer.h"
+#include "speech/initializer/KMeansInitializer.h"
 
 using speech::initializer::AbstractGaussianInitializer;
 using speech::initializer::RandomInitializer;
+using speech::initializer::KMeansInitializer;
 
 #include "speech/helpers.h"
 
@@ -100,7 +102,7 @@ int main(int argc, char **argv) {
     const int LEXICON_DIMENSIONALITY = 3 * (MFCC_CEPSTRAL_COEFFICIENTS + 1);
     const int LEXICON_GAUSSIANS = root["lexicon_gaussians"].asInt();
 
-    std::shared_ptr<AbstractGaussianInitializer> gaussianInitializer(new RandomInitializer());
+    std::shared_ptr<AbstractGaussianInitializer> gaussianInitializer(new KMeansInitializer()); // may be RandomInitializer as well
     HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS, gaussianInitializer);
     MFCCVectorizer<short int> *mfccVectorizer = new MFCCVectorizer<short int>(MFCC_BINS, MFCC_CEPSTRAL_COEFFICIENTS,
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
@@ -124,10 +126,12 @@ int main(int argc, char **argv) {
 
     int allUtterancesCount = 0;
     int predictedUtterancesCount = 0;
+    std::map<std::string, int> wordPredictions;
     for (int i = 0; i < words.size(); i++) {
         const Json::Value word = words[i];
         std::string transcription = word["transcription"].asString();
         const Json::Value utterances = word["utterances"];
+        wordPredictions[transcription] = 0;
 
         for (int j = 0; j < utterances.size(); j++) {
             WaveFileDataSource<short int> dataSource(utterances[j].asString(), SAMPLE_LENGTH);
@@ -139,6 +143,7 @@ int main(int argc, char **argv) {
             allUtterancesCount++;
             if (prediction.compare(transcription) == 0) {
                 predictedUtterancesCount++;
+                wordPredictions[transcription]++;
             }
         }
     }
@@ -147,6 +152,9 @@ int main(int argc, char **argv) {
 
     std::cout << "All utterances: " << allUtterancesCount << std::endl;
     std::cout << "Predicted utterances: " << predictedUtterancesCount << std::endl;
+    for (auto it = wordPredictions.begin(); it != wordPredictions.end(); it++) {
+        std::cout << "Word '" << it->first << "' predictions: " << it->second << std::endl;
+    }
 
     delete mfccVectorizer;
 

@@ -111,11 +111,23 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors) {
             }
         }
 
+        int vectorsCount = closestVectorsSum->size();
+        for (int i = 0; i < vectorsCount; i++) {
+            double *vectorPtr = closestVectorsSum->at(i);
+            delete[] vectorPtr;
+        }
+
+        closestVectorsSum->clear();
+
+        delete[] numberOfCloseVectors;
+        delete closestVectorsSum;
+
         if (difference < EPS) {
             break;
         }
     }
 
+#ifdef SPEECH_VERBOSITY
     std::cout << "Centroids: " << std::endl;
     auto centroidsBegin = centroids->begin();
     for (centroidsIt = centroids->begin(); centroidsIt != centroids->end(); ++centroidsIt) {
@@ -125,6 +137,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors) {
         }
         std::cout << "]" << std::endl;
     }
+#endif
 }
 
 int speech::clustering::KMeans::predict(const valarray<double> &vector) {

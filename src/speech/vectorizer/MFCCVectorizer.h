@@ -9,8 +9,10 @@
 #include <cmath>
 
 #include "../raw_data/Spectrum.h"
+#include "../raw_data/filtering/EmphasisFilter.h"
 
 using speech::raw_data::Spectrum;
+using speech::raw_data::filtering::EmphasisFilter;
 
 #include "../transform/IFrequencyTransform.h"
 #include "../transform/FastFourierTransform.h"
@@ -65,6 +67,8 @@ namespace speech {
                 buildFilterBank();
             }
 
+            virtual ~MFCCVectorizer();
+
             virtual std::valarray<double> vectorize(FrequencySample<FrameType> &sample);
 
             virtual std::vector<std::valarray<double>> vectorize(
@@ -97,6 +101,9 @@ namespace speech {
 
             /** Bank of Mel filters */
             std::vector<MelFilter> filterBank;
+
+            /** Emphasis filter */
+            EmphasisFilter<FrameType> *emphasisFilter = new EmphasisFilter<FrameType>(0.97); // TODO: allow to select this value
 
             /**
              * Calculates the frequency on mel scale

@@ -304,7 +304,7 @@ namespace speech {
             /** Low value used to avoid mathematical errors */
             static constexpr double EPS = 1e-256;
             /** Minimal variance of a single dimension in the Gaussian mixture */
-            static constexpr double MIN_VARIANCE = 1e-128;
+            static constexpr double MIN_VARIANCE = 1e-256;
             /** Dimensionality of a single input vector */
             unsigned int dimensionality;
             /** Number of hidden states (language units, like phones) */
@@ -321,6 +321,8 @@ namespace speech {
             double *pi;
             /** Probabilities of transition from state X to Y */
             double **transition;
+            /** Determines if a model has been already fitted */
+            bool fitted = false;
 
             /**
              * Initializes the mixtures using random values, but based on the dataset

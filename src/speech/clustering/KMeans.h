@@ -20,7 +20,7 @@ namespace speech {
         class KMeans : public IClusteringMethod {
         public:
             static const uint32_t TYPE_IDENTIFIER = 0x00000001;
-            const unsigned int MAX_ITERATIONS = 100000000;
+            const unsigned int MAX_ITERATIONS = 100000;
             const double EPS = 10e-64;
 
             /**

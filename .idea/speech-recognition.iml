@@ -1,9 +1,258 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/gtest-1.7.0/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/gtest-1.7.0/cmake/internal_utils.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/gtest-1.7.0/src/gtest-all.cc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/gtest-1.7.0/src/gtest_main.cc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/jsoncpp/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/jsoncpp/jsoncpp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/aib.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/aib.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/array.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/array.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/covdet.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/covdet.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/dsift.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/dsift.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/fisher.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/fisher.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/float.th" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/generic.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/generic.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/getopt_long.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/getopt_long.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/gmm.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/gmm.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/hikmeans.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/hikmeans.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/hog.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/hog.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/homkermap.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/homkermap.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/host.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/host.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/ikmeans.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/ikmeans.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/ikmeans_elkan.tc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/ikmeans_init.tc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/imopv.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/imopv.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/imopv_sse2.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/imopv_sse2.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/kdtree.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/kdtree.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/kmeans.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/kmeans.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/lbp.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/lbp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/liop.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/liop.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mathop.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mathop.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mathop_avx.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mathop_avx.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mathop_sse2.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mathop_sse2.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mser.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/mser.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/pgm.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/pgm.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/quickshift.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/quickshift.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/random.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/random.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/rodrigues.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/rodrigues.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/scalespace.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/scalespace.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/sift.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/sift.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/slic.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/slic.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/stringop.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/stringop.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/svm.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/svm.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/svmdataset.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/svmdataset.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/vlad.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/vl/vlad.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/filters_test.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/harmonics.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/harmonics_filter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/HMMLexicon.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/HMMLexicon.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/LanguageModel.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/LanguageModel.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/clustering/GaussianMixtureModel.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/clustering/GaussianMixtureModel.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/clustering/KMeans.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/clustering/KMeans.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/detector/NaiveSilenceDetector.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/detector/NaiveSilenceDetector.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/helpers.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/helpers.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/initializer/KMeansInitializer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/initializer/KMeansInitializer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/initializer/RandomInitializer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/initializer/RandomInitializer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/metric/EuclideanDistance.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/metric/EuclideanDistance.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/metric/MaximumDistance.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/metric/MaximumDistance.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/operators.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/operators.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/DataSample.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/DataSample.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/DataSource.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/DataSource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/FrequencySample.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/FrequencySample.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/Spectrum.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/Spectrum.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/WaveFileDataSource.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/WaveFileDataSource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/filtering/EmphasisFilter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/filtering/EmphasisFilter.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/filtering/MaxFrequenciesFilter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/raw_data/filtering/MaxFrequenciesFilter.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/spelling/HMM.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/spelling/HMM.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/spelling/SpellingAdjuster.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/spelling/SpellingAdjuster.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/DiscreteFourierTransform.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/DiscreteFourierTransform.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/FastFourierTransform.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/FastFourierTransform.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/DefaultWindow.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/DefaultWindow.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/GaussWindow.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/GaussWindow.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/HammingWindow.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/HammingWindow.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/HannWindow.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/HannWindow.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/Window.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/transform/window/Window.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/FormantVectorizer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/FormantVectorizer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/HarmonicsVectorizer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/HarmonicsVectorizer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/MFCCVectorizer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/MFCCVectorizer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/MaxFrequencyVectorizer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/MaxFrequencyVectorizer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/ThirdsPowerVectorizer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/speech/vectorizer/ThirdsPowerVectorizer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/KMeansTests.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/SpellingAdjusterTests.cpp" isTestSource="false" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+          <root url="file:///usr/local/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib" />
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+          <root url="file:///usr/local/include" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/lib/vl/array.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/kmeans.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/imopv.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/fisher.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/kmeans.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/imopv_sse2.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/quickshift.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/svm.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/stringop.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/mathop_sse2.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/quickshift.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/vlad.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/host.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/mathop_sse2.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/stringop.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/mathop.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/gmm.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/mathop.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/liop.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/dsift.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/kdtree.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/hog.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/host.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/hog.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/rodrigues.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/liop.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/svm.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/rodrigues.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/homkermap.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/kdtree.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/vlad.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/aib.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/array.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/homkermap.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/svmdataset.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/scalespace.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/sift.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/sift.h" />
+          <root url="file://$MODULE_DIR$/lib/gtest-1.7.0/cmake/internal_utils.cmake" />
+          <root url="file://$MODULE_DIR$/lib/vl/scalespace.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/aib.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/ikmeans_elkan.tc" />
+          <root url="file://$MODULE_DIR$/lib/vl/dsift.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/svmdataset.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/mathop_avx.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/gmm.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/mathop_avx.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/getopt_long.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/lbp.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/random.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/getopt_long.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/generic.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/random.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/pgm.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/lbp.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/hikmeans.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/lib/vl/slic.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/ikmeans_init.tc" />
+          <root url="file://$MODULE_DIR$/lib/vl/generic.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/mser.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/pgm.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/covdet.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/mser.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/float.th" />
+          <root url="file://$MODULE_DIR$/lib/vl/hikmeans.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/slic.c" />
+          <root url="file://$MODULE_DIR$/lib/jsoncpp/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/lib/gtest-1.7.0/src/gtest-all.cc" />
+          <root url="file://$MODULE_DIR$/lib/gtest-1.7.0/src/gtest_main.cc" />
+          <root url="file://$MODULE_DIR$/lib/jsoncpp/jsoncpp.cpp" />
+          <root url="file://$MODULE_DIR$/lib/gtest-1.7.0/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/lib/vl/ikmeans.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/ikmeans.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/imopv.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/covdet.h" />
+          <root url="file://$MODULE_DIR$/lib/vl/fisher.c" />
+          <root url="file://$MODULE_DIR$/lib/vl/imopv_sse2.h" />
+        </excluded>
+      </library>
+    </orderEntry>
   </component>
 </module>
-

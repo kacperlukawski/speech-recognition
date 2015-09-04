@@ -21,7 +21,7 @@ void speech::HMMLexicon::addUtterance(Observation utterance,
     if (unitModels.find(transcription) == unitModels.end()) {
         // given transcription was not passed before
         vector<string> substates = this->split(transcription, unitSeparator);
-        int states = substates.size() + 1; // one additional state is for the end state
+        int states = substates.size(); // one additional state is for the end state TODO: add 1
         unitModels[transcription] = new MultivariateGaussianHMM(this->dimensionality, states, gaussians,
                                                                 this->initializer);
     }
@@ -51,11 +51,11 @@ string speech::HMMLexicon::predict(const Observation &observation) {
 }
 
 void speech::HMMLexicon::fit() {
-#pragma omp parallel
-#pragma omp single nowait
+    #pragma omp parallel
+    #pragma omp single nowait
     {
         for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
-#pragma omp task firstprivate(it)
+            #pragma omp task firstprivate(it)
             {
                 std::cout << "Fitting model: " << it->first << std::endl;
                 it->second->fit();
@@ -143,6 +143,10 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
     //         state occupation probabilities estimations (a_i), mixtures means estimations (mi_im), mixtures
     //         variances estimations (sigma_im), mixtures occupation probabilties estimations (b_im)
     // 3. Update the models using data accumulated from all utterances
+
+    if (this->fitted) {
+        return; // TODO: throw an exception?
+    }
 
     this->initializeMixtures();
     this->initializeModel();
@@ -286,6 +290,9 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
 
         std::cout << "Iteration " << iteration << ". logLikelihood = " << logLikelihood << std::endl;
     }
+
+    this->utterances->clear();
+    this->fitted = true;
 }
 
 double speech::HMMLexicon::MultivariateGaussianHMM::predict(const Observation &observation) {
@@ -779,11 +786,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::updateMixtures(double **occupa
             double mixtureWeight = (occupationsAcc[s][m] + EPS) / gmmOccupation;
             stateGMM.setWeight(m, mixtureWeight);
             weightsSum += mixtureWeight;
-        }
-
-        if (weightsSum < 0.99) {
-            std::cout << "weightsSum = " << weightsSum << std::endl;
-            throw weightsSum;
         }
 
         // Update mixture means

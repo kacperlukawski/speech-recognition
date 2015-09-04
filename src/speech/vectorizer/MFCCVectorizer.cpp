@@ -16,6 +16,11 @@ speech::vectorizer::MFCCVectorizer<FrameType>::MFCCVectorizer(std::istream &in) 
 }
 
 template<typename FrameType>
+speech::vectorizer::MFCCVectorizer<FrameType>::~MFCCVectorizer() {
+    delete this->emphasisFilter;
+}
+
+template<typename FrameType>
 std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(FrequencySample<FrameType> &sample) {
     std::valarray<double> result(0.0, getVectorSize());
 
@@ -98,7 +103,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
     std::vector<std::valarray<double>> results;
     for (auto it = dataSource.getOffsetIteratorBegin(this->windowMsSize, this->offsetMsSize);
          it != dataSource.getOffsetIteratorEnd(); ++it) {
-        const DataSample<FrameType> &dataSample = *it;
+        const DataSample<FrameType> &dataSample = this->emphasisFilter->filter(*it);
 
         // TODO: add a container of the windows, to avoid creating too many objects
         int sampleSize = dataSample.getSize();

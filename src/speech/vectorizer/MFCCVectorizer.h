@@ -159,12 +159,14 @@ namespace speech {
                     double result = 0.0;
                     std::valarray<double> &spectrumValues = spectrum.getValues();
                     for (int index = startIndex; index < endIndex; index++) {
+                        double coeff = 0.0;
                         if (index < centerIndex) {
-                            result += spectrumValues[index] *
-                                      (double) ((index - startIndex) / (centerIndex - startIndex));
+                            coeff =  (index - startIndex) / (double) (centerIndex - startIndex);
                         } else {
-                            result += spectrumValues[index] * (double) ((endIndex - index) / (endIndex - centerIndex));
+                            coeff =  (endIndex - index) / (double) (endIndex - centerIndex);
                         }
+
+                        result += spectrumValues[index] * coeff;
                     }
 
                     return result;
@@ -178,7 +180,7 @@ namespace speech {
             };
 
         private:
-            static constexpr double EPS = 10e-12;
+            static constexpr double EPS = 1e-256;
             /** Size of a single window in milliseconds */
             int windowMsSize = 20;
             /** The offset between two frames in milliseconds */

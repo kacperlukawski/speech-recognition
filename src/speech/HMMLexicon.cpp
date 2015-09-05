@@ -22,7 +22,7 @@ void speech::HMMLexicon::addUtterance(Observation utterance,
     if (unitModels.find(transcription) == unitModels.end()) {
         // given transcription was not passed before
         vector<string> substates = this->split(transcription, unitSeparator);
-        int states = substates.size(); // one additional state is for the end state TODO: add 1
+        int states = substates.size() + 1; // one additional state is for the end state TODO: add 1
         unitModels[transcription] = new MultivariateGaussianHMM(this->dimensionality, states, gaussians,
                                                                 this->initializer, this->maxIterations);
     }
@@ -40,8 +40,9 @@ string speech::HMMLexicon::predict(const Observation &observation) {
     string bestLabel;
     double maxLikelihood = -INFINITY;
     for (auto it = modelLikelihood.begin(); it != modelLikelihood.end(); ++it) {
+#ifdef SPEECH_VERBOSITY
         std::cout << "PREDICTED: " << it->first << " -> " << it->second << std::endl;
-
+#endif
         if (it->second > maxLikelihood && !isinf(it->second)) {
             maxLikelihood = it->second;
             bestLabel = it->first;
@@ -50,6 +51,30 @@ string speech::HMMLexicon::predict(const Observation &observation) {
 
     return bestLabel;
 }
+
+std::map<std::string, double> speech::HMMLexicon::getBestPredictions(const Observation &observation, unsigned int N) {
+    std::map<std::string, double> modelLikelihood;
+    for (auto it = this->unitModels.begin(); it != this->unitModels.end(); ++it) {
+        double likelihood = it->second->predict(observation);
+        modelLikelihood[it->first] = likelihood;
+    }
+
+    while (modelLikelihood.size() > N) {
+        std::string minLabel;
+        double minProbability = INFINITY;
+        for (auto it = modelLikelihood.begin(); it != modelLikelihood.end(); ++it) {
+            if (it->second < minProbability) {
+                minLabel = it->first;
+                minProbability = it->second;
+            }
+        }
+
+        modelLikelihood.erase(minLabel);
+    }
+
+    return std::move(modelLikelihood);
+};
+
 
 void speech::HMMLexicon::fit() {
     #pragma omp parallel

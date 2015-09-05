@@ -75,6 +75,14 @@ namespace speech {
         string predict(const Observation &observation);
 
         /**
+         * Gets top N predictions of given utterance observation
+         * @param observation collection of acoustic observation vectors
+         * @param N number of top predictions
+         * @return a collection of language units maximizing the probability of being observed with the log-likelihoods
+         */
+        std::map<std::string, double> getBestPredictions(const Observation &observation, unsigned int N);
+
+        /**
          * Fits the parameters of the lexicon
          */
         void fit();

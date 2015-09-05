@@ -30,11 +30,12 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(F
     }
 
     Spectrum spectrum(sample);
-    result[this->cepstralCoefficientsNumber] = log(spectrum.getValues().sum());
+    result[this->cepstralCoefficientsNumber] = log10(spectrum.getValues().sum());
 
     return result;
 }
 
+// TODO: remove duplicated vectorizing
 template<typename FrameType>
 std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>::vectorize(
         std::vector<FrequencySample<FrameType>> &samples) {
@@ -50,7 +51,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         Spectrum spectrum(*it);
-        result[this->cepstralCoefficientsNumber] = log(spectrum.getValues().sum());
+        result[this->cepstralCoefficientsNumber] = log10(spectrum.getValues().sum());
 
         // stores the vector
         results.push_back(result);
@@ -105,11 +106,23 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
          it != dataSource.getOffsetIteratorEnd(); ++it) {
         const DataSample<FrameType> &dataSample = this->emphasisFilter->filter(*it);
 
+//        const std::shared_ptr<short int> val = dataSample.getValues();
+//        for (int tmp = 0; tmp < dataSample.getSize(); ++tmp) {
+//            std::cout << val.get()[tmp] << ", ";
+//        }
+//        std::cout << std::endl;
+
         // TODO: add a container of the windows, to avoid creating too many objects
         int sampleSize = dataSample.getSize();
         Window* frameWindow = new HammingWindow(sampleSize);
         FrequencySample<FrameType> frequencySample = frequencyTransform->transform(dataSample, frameWindow);
         delete frameWindow;
+
+//        std::shared_ptr<double> amp = frequencySample.getAmplitude();
+//        for (int tmp = 0; tmp < frequencySample.getSize(); ++tmp) {
+//            std::cout << amp.get()[tmp] << ' ';
+//        }
+//        std::cout << std::endl;
 
         // creates empty vectors for sample
         std::valarray<double> result(0.0, vectorSize);
@@ -121,7 +134,7 @@ std::vector<std::valarray<double>> speech::vectorizer::MFCCVectorizer<FrameType>
         }
 
         Spectrum spectrum(frequencySample);
-        result[this->cepstralCoefficientsNumber] = log(spectrum.getValues().sum());
+        result[this->cepstralCoefficientsNumber] = log10(spectrum.getValues().sum());
 
         // stores the vector
         results.push_back(result);
@@ -198,7 +211,7 @@ std::valarray<double> speech::vectorizer::MFCCVectorizer<FrameType>::calculateCe
     int position = 0;
     for (auto filterIt = this->filterBank.begin(); filterIt != this->filterBank.end(); filterIt++) {
         // calculate the log of energy in this particular filter
-        logEnergies[position] = log((*filterIt)(spectrum) + EPS);
+        logEnergies[position] = log10((*filterIt)(spectrum) + EPS);
         position++;
     }
 

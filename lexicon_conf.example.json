@@ -4,11 +4,11 @@
   "mfcc_bins": 26,
   "mfcc_cepstral_coefficients": 12,
   "mfcc_min_frequency": 64.0,
-  "mfcc_max_frequency": 16000.0,
+  "mfcc_max_frequency": 20000.0,
   "lexicon_gaussians": 16,
-  "max_iterations": 250,
+  "max_iterations": 100,
   "words": [
-    /*{
+    {
       "transcription": "vi|i|o.|s'|n'|e",
       "spelling": "wiośnie",
       "utterances": [
@@ -2843,7 +2843,7 @@
         "./dataset/splitted_records/record8/klechda.wav",
         "./dataset/splitted_records/record9/klechda.wav"
       ]
-    },*/
+    },
     {
       "transcription": "r|a|k'|i",
       "spelling": "raki",

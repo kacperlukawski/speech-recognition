@@ -54,7 +54,16 @@ namespace speech {
              * @return index containg this value
              */
             inline int getIndexByFrequency(double frequency) const {
-                return (int) (frequency / basicFrequency);
+                return (int) ceil(frequency / basicFrequency);
+            }
+
+            /**
+             * Gets the frequency stored in the given index
+             * @param index index to check
+             * @return frequency in given index in Herzs
+             */
+            inline double getIndexFrequency(int index) const {
+                return index * basicFrequency;
             }
 
         protected:

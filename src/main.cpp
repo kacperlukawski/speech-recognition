@@ -60,6 +60,7 @@ using speech::initializer::RandomInitializer;
 using speech::initializer::KMeansInitializer;
 
 #include "speech/helpers.h"
+#include "CVDataSet.hpp"
 
 #include <jsoncpp/json/json.h>
 
@@ -93,6 +94,9 @@ int main(int argc, char **argv) {
         return 3;
     }
 
+    const unsigned int CROSS_VALIDATION_K = 27; // number of different voices
+    const unsigned int TOP_PREDICTIONS = 10;
+
     const int SAMPLE_LENGTH = root["sample_length"].asInt(); // in milliseconds
     const int SAMPLE_OFFSET = root["sample_offset"].asInt(); // in milliseconds
     const int MFCC_BINS = root["mfcc_bins"].asInt(); // number of Mel filters in a bank
@@ -103,48 +107,50 @@ int main(int argc, char **argv) {
     const int LEXICON_GAUSSIANS = root["lexicon_gaussians"].asInt();
     const unsigned int MAX_ITERATIONS = root["max_iterations"].asInt();
 
-    std::shared_ptr<AbstractGaussianInitializer> gaussianInitializer(new KMeansInitializer()); // may be RandomInitializer as well
-    HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS, gaussianInitializer, MAX_ITERATIONS);
     MFCCVectorizer<short int> *mfccVectorizer = new MFCCVectorizer<short int>(MFCC_BINS, MFCC_CEPSTRAL_COEFFICIENTS,
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
                                                                               SAMPLE_LENGTH, SAMPLE_OFFSET);
 
-    const Json::Value words = root["words"];
-    for (int i = 0; i < words.size(); i++) {
-        const Json::Value word = words[i];
-        std::string spelling = word["spelling"].asString();
-        std::string transcription = word["transcription"].asString();
-        const Json::Value utterances = word["utterances"];
-
-        for (int j = 0; j < utterances.size(); j++) {
-            WaveFileDataSource<short int> dataSource(utterances[j].asString(), SAMPLE_LENGTH);
-            HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
-            lexicon.addUtterance(utterance, transcription, "|");
-        }
-    }
-
-    lexicon.fit();
-
     int allUtterancesCount = 0;
     int predictedUtterancesCount = 0;
     std::map<std::string, int> wordPredictions;
-    for (int i = 0; i < words.size(); i++) {
-        const Json::Value word = words[i];
-        std::string transcription = word["transcription"].asString();
-        const Json::Value utterances = word["utterances"];
-        wordPredictions[transcription] = 0;
-
-        for (int j = 0; j < utterances.size(); j++) {
-            WaveFileDataSource<short int> dataSource(utterances[j].asString(), SAMPLE_LENGTH);
+    std::map<std::string, int> wordInTopPredictions;
+    std::vector<CVDataSet> datasets = divideForCrossValidation(root, CROSS_VALIDATION_K);
+    for (auto it = datasets.begin(); it != datasets.end(); it++) {
+        CVDataSet &dataset = *it;
+        for (auto trainIt = dataset.trainingFiles.begin(); trainIt != dataset.trainingFiles.end(); trainIt++) {
+            WaveFileDataSource<short int> dataSource(trainIt->second, SAMPLE_LENGTH);
             HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
-            std::string prediction = lexicon.predict(utterance);
+            dataset.hmmLexicon->addUtterance(utterance, trainIt->first);
+            if (wordPredictions.find(trainIt->first) == wordPredictions.end()) {
+                wordPredictions[trainIt->first] = 0;
+                wordInTopPredictions[trainIt->first] = 0;
+            }
+        }
 
-            std::cout << "Prediction: " << prediction << ", Transcription: " << transcription << std::endl;
+        // Fit the model
+        dataset.hmmLexicon->fit();
 
+        // Check the predictions of test vectors
+        for (auto testIt = dataset.testFiles.begin(); testIt != dataset.testFiles.end(); testIt++) {
+            WaveFileDataSource<short int> dataSource(testIt->second, SAMPLE_LENGTH);
+            HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
+            std::string prediction = dataset.hmmLexicon->predict(utterance);
+            std::map<std::string, double> bestPredictions = dataset.hmmLexicon->getBestPredictions(utterance,
+                                                                                                   TOP_PREDICTIONS);
+
+            // Check if the prediction was correct
             allUtterancesCount++;
-            if (prediction.compare(transcription) == 0) {
+            if (prediction.compare(testIt->first) == 0) {
                 predictedUtterancesCount++;
-                wordPredictions[transcription]++;
+                wordPredictions[testIt->first]++;
+            }
+
+            // Check if the prediction was close to correct one
+            for (auto it = bestPredictions.begin(); it != bestPredictions.end(); it++) {
+                if (it->first.compare(testIt->first) == 0) {
+                    wordInTopPredictions[testIt->first]++;
+                }
             }
         }
     }
@@ -156,8 +162,12 @@ int main(int argc, char **argv) {
     for (auto it = wordPredictions.begin(); it != wordPredictions.end(); it++) {
         std::cout << "Word '" << it->first << "' predictions: " << it->second << std::endl;
     }
+    for (auto it = wordInTopPredictions.begin(); it != wordInTopPredictions.end(); it++) {
+        std::cout << "Word '" << it->first << "' in top " << TOP_PREDICTIONS << " predictions: " << it->second << std::endl;
+    }
 
     delete mfccVectorizer;
 
     return 0;
 }
+

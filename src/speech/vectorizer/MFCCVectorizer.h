@@ -140,7 +140,7 @@ namespace speech {
             public:
                 /**
                  * Constructs a filter non-zero in given boundaries
-                 * @param startFrequency begin frequency in herzs
+                 * @param startFrequenfcy begin frequency in herzs
                  * @param endFrequency end frequency in herzs
                  */
                 MelFilter(double startFrequency, double endFrequency)
@@ -155,21 +155,44 @@ namespace speech {
                     int startIndex = spectrum.getIndexByFrequency(startFrequency);
                     int endIndex = spectrum.getIndexByFrequency(endFrequency);
                     int centerIndex = (startIndex + endIndex) / 2;
+                    double centerFrequency = spectrum.getIndexFrequency(centerIndex);
 
                     double result = 0.0;
                     std::valarray<double> &spectrumValues = spectrum.getValues();
                     for (int index = startIndex; index < endIndex; index++) {
-                        double coeff = 0.0;
-                        if (index < centerIndex) {
-                            coeff =  (index - startIndex) / (double) (centerIndex - startIndex);
-                        } else {
-                            coeff =  (endIndex - index) / (double) (endIndex - centerIndex);
-                        }
-
-                        result += spectrumValues[index] * coeff;
+                        // TODO: try to use frequencies to calculate coefficients, not the indexes
+                        double currentFrequency = spectrum.getIndexFrequency(index);
+                        double coeff = this->getIndexCoeff(index, startIndex, centerIndex, endIndex);
+                        double frequencyCoeff = this->getFrequencyCoeff(currentFrequency, this->startFrequency,
+                                                                        centerFrequency, this->endFrequency);
+                        result += spectrumValues[index] * frequencyCoeff;
                     }
 
                     return result;
+                }
+
+                /**
+                 * Calculates the weight of the given index
+                 * @param index current index
+                 * @param startIndex the beginning of this particular filter
+                 * @param centerIndex the middle of this particular filter
+                 * @param endIndex the end of this particular filter
+                 */
+                double inline getIndexCoeff(int index, int startIndex, int centerIndex, int endIndex) {
+                    if (index < centerIndex) {
+                        return (index - startIndex) / (double) (centerIndex - startIndex);
+                    }
+
+                    return (endIndex - index) / (double) (endIndex - centerIndex);
+                }
+
+                double inline getFrequencyCoeff(double frequency, double startFrequency, double centerFrequency,
+                                                double endFrequency) {
+                    if (frequency < centerFrequency) {
+                        return (frequency - startFrequency) / (centerFrequency - startFrequency);
+                    }
+
+                    return (endFrequency - frequency) / (endFrequency - centerFrequency);
                 }
 
             private:

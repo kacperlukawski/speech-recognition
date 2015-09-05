@@ -7,12 +7,11 @@
 template<typename FrameType>
 DataSample<FrameType> speech::raw_data::filtering::EmphasisFilter<FrameType>::filter(const DataSample<FrameType> &sample) {
     DataSample<FrameType> result(sample);
-
     FrameType *sampleValues = result.getValues().get();
 
     int sampleSize = result.getSize();
-    for (int i = 1; i < sampleSize; i++) {
-        *(sampleValues + i) -= *(sampleValues + i - 1) * 0.95;
+    for (int i = sampleSize - 1; i > 0; i--) {
+        sampleValues[i] -= sampleValues[i - 1] * this->alpha;
     }
 
     return result;

@@ -101,9 +101,10 @@ int main(int argc, char **argv) {
     const double MFCC_MAX_FREQUENCY = root["mfcc_max_frequency"].asDouble(); // in Herzs
     const int LEXICON_DIMENSIONALITY = 3 * (MFCC_CEPSTRAL_COEFFICIENTS + 1);
     const int LEXICON_GAUSSIANS = root["lexicon_gaussians"].asInt();
+    const unsigned int MAX_ITERATIONS = root["max_iterations"].asInt();
 
     std::shared_ptr<AbstractGaussianInitializer> gaussianInitializer(new KMeansInitializer()); // may be RandomInitializer as well
-    HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS, gaussianInitializer);
+    HMMLexicon lexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS, gaussianInitializer, MAX_ITERATIONS);
     MFCCVectorizer<short int> *mfccVectorizer = new MFCCVectorizer<short int>(MFCC_BINS, MFCC_CEPSTRAL_COEFFICIENTS,
                                                                               MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY,
                                                                               SAMPLE_LENGTH, SAMPLE_OFFSET);

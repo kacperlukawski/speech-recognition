@@ -5,8 +5,9 @@
 #include "HMMLexicon.h"
 
 speech::HMMLexicon::HMMLexicon(int dimensionality, unsigned int gaussians,
-                               std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer)
-        : dimensionality(dimensionality), gaussians(gaussians), initializer(initializer) {
+                               std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer,
+                               unsigned int maxIterations)
+        : dimensionality(dimensionality), gaussians(gaussians), initializer(initializer), maxIterations(maxIterations) {
 }
 
 speech::HMMLexicon::~HMMLexicon() {
@@ -23,7 +24,7 @@ void speech::HMMLexicon::addUtterance(Observation utterance,
         vector<string> substates = this->split(transcription, unitSeparator);
         int states = substates.size(); // one additional state is for the end state TODO: add 1
         unitModels[transcription] = new MultivariateGaussianHMM(this->dimensionality, states, gaussians,
-                                                                this->initializer);
+                                                                this->initializer, this->maxIterations);
     }
 
     unitModels[transcription]->addUtterance(utterance);
@@ -108,8 +109,9 @@ constexpr double speech::HMMLexicon::MultivariateGaussianHMM::MIN_VARIANCE;
 
 speech::HMMLexicon::MultivariateGaussianHMM::MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states,
                                                                      unsigned int M,
-                                                                     std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer)
-        : dimensionality(dimensionality), states(states), M(M), initializer(initializer) {
+                                                                     std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer,
+                                                                     unsigned int maxIterations)
+        : dimensionality(dimensionality), states(states), M(M), initializer(initializer), maxIterations(maxIterations) {
     this->utterances = new vector<Observation>();
     this->hiddenStates = new vector<GMMLikelihoodFunction>();
     this->pi = new double[states];
@@ -154,7 +156,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
     double logLikelihood = -INFINITY;
     double lastLogLikelihood = 0.0;
     unsigned long int iteration = 0;
-    while (logLikelihood != lastLogLikelihood && iteration < MAX_ITERATIONS) {
+    while (logLikelihood != lastLogLikelihood && iteration < this->maxIterations) {
         // Reset values for the next iteration
         lastLogLikelihood = logLikelihood;
         logLikelihood = 0.0;

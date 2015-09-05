@@ -47,9 +47,11 @@ namespace speech {
          * @param dimensionality dimensionality of a single acoustic vector
          * @param gaussians number of Gaussian mixtures in a single state of HMM
          * @param initializer an instance of custom initializer
+         * @param maxIterations a maximum number of iterations to perform in model fitting
          */
         HMMLexicon(int dimensionality, unsigned int gaussians,
-                   std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer);
+                   std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer,
+                   unsigned int maxIterations = 100);
 
         /**
          * Destructs the object
@@ -251,7 +253,8 @@ namespace speech {
              * @param initializer an instance of the Gaussian initializer
              */
             MultivariateGaussianHMM(unsigned int dimensionality, unsigned int states, unsigned int M,
-                                    std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer);
+                                    std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer,
+                                    unsigned int maxIterations);
 
             /**
              * Destructs the object
@@ -299,8 +302,6 @@ namespace speech {
             }
 
         protected:
-            /** An upper limit of iterations for the model in learning phase */
-            static const unsigned int MAX_ITERATIONS = 1000;
             /** Low value used to avoid mathematical errors */
             static constexpr double EPS = 1e-256;
             /** Minimal variance of a single dimension in the Gaussian mixture */
@@ -313,6 +314,8 @@ namespace speech {
             unsigned int M;
             /** Initializer of the Gaussians */
             std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer;
+            /** Max iterations in a fitting phase */
+            unsigned int maxIterations;
             /** Collection of observed vectors of this language unit */
             vector<Observation> *utterances;
             /** Probability distributions of the emiting hidden states */
@@ -461,6 +464,8 @@ namespace speech {
         unsigned int gaussians;
         /** Initializer of the Gaussian mixtures */
         std::shared_ptr<speech::initializer::AbstractGaussianInitializer> initializer;
+        /** Max iterations in a fitting phase */
+        unsigned int maxIterations;
         /** Collection of Hidden Markov Models, each one represents a single language unit */
         map<string, MultivariateGaussianHMM *> unitModels;
 

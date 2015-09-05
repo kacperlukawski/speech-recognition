@@ -66,7 +66,12 @@ add_executable(
         speech/initializer/KMeansInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
-        speech/helpers.cpp)
+        speech/helpers.cpp
+        speech/transform/window/HammingWindow.cpp
+        speech/transform/window/Window.cpp
+        speech/transform/window/DefaultWindow.cpp
+        speech/transform/window/HannWindow.cpp
+        speech/transform/window/GaussWindow.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Filters LINK_PUBLIC VLFeat)
@@ -101,7 +106,12 @@ add_executable(
         speech/initializer/KMeansInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
-        speech/helpers.cpp)
+        speech/helpers.cpp
+        speech/transform/window/HammingWindow.cpp
+        speech/transform/window/Window.cpp
+        speech/transform/window/DefaultWindow.cpp
+        speech/transform/window/HannWindow.cpp
+        speech/transform/window/GaussWindow.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Harmonics LINK_PUBLIC VLFeat)
@@ -136,7 +146,12 @@ add_executable(
         speech/initializer/KMeansInitializer.cpp
         speech/HMMLexicon.cpp
         speech/operators.cpp
-        speech/helpers.cpp)
+        speech/helpers.cpp
+        speech/transform/window/HammingWindow.cpp
+        speech/transform/window/Window.cpp
+        speech/transform/window/DefaultWindow.cpp
+        speech/transform/window/HannWindow.cpp
+        speech/transform/window/GaussWindow.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Harmonics_filter LINK_PUBLIC VLFeat)

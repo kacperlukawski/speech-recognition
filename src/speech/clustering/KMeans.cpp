@@ -104,7 +104,7 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors) {
         double difference = 0.0;
         for (int i = 0; i < k; ++i) {
             for (int j = 0; j < dimension; ++j) {
-                double normalizedCoeff = (closestVectorsSum->at(i))[j] / numberOfCloseVectors[i];
+                double normalizedCoeff = (closestVectorsSum->at(i))[j] / (numberOfCloseVectors[i] + EPS);
 
                 difference += pow((centroids->at(i))[j] - normalizedCoeff, 2.0);
                 (centroids->at(i))[j] = normalizedCoeff;

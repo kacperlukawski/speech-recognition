@@ -9,6 +9,7 @@ add_executable(
         speech/spelling/SpellingAdjuster.cpp
         speech/raw_data/filtering/MaxFrequenciesFilter.cpp
         speech/raw_data/filtering/EmphasisFilter.cpp
+        speech/raw_data/filtering/FirFilter.cpp
         speech/vectorizer/MaxFrequencyVectorizer.cpp
         speech/vectorizer/FormantVectorizer.cpp
         speech/vectorizer/MFCCVectorizer.cpp
@@ -32,7 +33,8 @@ add_executable(
         speech/transform/window/Window.cpp
         speech/transform/window/DefaultWindow.cpp
         speech/transform/window/HannWindow.cpp
-        speech/transform/window/GaussWindow.cpp)
+        speech/transform/window/GaussWindow.cpp
+        speech/raw_data/filtering/FirFilterBank.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Main LINK_PUBLIC VLFeat JsonCpp)
@@ -71,7 +73,8 @@ add_executable(
         speech/transform/window/Window.cpp
         speech/transform/window/DefaultWindow.cpp
         speech/transform/window/HannWindow.cpp
-        speech/transform/window/GaussWindow.cpp)
+        speech/transform/window/GaussWindow.cpp
+        speech/raw_data/filtering/FirFilter.cpp)
 
 # add VLFeat library usage
 target_link_libraries(Filters LINK_PUBLIC VLFeat)

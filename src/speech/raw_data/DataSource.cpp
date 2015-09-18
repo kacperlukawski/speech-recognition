@@ -17,6 +17,10 @@ void speech::raw_data::DataSource<FrameType>::addSample(DataSample<FrameType> sa
 }
 
 template<typename FrameType>
+void speech::raw_data::DataSource<FrameType>::init() {
+}
+
+template<typename FrameType>
 typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<FrameType>::getSamplesIteratorBegin() {
     return samples->begin();
 }

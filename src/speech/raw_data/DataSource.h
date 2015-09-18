@@ -166,6 +166,8 @@ namespace speech {
 
             virtual ~DataSource();
 
+            virtual void init();
+
             virtual void addSample(DataSample<FrameType> sample);
 
             virtual typename list<DataSample<FrameType>>::iterator getSamplesIteratorBegin();

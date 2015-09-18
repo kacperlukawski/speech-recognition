@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
     char *outputFilename = "/home/kacper/voice/record_17_filtered.wav";
 
     WaveFileDataSource<short> dataSource(inputFilename, sampleLength);
+    dataSource.init();
     MaxFrequenciesFilter<short> maxFrequenciesFilter(maxFrequencies);
     EmphasisFilter<short> emphasisFilter(0.97);
     FastFourierTransform<short> fft;

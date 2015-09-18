@@ -120,6 +120,7 @@ int main(int argc, char **argv) {
         CVDataSet &dataset = *it;
         for (auto trainIt = dataset.trainingFiles.begin(); trainIt != dataset.trainingFiles.end(); trainIt++) {
             WaveFileDataSource<short int> dataSource(trainIt->second, SAMPLE_LENGTH);
+            dataSource.init();
             HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
             dataset.hmmLexicon->addUtterance(utterance, trainIt->first);
             if (wordPredictions.find(trainIt->first) == wordPredictions.end()) {
@@ -134,6 +135,7 @@ int main(int argc, char **argv) {
         // Check the predictions of test vectors
         for (auto testIt = dataset.testFiles.begin(); testIt != dataset.testFiles.end(); testIt++) {
             WaveFileDataSource<short int> dataSource(testIt->second, SAMPLE_LENGTH);
+            dataSource.init();
             HMMLexicon::Observation utterance = mfccVectorizer->vectorize(dataSource);
             std::string prediction = dataset.hmmLexicon->predict(utterance);
             std::map<std::string, double> bestPredictions = dataset.hmmLexicon->getBestPredictions(utterance,

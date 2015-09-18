@@ -76,6 +76,8 @@ namespace speech {
 
             virtual void addSample(DataSample<FrameType> sample);
 
+            virtual void init();
+
         protected:
             /** Path to the WAV file */
             string fileName;

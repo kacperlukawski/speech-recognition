@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
     IFrequencyTransform<short> *fft = new FastFourierTransform<short>();
     WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>("/home/kacper/voice/samogloski.wav",
                                                                              singleSampleLength);
+    dataSourcePtr->init();
     IVectorizer<short> *vectorizer = new MaxFrequencyVectorizer<short>(10);
     IFrequencySampleFilter<short> *filter = new MaxFrequenciesFilter<short>(20);
 

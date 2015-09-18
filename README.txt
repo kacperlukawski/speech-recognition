@@ -4,33 +4,21 @@ Struktura katalogów oraz autorzy poszczególnych części biblioteki
 |                      magisterskiej
 |- lib/              - zewnętrzne biblioteki, z których
 |                      skorzystano podczas implementacji
-|- src/
+|- src/              - pliki źródłowe biblioteki
 |--- speech/
-|----- clustering/   - klasy implementujące metody klastrowania
-|                      (autor: Kacper Łukawski)
-|------- exception/  - powiązane klasy wyjątków
-|----- detector/     - klasy dostarczające detektory cech
-|                      dźwiękowych (autor: Kacper Łukawski)
-|----- exception/    - powiązane klasy wyjątków
-|----- initializer/  - klasy inicjalizujące model oparty
-|                      o leksykon i ukryte łańcuchy Markowa
-|                      (autor: Kacper Łukawski)
-|----- metric/       - klasy implementujące metryki
-|                      (autor: Kacper Łukawski)
-|----- raw_data/     - klasy opisujące dane dźwiękowe
-|                      w dziedzinie czasu oraz częstotliwości,
-|                      a także całe źródła tych danych (autor:
-|                      Szymon Wenta)
-|------- filtering/  - filtry dźwiękowe operujące na danych
-|                      w dziedzinie czasu bądź częstotliwości
-|                      (autor: Szymon Wenta)
-|----- spelling/     - klasy operujące na słowach zapisanych
-|                      ortograficznie
-|------- exception/  - powiązane klasy wyjątków
-|----- transform/    - implementacje transformat
-|                      częstotliwościowych (autor: Szymon Wenta)
-|------- window/     - klasy reprezentujące funkcje okna, używane
-|                      podczas transformaty częstotliwościowej
-|----- vectorizer/   - klasy służące do wektoryzacji próbek
-|                      dźwiękowych (autor: Kacper Łukawski)
+|----- clustering/   - autor: Kacper Łukawski
+|----- initializer/  - autor: Kacper Łukawski
+|----- metric/       - autor: Kacper Łukawski
+|----- raw_data/     - autor: Szymon Wenta
+|------- filtering/  - autor: Szymon Wenta
+|----- transform/    - autor: Szymon Wenta
+|------- window/     - autor: Szymon Wenta
+|----- vectorizer/   - autor: Kacper Łukawski
 |--- main.cpp        - program główny opisany w pracy
+
+Uruchamianie programu głównego
+=================================================================
+Program główny należy uruchamiać przekazując ścieżkę do pliku
+w formacie JSON, zawierającego konfigurację modelu. Plik
+lexicon_conf.example.json zawiera konfigurację wykorzystującą
+cały zbiór danych, w sposób opisany w pracy.

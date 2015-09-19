@@ -1,7 +1,3 @@
-//
-// Created by kacper on 29.08.15.
-//
-
 #include "RandomInitializer.h"
 
 void speech::initializer::RandomInitializer::initialize(speech::HMMLexicon::MultivariateGaussianHMM &gaussianHMM) {

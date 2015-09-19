@@ -1,7 +1,3 @@
-//
-// Created by szymon on 10.09.15.
-//
-
 #include "FirFilterBank.h"
 
 const speech::raw_data::filtering::FirFilterData speech::raw_data::filtering::FirFilterBank::LOWPASS_44100_8000_5DB_80DB = {

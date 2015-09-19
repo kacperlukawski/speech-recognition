@@ -1,7 +1,3 @@
-//
-// Created by szymon on 08.09.15.
-//
-
 #ifndef SPEECH_RECOGNITION_FIRFILTER_H
 #define SPEECH_RECOGNITION_FIRFILTER_H
 

@@ -1,7 +1,3 @@
-//
-// Created by kacper on 04.06.15.
-//
-
 #include "HMMLexicon.h"
 
 speech::HMMLexicon::HMMLexicon(int dimensionality, unsigned int gaussians,
@@ -16,9 +12,7 @@ speech::HMMLexicon::~HMMLexicon() {
     }
 }
 
-void speech::HMMLexicon::addUtterance(Observation utterance,
-                                      string transcription,
-                                      string unitSeparator) {
+void speech::HMMLexicon::addUtterance(Observation utterance, string transcription, string unitSeparator) {
     if (unitModels.find(transcription) == unitModels.end()) {
         // given transcription was not passed before
         vector<string> substates = this->split(transcription, unitSeparator);

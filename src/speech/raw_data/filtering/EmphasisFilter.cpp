@@ -1,7 +1,3 @@
-//
-// Created by kacper on 19.05.15.
-//
-
 #include "EmphasisFilter.h"
 
 template<typename FrameType>

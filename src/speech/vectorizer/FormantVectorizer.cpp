@@ -1,7 +1,3 @@
-//
-// Created by kacper on 10.05.15.
-//
-
 #include <algorithm>
 
 #include "FormantVectorizer.h"

@@ -1,7 +1,3 @@
-//
-// Created by kacper on 18.05.15.
-//
-
 #include "HarmonicsVectorizer.h"
 
 #include <set>

@@ -1,7 +1,3 @@
-//
-// Created by kacper on 28.05.15.
-//
-
 #include <complex>
 #include "DiscreteFourierTransform.h"
 #include "./window/DefaultWindow.h"

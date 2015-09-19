@@ -1,7 +1,3 @@
-//
-// Created by szymon
-//
-
 #include "FirFilter.h"
 
 template<typename FrameType>

@@ -1,7 +1,3 @@
-//
-// Created by kacper on 19.05.15.
-//
-
 #ifndef SPEECH_RECOGNITION_MFCCVECTORIZER_H
 #define SPEECH_RECOGNITION_MFCCVECTORIZER_H
 

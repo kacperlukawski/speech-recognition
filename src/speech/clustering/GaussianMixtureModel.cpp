@@ -1,7 +1,3 @@
-//
-// Created by kacper on 20.05.15.
-//
-
 #include "GaussianMixtureModel.h"
 
 speech::clustering::GaussianMixtureModel::GaussianMixtureModel(std::istream &in) {

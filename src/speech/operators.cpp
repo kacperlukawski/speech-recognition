@@ -1,7 +1,3 @@
-//
-// Created by kacper on 14.06.15.
-//
-
 #include "operators.h"
 
 std::ostream& operator<<(std::ostream& out, const std::valarray<double>& v) {

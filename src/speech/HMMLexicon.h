@@ -1,7 +1,3 @@
-//
-// Created by kacper on 04.06.15.
-//
-
 #ifndef SPEECH_RECOGNITION_HMMLEXICON_H
 #define SPEECH_RECOGNITION_HMMLEXICON_H
 

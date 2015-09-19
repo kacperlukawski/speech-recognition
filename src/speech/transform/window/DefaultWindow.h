@@ -1,7 +1,3 @@
-//
-// Created by szymon on 01.08.15.
-//
-
 #ifndef SPEECH_RECOGNITION_DEFAULTWINDOW_H
 #define SPEECH_RECOGNITION_DEFAULTWINDOW_H
 

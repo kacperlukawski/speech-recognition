@@ -1,7 +1,3 @@
-//
-// Created by kacper on 31.08.15.
-//
-
 #include "KMeansInitializer.h"
 
 void speech::initializer::KMeansInitializer::initialize(speech::HMMLexicon::MultivariateGaussianHMM &gaussianHMM) {

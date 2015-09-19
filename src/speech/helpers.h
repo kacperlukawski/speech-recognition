@@ -1,7 +1,3 @@
-//
-// Created by kacper on 15.06.15.
-//
-
 #ifndef SPEECH_RECOGNITION_HELPERS_H
 #define SPEECH_RECOGNITION_HELPERS_H
 

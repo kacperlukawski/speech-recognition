@@ -1,7 +1,3 @@
-//
-// Created by kacper on 18.05.15.
-//
-
 #include "MaximumDistance.h"
 
 double speech::metric::MaximumDistance::operator()(const std::valarray<double> &v1,

@@ -1,7 +1,3 @@
-//
-// Created by szymon on 02.08.15.
-//
-
 #include "GaussWindow.h"
 #include <cmath>
 

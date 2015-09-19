@@ -1,7 +1,3 @@
-//
-// Created by szymon on 02.08.15.
-//
-
 #ifndef SPEECH_RECOGNITION_GAUSSWINDOW_H
 #define SPEECH_RECOGNITION_GAUSSWINDOW_H
 

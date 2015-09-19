@@ -39,10 +39,47 @@ namespace speech {
 
         public:
 
+            template<typename dataSourceIteratorType>
+            class dataSourceIterator {
+                virtual bool operator==(const dataSourceIteratorType &it)=0;
+
+                virtual bool operator!=(const dataSourceIteratorType &it)=0;
+
+                virtual void operator++()=0;
+
+                virtual DataSample<FrameType> operator*()=0;
+            };
+
+            class normalIterator : dataSourceIterator<normalIterator> {
+            private:
+                typename list<DataSample<FrameType>>::iterator samplesIterator;
+            public:
+
+                normalIterator(typename list<DataSample<FrameType>>::iterator samplesIterator) {
+                    this->samplesIterator = samplesIterator;
+                }
+
+                virtual bool operator==(const normalIterator &it) {
+                   return samplesIterator == it.samplesIterator;
+                }
+
+                virtual bool operator!=(const normalIterator &it) {
+                    return samplesIterator != it.samplesIterator;
+                }
+
+                virtual void operator++() {
+                    ++samplesIterator;
+                }
+
+                virtual DataSample<FrameType> operator*() {
+                    return *samplesIterator;
+                }
+            };
+
             /**
              *
              */
-            class offsetIterator {
+            class offsetIterator : dataSourceIterator<offsetIterator>{
             private:
                 friend class DataSource;
                 DataSource<FrameType> &_dataSource;
@@ -79,7 +116,7 @@ namespace speech {
                     this->windowVector = new std::vector<FrameType>();
 
                     if (endIterator) {
-                        this->samplesIterator = this->samplesIteratorEnd = dataSource.getSamplesIteratorEnd();
+                        this->samplesIterator = this->samplesIteratorEnd = dataSource.samples->end();
                         samplesIterator--;
                         this->currDataSamplePosition = samplesIterator->getSize();
                         this->currDataSamplePosition += 2;
@@ -87,8 +124,8 @@ namespace speech {
                         this->currDataSampleSize = samplesIterator->getSize();
                         samplesIterator++;
                     } else {
-                        this->samplesIterator = dataSource.getSamplesIteratorBegin();
-                        this->samplesIteratorEnd = --dataSource.getSamplesIteratorEnd();
+                        this->samplesIterator = dataSource.samples->begin();
+                        this->samplesIteratorEnd = --dataSource.samples->end();
                         this->currIterationPtr = samplesIterator->getValues();
                         this->currDataSampleSize = samplesIterator->getSize();
                         this->currDataSamplePosition = 0;
@@ -103,18 +140,18 @@ namespace speech {
                     currIterationPtr.reset();
                 }
 
-                bool operator==(const offsetIterator &it) {
+                virtual bool operator==(const offsetIterator &it) {
                     return (this->currIterationPtr.get() == it.currIterationPtr.get() &&
                             this->currDataSamplePosition == it.currDataSamplePosition);
                 }
 
-                bool operator!=(const offsetIterator &it) {
+                virtual bool operator!=(const offsetIterator &it) {
                     return !(*this == it);
                 }
 
                 // TODO: postfix operator++ is not defined
 
-                void operator++() {
+                virtual void operator++() {
                     std::vector<FrameType> vectorTmp;
                     if (windowVector->size() > offset) {
                         for (int i = windowVector->size() - offset; i < windowVector->size(); ++i) {
@@ -144,7 +181,7 @@ namespace speech {
                     }
                 }
 
-                DataSample<FrameType> operator*() {
+                virtual DataSample<FrameType> operator*() {
                     int windowSize = (*windowVector).size();
                     std::shared_ptr<FrameType> windowVectorPtr(new FrameType[windowSize],
                                                                std::default_delete<FrameType[]>());
@@ -170,9 +207,9 @@ namespace speech {
 
             virtual void addSample(DataSample<FrameType> sample);
 
-            virtual typename list<DataSample<FrameType>>::iterator getSamplesIteratorBegin();
+            virtual DataSource<FrameType>::normalIterator getSamplesIteratorBegin();
 
-            virtual typename list<DataSample<FrameType>>::iterator getSamplesIteratorEnd();
+            virtual DataSource<FrameType>::normalIterator getSamplesIteratorEnd();
 
             virtual DataSource<FrameType>::offsetIterator getOffsetIteratorBegin(int windowSizeInMilliseconds,
                                                                            int offsetInMilliseconds);

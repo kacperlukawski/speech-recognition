@@ -21,13 +21,13 @@ void speech::raw_data::DataSource<FrameType>::init() {
 }
 
 template<typename FrameType>
-typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<FrameType>::getSamplesIteratorBegin() {
-    return samples->begin();
+typename speech::raw_data::DataSource<FrameType>::normalIterator speech::raw_data::DataSource<FrameType>::getSamplesIteratorBegin() {
+    return normalIterator(samples->begin());
 }
 
 template<typename FrameType>
-typename list<DataSample<FrameType>>::iterator speech::raw_data::DataSource<FrameType>::getSamplesIteratorEnd() {
-    return samples->end();
+typename speech::raw_data::DataSource<FrameType>::normalIterator speech::raw_data::DataSource<FrameType>::getSamplesIteratorEnd() {
+    return normalIterator(samples->end());
 }
 
 template<typename FrameType>

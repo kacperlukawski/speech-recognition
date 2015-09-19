@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
     std::vector<FrequencySample<short> *> frequencySamples;
 
     int i = 0;
-    for (auto innerIt = begin; innerIt != end; innerIt++) {
+    for (auto innerIt = begin; innerIt != end; ++innerIt) {
         FrequencySample<short> frequencySample = fft->transform(*innerIt);
         frequencySamples.push_back(new FrequencySample<short>(frequencySample));
 

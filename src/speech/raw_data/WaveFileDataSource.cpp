@@ -87,7 +87,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::saveToFile(string _fileNam
     fwrite(meta_data, 1, sizeof(*meta_data), outfile);
 
     for (auto it = this->getSamplesIteratorBegin(); it != this->getSamplesIteratorEnd(); ++it) {
-        fwrite(it->getValues().get(), 1, it->getSize() * sizeof(FrameType), outfile);
+        fwrite((*it).getValues().get(), 1, (*it).getSize() * sizeof(FrameType), outfile);
     }
     fclose(outfile);
 }

@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     auto metadata = dataSource.getMetaData();
     WaveFileDataSource<short> output(metadata, sampleLength);
 
-    for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
+    for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); ++it) {
 //        FrequencySample<short> frequencySample = fft.transform(*it);
 //        FrequencySample<short> filteredFrequencySample = maxFrequenciesFilter.filter(frequencySample);
 //        output.addSample(fft.reverseTransform(filteredFrequencySample));

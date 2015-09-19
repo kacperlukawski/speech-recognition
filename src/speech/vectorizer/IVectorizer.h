@@ -63,7 +63,7 @@ namespace speech {
              */
             virtual std::vector<std::valarray<double>> vectorize(DataSource<FrameType>& dataSource) {
                 std::vector<std::valarray<double>> vectors;
-                for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
+                for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); ++it) {
                     FrequencySample<FrameType> frequencySample = frequencyTransform->transform(*it);
                     vectors.push_back(vectorize(frequencySample)); // TODO: change that, probably method for single frame should be removed or changed
                 }

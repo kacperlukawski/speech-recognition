@@ -51,15 +51,20 @@ namespace speech {
              * @param cepstralCoefficientsNumber number of cepstral coefficients
              * @param minFrequency
              * @param maxFrequency
+             * @param windowMsSize
+             * @param offsetMsSize
+             * @param emphasisFactor
              */
             MFCCVectorizer(int bins, int cepstralCoefficientsNumber, double minFrequency = 64.0,
-                           double maxFrequency = 16000.0, int windowMsSize = 20, int offsetMsSize = 10) :
+                           double maxFrequency = 16000.0, int windowMsSize = 20, int offsetMsSize = 10,
+                           double emphasisFactor = 0.97) :
                     bins(bins),
                     cepstralCoefficientsNumber(cepstralCoefficientsNumber),
                     minCepstrumFrequency(minFrequency),
                     maxCepstrumFrequency(maxFrequency),
                     windowMsSize(windowMsSize),
-                    offsetMsSize(offsetMsSize) {
+                    offsetMsSize(offsetMsSize),
+                    emphasisFilter(new EmphasisFilter<FrameType>(emphasisFactor)) {
                 buildFilterBank();
             }
 
@@ -93,13 +98,13 @@ namespace speech {
             double maxCepstrumFrequency;
 
             /** Transform between time and frequency domain */
-            IFrequencyTransform<FrameType> *frequencyTransform = new FastFourierTransform<FrameType>();//  new DiscreteFourierTransform<FrameType>(); // TODO: should be more dynamic
+            IFrequencyTransform<FrameType> *frequencyTransform = new FastFourierTransform<FrameType>();
 
             /** Bank of Mel filters */
             std::vector<MelFilter> filterBank;
 
             /** Emphasis filter */
-            EmphasisFilter<FrameType> *emphasisFilter = new EmphasisFilter<FrameType>(0.97); // TODO: allow to select this value
+            EmphasisFilter<FrameType> *emphasisFilter;
 
             /**
              * Calculates the frequency on mel scale
@@ -156,7 +161,6 @@ namespace speech {
                     double result = 0.0;
                     std::valarray<double> &spectrumValues = spectrum.getValues();
                     for (int index = startIndex; index < endIndex; index++) {
-                        // TODO: try to use frequencies to calculate coefficients, not the indexes
                         double currentFrequency = spectrum.getIndexFrequency(index);
                         double coeff = this->getIndexCoeff(index, startIndex, centerIndex, endIndex);
                         double frequencyCoeff = this->getFrequencyCoeff(currentFrequency, this->startFrequency,

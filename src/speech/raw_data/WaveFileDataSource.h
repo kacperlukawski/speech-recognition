@@ -30,11 +30,9 @@ namespace speech {
         };
 
         /**
-        * This class represents the data source which reads the signal
-        * from standard WAV file
-        *
-        * @todo because wave file can have more than one channel (stereo is probably the most common format nowadays), we need to have a way to convert it into one signal - the transform should work only on one stream, while stereo has actually two independent streams of the data
-        */
+         * This class represents the data source which reads the signal
+         * from standard WAV file
+         */
         template<typename FrameType>
         class WaveFileDataSource : public DataSource<FrameType> {
         public:

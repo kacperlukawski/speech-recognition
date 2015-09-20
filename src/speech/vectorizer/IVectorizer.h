@@ -43,8 +43,6 @@ namespace speech {
              * @param samples a collection of frequency domain samples
              * @deprecated pass the data source instead
              * @return the projection of all vectors from given collection
-             *
-             * @todo change the vectorizer to use data source instead of collection of samples (we need to operatore on both data and frequency samples)
              */
             virtual std::vector<std::valarray<double>> vectorize(std::vector<FrequencySample<FrameType>> &samples) {
                 std::vector<std::valarray<double>> result;
@@ -65,7 +63,7 @@ namespace speech {
                 std::vector<std::valarray<double>> vectors;
                 for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); ++it) {
                     FrequencySample<FrameType> frequencySample = frequencyTransform->transform(*it);
-                    vectors.push_back(vectorize(frequencySample)); // TODO: change that, probably method for single frame should be removed or changed
+                    vectors.push_back(vectorize(frequencySample));
                 }
 
                 return std::move(vectors);
@@ -85,7 +83,7 @@ namespace speech {
             virtual int getVectorSize() const = 0;
         protected:
             /** Transform between time and frequency domain */
-            IFrequencyTransform<FrameType>* frequencyTransform = new FastFourierTransform<FrameType>(); // TODO: should be more dynamic
+            IFrequencyTransform<FrameType>* frequencyTransform = new FastFourierTransform<FrameType>();
         };
 
     }

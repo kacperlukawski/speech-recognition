@@ -2,7 +2,6 @@
 
 //
 // Adjust the length of the string to given size.
-// @todo: change the way of counting eachLetterNumber variable (it should be calculated separately for each letter)
 //
 // @return adjusted string
 //

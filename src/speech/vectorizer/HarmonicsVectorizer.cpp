@@ -8,8 +8,6 @@ template<typename FrameType>
 std::valarray<double> speech::vectorizer::HarmonicsVectorizer<FrameType>::vectorize(FrequencySample<FrameType> &sample) {
     std::valarray<double> result(maxHarmonics);
 
-    // TODO: correct the algorithm
-
     int minFrequencyIndex = sample.getFrequencyIndex(sample.getMinFrequency());
     int maxFrequencyIndex = sample.getFrequencyIndex(sample.getMaxFrequency());
 
@@ -46,7 +44,6 @@ std::valarray<double> speech::vectorizer::HarmonicsVectorizer<FrameType>::vector
 
 template<typename FrameType>
 void speech::vectorizer::HarmonicsVectorizer<FrameType>::serialize(std::ostream &out) const {
-    // TODO: implement
 }
 
 template<typename FrameType>

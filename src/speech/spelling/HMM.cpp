@@ -1,8 +1,5 @@
 #include "HMM.h"
 
-//
-// @todo implement loading the model
-//
 speech::spelling::HMM::HMM(std::istream &in) {
     in.read((char *) &numberOfObservations, sizeof(numberOfObservations));
     in.read((char *) &numberOfStates, sizeof(numberOfStates));
@@ -101,7 +98,6 @@ speech::spelling::HMM::~HMM() {
 */
 void speech::spelling::HMM::fit(std::vector<int> &phonems, const std::string &spelling) {
     if (phonems.size() != spelling.length()) {
-        // @todo it is necessary to adjust the spelling somehow by duplicating some of the letters - some phonems last longer than another
         return fit(phonems, spellingAdjuster.adjust(spelling, phonems.size()));
     }
 
@@ -220,8 +216,6 @@ std::string speech::spelling::HMM::predict(std::vector<int> phonems) {
 /**
 * Convert given character into index taken from
 * the states collection.
-*
-* @todo add throwing an exception when the state is not present in the set of states
 */
 int speech::spelling::HMM::stateToIndex(const char &state) {
     auto elementPosIt = std::find(states->begin(), states->end(), state);
@@ -237,8 +231,6 @@ int speech::spelling::HMM::stateToIndex(const char &state) {
 * into internal index. It will be mostly the same,
 * but in some cases it is necessary to label the data
 * another way.
-*
-* @todo add throwing an exception when observation is not present in observations set
 */
 int speech::spelling::HMM::observationToIndex(const int &observation) {
     auto elementPosIt = std::find(observations->begin(), observations->end(), observation);
@@ -251,8 +243,6 @@ int speech::spelling::HMM::observationToIndex(const int &observation) {
 
 /**
 * Create matrices of probabilities by normalization
-*
-* @todo check if the provided algorithm is correct (rows are not used when the cols should be)
 */
 void speech::spelling::HMM::actualizeProbabilityDistributions() {
     for (int i = 0; i < numberOfStates; ++i) {
@@ -263,18 +253,11 @@ void speech::spelling::HMM::actualizeProbabilityDistributions() {
         emission->unsafe_col(i) = stateToObservationCount->unsafe_col(i) / (sum(stateToObservationCount->unsafe_col(i)) + EPS);
     }
 
-    for (int i = 0; i < numberOfStates; ++i) { // @todo: check indexes
+    for (int i = 0; i < numberOfStates; ++i) {
         transmission->unsafe_col(i) = stateToStateCount->unsafe_col(i) / (sum(stateToStateCount->unsafe_col(i)) + EPS);
     }
-
-//    std::cout << *stateCount;
-//    std::cout << *stateToObservationCount;
-//    std::cout << *stateToStateCount;
 }
 
-//
-// @todo implement the serialization
-//
 void speech::spelling::HMM::serialize(std::ostream &out) const {
     uint32_t typeIdentifier = TYPE_IDENTIFIER;
 

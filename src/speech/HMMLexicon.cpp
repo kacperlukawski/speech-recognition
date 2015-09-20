@@ -16,7 +16,7 @@ void speech::HMMLexicon::addUtterance(Observation utterance, string transcriptio
     if (unitModels.find(transcription) == unitModels.end()) {
         // given transcription was not passed before
         vector<string> substates = this->split(transcription, unitSeparator);
-        int states = substates.size() + 1; // one additional state is for the end state TODO: add 1
+        int states = substates.size() + 1; // one additional state is for the end state
         unitModels[transcription] = new MultivariateGaussianHMM(this->dimensionality, states, gaussians,
                                                                 this->initializer, this->maxIterations);
     }
@@ -166,7 +166,7 @@ void speech::HMMLexicon::MultivariateGaussianHMM::fit() {
     // 3. Update the models using data accumulated from all utterances
 
     if (this->fitted) {
-        return; // TODO: throw an exception?
+        return;
     }
 
     this->initializeMixtures();
@@ -480,7 +480,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::normalizePi() {
 }
 
 double speech::HMMLexicon::MultivariateGaussianHMM::calculateLogLikelihood(const Observation &observation) {
-    // TODO: find a way to calculate log-likelihood more precisely
     unsigned int vectorsNb = observation.size();
     unsigned int T = vectorsNb - 1;
     if (T <= 0) {
@@ -515,8 +514,7 @@ double speech::HMMLexicon::MultivariateGaussianHMM::calculateLogLikelihood(const
 
     double likelihood = 0.0;
     for (int i = 0; i < this->states; i++) {
-        likelihood += exp(
-                logForward[i][T]); // TODO: it is a sum of log-probabilities - product of normal probabilities CORRECT
+        likelihood += exp(logForward[i][T]);
     }
 
     removeArray<double>(logForward, this->states);
@@ -663,7 +661,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::calculateTransitionEstimates(d
 
         for (int s1 = 0; s1 < this->states; ++s1) {
             for (int s2 = 0; s2 < this->states; ++s2) {
-                // TODO: check if the transition estimate is correct, because inner state transition strives to zero
                 GMMLikelihoodFunction &stateGMM = this->hiddenStates->at(s2);
                 double globalOccupation = 0.0;
                 for (int m = 0; m < this->M; ++m) {
@@ -790,7 +787,6 @@ void speech::HMMLexicon::MultivariateGaussianHMM::accumulateMixtureVariances(val
 void speech::HMMLexicon::MultivariateGaussianHMM::updateMixtures(double **occupationsAcc,
                                                                  valarray<double> **weightedObservationAcc,
                                                                  valarray<double> **weightedVarianceAcc) {
-    // TODO: normalize the mixture weights
     // Update mixtures
     for (int s = 0; s < this->states; ++s) {
         // Calculate occupation of whole GMM

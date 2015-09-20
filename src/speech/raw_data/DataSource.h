@@ -149,7 +149,9 @@ namespace speech {
                     return !(*this == it);
                 }
 
-                // TODO: postfix operator++ is not defined
+                virtual void operator++(int) {
+                    this->operator++();
+                }
 
                 virtual void operator++() {
                     std::vector<FrameType> vectorTmp;

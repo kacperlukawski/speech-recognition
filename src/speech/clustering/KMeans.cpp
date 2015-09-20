@@ -48,7 +48,6 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors) {
         throw speech::clustering::exception::TooLessVectorsException();
     }
 
-    // @todo change a way of choosing initial centroids to be random
     unsigned int currentCentroidPosition = 0;
     std::vector<valarray<double>>::iterator vectorsIt;
     std::vector<valarray<double>>::const_iterator centroidsIt;
@@ -142,7 +141,6 @@ void speech::clustering::KMeans::fit(vector<valarray<double>> &vectors) {
 
 int speech::clustering::KMeans::predict(const valarray<double> &vector) {
     if (centroids->empty()) {
-        // @todo probably throw an exception there, because the model was not fitted properly
         return 0;
     }
 

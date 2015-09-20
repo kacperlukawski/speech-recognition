@@ -15,7 +15,7 @@ void speech::initializer::KMeansInitializer::initialize(speech::HMMLexicon::Mult
     for (int n = 0; n < states; ++n) {
         HMMLexicon::GMMLikelihoodFunction &stateGMM = gaussianHMM.getHiddenState(n);
 
-        std::vector<std::valarray<double>> vectors; // TODO: add a initial size
+        std::vector<std::valarray<double>> vectors;
         for (auto it = utterances->begin(); it != utterances->end(); it++) {
             HMMLexicon::Observation &utterance = *it;
             int nbSamples = utterance.size();

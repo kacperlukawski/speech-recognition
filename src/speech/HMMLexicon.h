@@ -369,7 +369,11 @@ namespace speech {
             void normalizePi();
 
         private:
-            // TODO: comment the methood
+            /**
+             * Calculates the log-likelihoood of producing given observation
+             * @param observation
+             * @return log-likelihood
+             */
             double calculateLogLikelihood(const Observation& observation);
 
             /**
@@ -445,7 +449,14 @@ namespace speech {
                                         double **occupationsAcc, const Observation &observation);
 
 
-            // TODO: write doc
+            /**
+             * Accumulates the variances of mixtures
+             * @param weightedVarianceAcc an array where store the variances
+             * @param weightedObservationAcc
+             * @param occupation state occupation probabilities with time frames
+             * @param occupationsAcc state occupation probabilities
+             * @param observation collection of observed vectors
+             */
             void accumulateMixtureVariances(valarray<double> **weightedVarianceAcc,
                                             valarray<double> **weightedObservationAcc, double ***occupation,
                                             double **occupationsAcc, const Observation &observation);

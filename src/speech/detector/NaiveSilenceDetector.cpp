@@ -23,7 +23,6 @@ bool speech::detector::NaiveSilenceDetector<FrameType>::detected(FrequencySample
     double sampleAmplitudeVariance = sampleAmplitudeSqrError / sampleSize;
     double sampleAmplitudeStddev = sqrt(sampleAmplitudeVariance);
 
-    // TODO: use thresholds passed as a model parameter
     return sampleAmplitudeMean < 0.5 && sampleAmplitudeStddev < 1.0;
 }
 

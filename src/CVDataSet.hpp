@@ -34,7 +34,6 @@ struct CVDataSet {
         const int LEXICON_GAUSSIANS = root["lexicon_gaussians"].asInt();
         const unsigned int MAX_ITERATIONS = root["max_iterations"].asInt();
 
-        // TODO: allow to choose how to initialize the gaussians
         std::shared_ptr<AbstractGaussianInitializer> gaussianInitializer(new KMeansInitializer());
         this->hmmLexicon = std::shared_ptr<speech::HMMLexicon>(
                 new speech::HMMLexicon(LEXICON_DIMENSIONALITY, LEXICON_GAUSSIANS, gaussianInitializer, MAX_ITERATIONS));

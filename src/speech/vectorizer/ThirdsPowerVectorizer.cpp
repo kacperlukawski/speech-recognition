@@ -3,7 +3,6 @@
 
 #include "ThirdsPowerVectorizer.h"
 
-// TODO: remove below declaration
 std::ostream &operator<<(std::ostream &out, std::valarray<double> vector);
 
 template<typename FrameType>
@@ -52,7 +51,7 @@ double speech::vectorizer::ThirdsPowerVectorizer<FrameType>::getThirdEnergy(doub
 
 template<typename FrameType>
 void speech::vectorizer::ThirdsPowerVectorizer<FrameType>::serialize(std::ostream &out) const {
-    // TODO: implement
+
 }
 
 template<typename FrameType>
@@ -67,7 +66,6 @@ class speech::vectorizer::ThirdsPowerVectorizer<short>;
 //
 // Overloads the << operator for std::valarray to have a simple method
 // to display current values of vectors.
-// TODO: remove the operator
 //
 std::ostream &operator<<(std::ostream &out, std::valarray<double> vector) {
     for (int i = 0; i < vector.size(); i++) {

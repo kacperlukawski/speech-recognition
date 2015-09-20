@@ -54,16 +54,9 @@ speech::LanguageModel<FrameType>::LanguageModel(shared_ptr<IVectorizer<FrameType
         : vectorizer(vectorizer), clusteringMethod(clusteringMethod), spellingTranscription(spellingTranscription) {
 }
 
-// TODO: remove
-std::ostream &operator<<(std::ostream &out, std::valarray<double> vector);
-
 template<typename FrameType>
 void speech::LanguageModel<FrameType>::fit(vector<DataSource<FrameType>> &dataSources,
                                            vector<std::string> &transcriptions) {
-    if (dataSources.size() != transcriptions.size()) {
-        // TODO: throw an exception - the numbers need to match
-    }
-
     IFrequencyTransform<short> *fft = new FastFourierTransform<FrameType>();
 
     vector<valarray<double>> vectors;

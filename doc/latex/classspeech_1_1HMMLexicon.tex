@@ -1,0 +1,205 @@
+\hypertarget{classspeech_1_1HMMLexicon}{\section{speech\+:\+:H\+M\+M\+Lexicon Class Reference}
+\label{classspeech_1_1HMMLexicon}\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+}
+
+
+{\ttfamily \#include $<$H\+M\+M\+Lexicon.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction}{G\+M\+M\+Likelihood\+Function}
+\item 
+class \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM}{Multivariate\+Gaussian\+H\+M\+M}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1HMMLexicon_aa8d24ad3e9e92620ee2ce1f4cb783bad}{typedef vector$<$ valarray\\*
+$<$ double $>$ $>$ {\bfseries Observation}}\label{classspeech_1_1HMMLexicon_aa8d24ad3e9e92620ee2ce1f4cb783bad}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1HMMLexicon_a720b99df01bd818f36cd9437ec83ce72}{H\+M\+M\+Lexicon} (int \hyperlink{classspeech_1_1HMMLexicon_a0e8247e6ee089aced3287ec0488e927b}{dimensionality}, unsigned int \hyperlink{classspeech_1_1HMMLexicon_a31c5dc5af41ea8a1f7ef825b2581b4d6}{gaussians}, std\+::shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1initializer_1_1AbstractGaussianInitializer}{speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer} $>$ \hyperlink{classspeech_1_1HMMLexicon_a12d561355a3c03df3d6500c422c1b821}{initializer}, unsigned int \hyperlink{classspeech_1_1HMMLexicon_a4f7a5e08c169ca9f5a389f25c6fc5972}{max\+Iterations}=100)
+\item 
+virtual \hyperlink{classspeech_1_1HMMLexicon_a07f9cfec2db8467b98c016b7e90f85d8}{$\sim$\+H\+M\+M\+Lexicon} ()
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_ae8b1812cf8ee22d64b87861f71f39ce2}{add\+Utterance} (Observation utterance, string transcription, string unit\+Separator=\char`\"{}$\vert$\char`\"{})
+\item 
+string \hyperlink{classspeech_1_1HMMLexicon_a6c9f0b864f71efd3946f760f3b955c6c}{predict} (const Observation \&observation)
+\item 
+std\+::map$<$ std\+::string, double $>$ \hyperlink{classspeech_1_1HMMLexicon_ab8d36b52d200a08213577aa72e85dbfe}{get\+Best\+Predictions} (const Observation \&observation, unsigned int N)
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_ab8858456fd0f64bf13fac21f2b30a317}{fit} ()
+\item 
+unsigned long \hyperlink{classspeech_1_1HMMLexicon_a834c97dbcac695589f117c2252101f88}{size} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ string $>$ \hyperlink{classspeech_1_1HMMLexicon_a36f384430151123b2a27b532fcb24d46}{split} (const string \&text, string \&separator)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classspeech_1_1HMMLexicon_a0e8247e6ee089aced3287ec0488e927b}{dimensionality}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_a31c5dc5af41ea8a1f7ef825b2581b4d6}{gaussians}
+\item 
+std\+::shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1initializer_1_1AbstractGaussianInitializer}{speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer} $>$ \hyperlink{classspeech_1_1HMMLexicon_a12d561355a3c03df3d6500c422c1b821}{initializer}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_a4f7a5e08c169ca9f5a389f25c6fc5972}{max\+Iterations}
+\item 
+map$<$ string, \\*
+\hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM}{Multivariate\+Gaussian\+H\+M\+M} $\ast$ $>$ \hyperlink{classspeech_1_1HMMLexicon_aee3322e49c63383316eb46e489d81de9}{unit\+Models}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An acoustic model of the language built from H\+M\+Ms for each word / syllabe / phoneme from the dictionary. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_a720b99df01bd818f36cd9437ec83ce72}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!H\+M\+M\+Lexicon@{H\+M\+M\+Lexicon}}
+\index{H\+M\+M\+Lexicon@{H\+M\+M\+Lexicon}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{H\+M\+M\+Lexicon}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::\+H\+M\+M\+Lexicon\+::\+H\+M\+M\+Lexicon (
+\begin{DoxyParamCaption}
+\item[{int}]{dimensionality, }
+\item[{unsigned int}]{gaussians, }
+\item[{std\+::shared\+\_\+ptr$<$ {\bf speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer} $>$}]{initializer, }
+\item[{unsigned int}]{max\+Iterations = {\ttfamily 100}}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_a720b99df01bd818f36cd9437ec83ce72}
+Constructs an object with a custom initializer 
+\begin{DoxyParams}{Parameters}
+{\em dimensionality} & dimensionality of a single acoustic vector \\
+\hline
+{\em gaussians} & number of Gaussian mixtures in a single state of H\+M\+M \\
+\hline
+{\em initializer} & an instance of custom initializer \\
+\hline
+{\em max\+Iterations} & a maximum number of iterations to perform in model fitting \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_a07f9cfec2db8467b98c016b7e90f85d8}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!````~H\+M\+M\+Lexicon@{$\sim$\+H\+M\+M\+Lexicon}}
+\index{````~H\+M\+M\+Lexicon@{$\sim$\+H\+M\+M\+Lexicon}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{$\sim$\+H\+M\+M\+Lexicon}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::\+H\+M\+M\+Lexicon\+::$\sim$\+H\+M\+M\+Lexicon (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1HMMLexicon_a07f9cfec2db8467b98c016b7e90f85d8}
+Destructs the object 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_ae8b1812cf8ee22d64b87861f71f39ce2}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!add\+Utterance@{add\+Utterance}}
+\index{add\+Utterance@{add\+Utterance}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{add\+Utterance}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::add\+Utterance (
+\begin{DoxyParamCaption}
+\item[{Observation}]{utterance, }
+\item[{string}]{transcription, }
+\item[{string}]{unit\+Separator = {\ttfamily \char`\"{}$\vert$\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_ae8b1812cf8ee22d64b87861f71f39ce2}
+Adds an acoustic observation of given text 
+\begin{DoxyParams}{Parameters}
+{\em utterance} & collection of acoustic observation vectors \\
+\hline
+{\em transcription} & text representing the observation \\
+\hline
+{\em unit\+Separator} & separator used for splitting the transcription \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_ab8858456fd0f64bf13fac21f2b30a317}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!fit@{fit}}
+\index{fit@{fit}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{fit}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::fit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_ab8858456fd0f64bf13fac21f2b30a317}
+Fits the parameters of the lexicon \hypertarget{classspeech_1_1HMMLexicon_ab8d36b52d200a08213577aa72e85dbfe}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!get\+Best\+Predictions@{get\+Best\+Predictions}}
+\index{get\+Best\+Predictions@{get\+Best\+Predictions}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{get\+Best\+Predictions}]{\setlength{\rightskip}{0pt plus 5cm}std\+::map$<$ std\+::string, double $>$ speech\+::\+H\+M\+M\+Lexicon\+::get\+Best\+Predictions (
+\begin{DoxyParamCaption}
+\item[{const Observation \&}]{observation, }
+\item[{unsigned int}]{N}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_ab8d36b52d200a08213577aa72e85dbfe}
+Gets top N predictions of given utterance observation 
+\begin{DoxyParams}{Parameters}
+{\em observation} & collection of acoustic observation vectors \\
+\hline
+{\em N} & number of top predictions \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a collection of language units maximizing the probability of being observed with the log-\/likelihoods 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1HMMLexicon_a6c9f0b864f71efd3946f760f3b955c6c}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!predict@{predict}}
+\index{predict@{predict}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{predict}]{\setlength{\rightskip}{0pt plus 5cm}string speech\+::\+H\+M\+M\+Lexicon\+::predict (
+\begin{DoxyParamCaption}
+\item[{const Observation \&}]{observation}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_a6c9f0b864f71efd3946f760f3b955c6c}
+Predicts a word which maximizes the probability of being observed in given observation 
+\begin{DoxyParams}{Parameters}
+{\em observation} & collection of acoustic observation vectors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a language unit maximizing the probability of being observed 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1HMMLexicon_a834c97dbcac695589f117c2252101f88}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!size@{size}}
+\index{size@{size}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long speech\+::\+H\+M\+M\+Lexicon\+::size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_a834c97dbcac695589f117c2252101f88}
+Gets number of the unit models \begin{DoxyReturn}{Returns}
+number of H\+M\+Ms 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1HMMLexicon_a36f384430151123b2a27b532fcb24d46}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!split@{split}}
+\index{split@{split}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{split}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ speech\+::\+H\+M\+M\+Lexicon\+::split (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{text, }
+\item[{string \&}]{separator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_a36f384430151123b2a27b532fcb24d46}
+Splits given string using given separator 
+\begin{DoxyParams}{Parameters}
+{\em text} & \\
+\hline
+{\em separator} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of chunks 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_a0e8247e6ee089aced3287ec0488e927b}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!dimensionality@{dimensionality}}
+\index{dimensionality@{dimensionality}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{dimensionality}]{\setlength{\rightskip}{0pt plus 5cm}int speech\+::\+H\+M\+M\+Lexicon\+::dimensionality\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_a0e8247e6ee089aced3287ec0488e927b}
+Dimensionality of a single data vector \hypertarget{classspeech_1_1HMMLexicon_a31c5dc5af41ea8a1f7ef825b2581b4d6}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!gaussians@{gaussians}}
+\index{gaussians@{gaussians}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{gaussians}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::gaussians\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_a31c5dc5af41ea8a1f7ef825b2581b4d6}
+Number of mixture Gaussians used for the probability approximation \hypertarget{classspeech_1_1HMMLexicon_a12d561355a3c03df3d6500c422c1b821}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!initializer@{initializer}}
+\index{initializer@{initializer}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{initializer}]{\setlength{\rightskip}{0pt plus 5cm}std\+::shared\+\_\+ptr$<${\bf speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer}$>$ speech\+::\+H\+M\+M\+Lexicon\+::initializer\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_a12d561355a3c03df3d6500c422c1b821}
+Initializer of the Gaussian mixtures \hypertarget{classspeech_1_1HMMLexicon_a4f7a5e08c169ca9f5a389f25c6fc5972}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!max\+Iterations@{max\+Iterations}}
+\index{max\+Iterations@{max\+Iterations}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{max\+Iterations}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::max\+Iterations\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_a4f7a5e08c169ca9f5a389f25c6fc5972}
+Max iterations in a fitting phase \hypertarget{classspeech_1_1HMMLexicon_aee3322e49c63383316eb46e489d81de9}{\index{speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}!unit\+Models@{unit\+Models}}
+\index{unit\+Models@{unit\+Models}!speech\+::\+H\+M\+M\+Lexicon@{speech\+::\+H\+M\+M\+Lexicon}}
+\subsubsection[{unit\+Models}]{\setlength{\rightskip}{0pt plus 5cm}map$<$string, {\bf Multivariate\+Gaussian\+H\+M\+M} $\ast$$>$ speech\+::\+H\+M\+M\+Lexicon\+::unit\+Models\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_aee3322e49c63383316eb46e489d81de9}
+Collection of Hidden Markov Models, each one represents a single language unit 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/H\+M\+M\+Lexicon.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/H\+M\+M\+Lexicon.\+cpp\end{DoxyCompactItemize}

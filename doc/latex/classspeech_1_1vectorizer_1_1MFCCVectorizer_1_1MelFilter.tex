@@ -1,0 +1,86 @@
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter}{\section{speech\+:\+:vectorizer\+:\+:M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$\+:\+:Mel\+Filter Class Reference}
+\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter}\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$\+::\+Mel\+Filter}}
+}
+
+
+{\ttfamily \#include $<$M\+F\+C\+C\+Vectorizer.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a406c5493a1eaeea4586c372ddb0dbd5c}{Mel\+Filter} (double start\+Frequency, double end\+Frequency)
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a332be225c09e3c12e2a05f9a61401e96}{operator()} (\hyperlink{classspeech_1_1raw__data_1_1Spectrum}{Spectrum} \&spectrum)
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a024b85d403d333f6f7649e11de0bf257}{get\+Index\+Coeff} (int index, int start\+Index, int center\+Index, int end\+Index)
+\item 
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_af41ba8e8dc53e80cbaf45509874e7655}{double {\bfseries get\+Frequency\+Coeff} (double frequency, double start\+Frequency, double center\+Frequency, double end\+Frequency)}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_af41ba8e8dc53e80cbaf45509874e7655}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$\+::\+Mel\+Filter}
+
+A triangular filter used in M\+F\+C\+C calculating 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a406c5493a1eaeea4586c372ddb0dbd5c}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter}!Mel\+Filter@{Mel\+Filter}}
+\index{Mel\+Filter@{Mel\+Filter}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter}}
+\subsubsection[{Mel\+Filter}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::Mel\+Filter\+::\+Mel\+Filter (
+\begin{DoxyParamCaption}
+\item[{double}]{start\+Frequency, }
+\item[{double}]{end\+Frequency}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a406c5493a1eaeea4586c372ddb0dbd5c}
+Constructs a filter non-\/zero in given boundaries 
+\begin{DoxyParams}{Parameters}
+{\em start\+Frequenfcy} & begin frequency in herzs \\
+\hline
+{\em end\+Frequency} & end frequency in herzs \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a024b85d403d333f6f7649e11de0bf257}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter}!get\+Index\+Coeff@{get\+Index\+Coeff}}
+\index{get\+Index\+Coeff@{get\+Index\+Coeff}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter}}
+\subsubsection[{get\+Index\+Coeff}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::Mel\+Filter\+::get\+Index\+Coeff (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{int}]{start\+Index, }
+\item[{int}]{center\+Index, }
+\item[{int}]{end\+Index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a024b85d403d333f6f7649e11de0bf257}
+Calculates the weight of the given index 
+\begin{DoxyParams}{Parameters}
+{\em index} & current index \\
+\hline
+{\em start\+Index} & the beginning of this particular filter \\
+\hline
+{\em center\+Index} & the middle of this particular filter \\
+\hline
+{\em end\+Index} & the end of this particular filter \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a332be225c09e3c12e2a05f9a61401e96}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter}!operator()@{operator()}}
+\index{operator()@{operator()}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer\+::\+Mel\+Filter}}
+\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::Mel\+Filter\+::operator() (
+\begin{DoxyParamCaption}
+\item[{{\bf Spectrum} \&}]{spectrum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter_a332be225c09e3c12e2a05f9a61401e96}
+Calucates an energy in given spectrum 
+\begin{DoxyParams}{Parameters}
+{\em spectrum} & reference to Spectrum class object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+energy of this filter in given spectrum 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/M\+F\+C\+C\+Vectorizer.\+h\end{DoxyCompactItemize}

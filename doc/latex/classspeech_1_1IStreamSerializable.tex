@@ -1,0 +1,61 @@
+\hypertarget{classspeech_1_1IStreamSerializable}{\section{speech\+:\+:I\+Stream\+Serializable Class Reference}
+\label{classspeech_1_1IStreamSerializable}\index{speech\+::\+I\+Stream\+Serializable@{speech\+::\+I\+Stream\+Serializable}}
+}
+
+
+{\ttfamily \#include $<$I\+Stream\+Serializable.\+h$>$}
+
+Inheritance diagram for speech\+:\+:I\+Stream\+Serializable\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.165746cm]{classspeech_1_1IStreamSerializable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classspeech_1_1IStreamSerializable_a891561ebe3e4eb5411e613b28bc2c982}{serialize} (std\+::ostream \&out) const =0
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \hyperlink{classspeech_1_1IStreamSerializable_ae1962586a37479716e14c3d8ed3beaca}{operator$<$$<$} (std\+::ostream \&out, const \hyperlink{classspeech_1_1IStreamSerializable}{I\+Stream\+Serializable} \&object)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class gives an interface for all classes which can be serialized. All classes used in an language model should inherit from this one, to make sure that it is possible to save the model. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1IStreamSerializable_a891561ebe3e4eb5411e613b28bc2c982}{\index{speech\+::\+I\+Stream\+Serializable@{speech\+::\+I\+Stream\+Serializable}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::\+I\+Stream\+Serializable@{speech\+::\+I\+Stream\+Serializable}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}virtual void speech\+::\+I\+Stream\+Serializable\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classspeech_1_1IStreamSerializable_a891561ebe3e4eb5411e613b28bc2c982}
+Writes an object to given stream 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classspeech_1_1LanguageModel_ae3c30d0a1a1a5e60fd69954b432766fa}{speech\+::\+Language\+Model$<$ Frame\+Type $>$}, \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f266d0fc3ab4dd89a1d701531818930}{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$}, \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_aa8285bbd275c31ae1ce48d294400dea9}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}, \hyperlink{classspeech_1_1clustering_1_1KMeans_a47ba455f6996f45a1f61cde7e736e254}{speech\+::clustering\+::\+K\+Means}, \hyperlink{classspeech_1_1clustering_1_1GaussianMixtureModel_a51a73a7818e57e5b9e2ff6fbd25188f6}{speech\+::clustering\+::\+Gaussian\+Mixture\+Model}, \hyperlink{classspeech_1_1spelling_1_1HMM_a225d39c70f721195c184e8af00ec3651}{speech\+::spelling\+::\+H\+M\+M}, \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_a9676e73a7c47d5383e9359850086249c}{speech\+::clustering\+::\+I\+Clustering\+Method}, \hyperlink{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a1fdb7b7544a6386e64e8df49b644a13c}{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer$<$ Frame\+Type $>$}, \hyperlink{classspeech_1_1vectorizer_1_1FormantVectorizer_a8eed42b42272eb0d77a49213a5a36f73}{speech\+::vectorizer\+::\+Formant\+Vectorizer$<$ Frame\+Type $>$}, \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription_a2ebd3da352eac002869c2f29ad890b16}{speech\+::spelling\+::\+I\+Spelling\+Transcription}, \hyperlink{classspeech_1_1vectorizer_1_1HarmonicsVectorizer_a6a9467047e5acbfd0fc4bf1e72679acf}{speech\+::vectorizer\+::\+Harmonics\+Vectorizer$<$ Frame\+Type $>$}, and \hyperlink{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_ab27c49171171fa2af908d9f3df0712db}{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer$<$ Frame\+Type $>$}.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classspeech_1_1IStreamSerializable_ae1962586a37479716e14c3d8ed3beaca}{\index{speech\+::\+I\+Stream\+Serializable@{speech\+::\+I\+Stream\+Serializable}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!speech\+::\+I\+Stream\+Serializable@{speech\+::\+I\+Stream\+Serializable}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const {\bf I\+Stream\+Serializable} \&}]{object}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}}\label{classspeech_1_1IStreamSerializable_ae1962586a37479716e14c3d8ed3beaca}
+Overloads stream $<$$<$ operator, to allow passing instances of \hyperlink{classspeech_1_1IStreamSerializable}{I\+Stream\+Serializable} into streams; 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/I\+Stream\+Serializable.\+h\end{DoxyCompactItemize}

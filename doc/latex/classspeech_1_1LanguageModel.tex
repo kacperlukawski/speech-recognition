@@ -1,0 +1,148 @@
+\hypertarget{classspeech_1_1LanguageModel}{\section{speech\+:\+:Language\+Model$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1LanguageModel}\index{speech\+::\+Language\+Model$<$ Frame\+Type $>$@{speech\+::\+Language\+Model$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Language\+Model.\+h$>$}
+
+Inheritance diagram for speech\+:\+:Language\+Model$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1LanguageModel}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1LanguageModel_a653f37a791e75e9ea968d58b6ee7d2fa}{{\bfseries Language\+Model} (std\+::istream \&in)}\label{classspeech_1_1LanguageModel_a653f37a791e75e9ea968d58b6ee7d2fa}
+
+\item 
+\hypertarget{classspeech_1_1LanguageModel_a810070486190924d9f9ba1afb3fe61c2}{{\bfseries Language\+Model} (shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer}{I\+Vectorizer}$<$ Frame\+Type $>$$>$ vectorizer, shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod}{clustering\+::\+I\+Clustering\+Method} $>$ clustering\+Method, shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription}{spelling\+::\+I\+Spelling\+Transcription} $>$ spelling\+Transcription)}\label{classspeech_1_1LanguageModel_a810070486190924d9f9ba1afb3fe61c2}
+
+\item 
+void \hyperlink{classspeech_1_1LanguageModel_a07bc11f505b763e363748e7e1533615c}{fit} (vector$<$ \hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$$>$ \&data\+Sources, vector$<$ std\+::string $>$ \&transcriptions)
+\item 
+std\+::string \hyperlink{classspeech_1_1LanguageModel_ada9a59cc5f394d8ddecb650c0f334d87}{predict} (\hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$ \&data\+Source)
+\item 
+shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer}{I\+Vectorizer}\\*
+$<$ Frame\+Type $>$ $>$ \hyperlink{classspeech_1_1LanguageModel_adbcee84dfcd012a9c9a12fc5dde7f3f6}{get\+Vectorizer} ()
+\item 
+shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod}{clustering\+::\+I\+Clustering\+Method} $>$ \hyperlink{classspeech_1_1LanguageModel_afb61fb7cf00950c3c85ed2860c17d83c}{get\+Clustering\+Method} ()
+\item 
+shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription}{spelling\+::\+I\+Spelling\+Transcription} $>$ \hyperlink{classspeech_1_1LanguageModel_a0c5dab5aad9bb4dabc92bedbce99cfb6}{get\+Spelling\+Transcription} ()
+\item 
+virtual void \hyperlink{classspeech_1_1LanguageModel_ae3c30d0a1a1a5e60fd69954b432766fa}{serialize} (std\+::ostream \&out) const 
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1LanguageModel_a5929f6de00b952d3094c8dd7bb240d05}{shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer}{I\+Vectorizer}\\*
+$<$ Frame\+Type $>$ $>$ {\bfseries vectorizer} = nullptr}\label{classspeech_1_1LanguageModel_a5929f6de00b952d3094c8dd7bb240d05}
+
+\item 
+\hypertarget{classspeech_1_1LanguageModel_ac846feac8765604343d901e35de07c2a}{shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod}{clustering\+::\+I\+Clustering\+Method} $>$ {\bfseries clustering\+Method} = nullptr}\label{classspeech_1_1LanguageModel_ac846feac8765604343d901e35de07c2a}
+
+\item 
+\hypertarget{classspeech_1_1LanguageModel_a20b08c539071cd3dcbd49e59c3bc08f2}{shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription}{spelling\+::\+I\+Spelling\+Transcription} $>$ {\bfseries spelling\+Transcription} = nullptr}\label{classspeech_1_1LanguageModel_a20b08c539071cd3dcbd49e59c3bc08f2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::\+Language\+Model$<$ Frame\+Type $>$}
+
+It is a representation of the language model which is built from the clustering method and a method which converts labeled signals into textual representation (we call it spelling transcription) 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1LanguageModel_a07bc11f505b763e363748e7e1533615c}{\index{speech\+::\+Language\+Model@{speech\+::\+Language\+Model}!fit@{fit}}
+\index{fit@{fit}!speech\+::\+Language\+Model@{speech\+::\+Language\+Model}}
+\subsubsection[{fit}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ void {\bf speech\+::\+Language\+Model}$<$ Frame\+Type $>$\+::fit (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf Data\+Source}$<$ Frame\+Type $>$$>$ \&}]{data\+Sources, }
+\item[{vector$<$ std\+::string $>$ \&}]{transcriptions}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1LanguageModel_a07bc11f505b763e363748e7e1533615c}
+Fits all model components 
+\begin{DoxyParams}{Parameters}
+{\em data\+Sources} & collection of data sources \\
+\hline
+{\em transcriptions} & collection of transcriptions for each provided data source \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1LanguageModel_afb61fb7cf00950c3c85ed2860c17d83c}{\index{speech\+::\+Language\+Model@{speech\+::\+Language\+Model}!get\+Clustering\+Method@{get\+Clustering\+Method}}
+\index{get\+Clustering\+Method@{get\+Clustering\+Method}!speech\+::\+Language\+Model@{speech\+::\+Language\+Model}}
+\subsubsection[{get\+Clustering\+Method}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ shared\+\_\+ptr$<${\bf clustering\+::\+I\+Clustering\+Method}$>$ {\bf speech\+::\+Language\+Model}$<$ Frame\+Type $>$\+::get\+Clustering\+Method (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1LanguageModel_afb61fb7cf00950c3c85ed2860c17d83c}
+Gets shared pointer to the clustering method used by the model
+
+\begin{DoxyReturn}{Returns}
+instance of the clustering method 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1LanguageModel_a0c5dab5aad9bb4dabc92bedbce99cfb6}{\index{speech\+::\+Language\+Model@{speech\+::\+Language\+Model}!get\+Spelling\+Transcription@{get\+Spelling\+Transcription}}
+\index{get\+Spelling\+Transcription@{get\+Spelling\+Transcription}!speech\+::\+Language\+Model@{speech\+::\+Language\+Model}}
+\subsubsection[{get\+Spelling\+Transcription}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ shared\+\_\+ptr$<${\bf spelling\+::\+I\+Spelling\+Transcription}$>$ {\bf speech\+::\+Language\+Model}$<$ Frame\+Type $>$\+::get\+Spelling\+Transcription (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1LanguageModel_a0c5dab5aad9bb4dabc92bedbce99cfb6}
+Gets shared pointer to the spelling transcription used by the model
+
+\begin{DoxyReturn}{Returns}
+instance of the spelling transcription 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1LanguageModel_adbcee84dfcd012a9c9a12fc5dde7f3f6}{\index{speech\+::\+Language\+Model@{speech\+::\+Language\+Model}!get\+Vectorizer@{get\+Vectorizer}}
+\index{get\+Vectorizer@{get\+Vectorizer}!speech\+::\+Language\+Model@{speech\+::\+Language\+Model}}
+\subsubsection[{get\+Vectorizer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ shared\+\_\+ptr$<${\bf I\+Vectorizer}$<$Frame\+Type$>$ $>$ {\bf speech\+::\+Language\+Model}$<$ Frame\+Type $>$\+::get\+Vectorizer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1LanguageModel_adbcee84dfcd012a9c9a12fc5dde7f3f6}
+Gets shared pointer to the vectorizer instance used by the model
+
+\begin{DoxyReturn}{Returns}
+instance of the vectorizer 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1LanguageModel_ada9a59cc5f394d8ddecb650c0f334d87}{\index{speech\+::\+Language\+Model@{speech\+::\+Language\+Model}!predict@{predict}}
+\index{predict@{predict}!speech\+::\+Language\+Model@{speech\+::\+Language\+Model}}
+\subsubsection[{predict}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::string {\bf speech\+::\+Language\+Model}$<$ Frame\+Type $>$\+::predict (
+\begin{DoxyParamCaption}
+\item[{{\bf Data\+Source}$<$ Frame\+Type $>$ \&}]{data\+Source}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1LanguageModel_ada9a59cc5f394d8ddecb650c0f334d87}
+Predicts the sentence from given data source samples 
+\begin{DoxyParams}{Parameters}
+{\em data\+Source} & referene to the data source\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+predicted sentence 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1LanguageModel_ae3c30d0a1a1a5e60fd69954b432766fa}{\index{speech\+::\+Language\+Model@{speech\+::\+Language\+Model}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::\+Language\+Model@{speech\+::\+Language\+Model}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ void {\bf speech\+::\+Language\+Model}$<$ Frame\+Type $>$\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1LanguageModel_ae3c30d0a1a1a5e60fd69954b432766fa}
+Writes an object to given stream 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1IStreamSerializable_a891561ebe3e4eb5411e613b28bc2c982}{speech\+::\+I\+Stream\+Serializable}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/Language\+Model.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/Language\+Model.\+cpp\end{DoxyCompactItemize}

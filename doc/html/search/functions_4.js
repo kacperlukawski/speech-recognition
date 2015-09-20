@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['fit',['fit',['../classspeech_1_1clustering_1_1GaussianMixtureModel.html#ab14e1843eb9412b32f918c909e19d1c5',1,'speech::clustering::GaussianMixtureModel::fit()'],['../classspeech_1_1clustering_1_1IClusteringMethod.html#ab9ec001a1f76be4793086cd8548ac886',1,'speech::clustering::IClusteringMethod::fit()'],['../classspeech_1_1clustering_1_1KMeans.html#a53a00478141ceee40366602a85e31ff4',1,'speech::clustering::KMeans::fit()'],['../classspeech_1_1HMMLexicon.html#ab8858456fd0f64bf13fac21f2b30a317',1,'speech::HMMLexicon::fit()'],['../classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM.html#a7700484ac8675c53d148a3919f736005',1,'speech::HMMLexicon::MultivariateGaussianHMM::fit()'],['../classspeech_1_1LanguageModel.html#a07bc11f505b763e363748e7e1533615c',1,'speech::LanguageModel::fit()'],['../classspeech_1_1spelling_1_1HMM.html#ae8a7d3797ef1f8d8ac3966db5500c552',1,'speech::spelling::HMM::fit()']]]
+];

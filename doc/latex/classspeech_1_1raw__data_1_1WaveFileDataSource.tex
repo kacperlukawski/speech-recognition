@@ -1,0 +1,157 @@
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource}{\section{speech\+:\+:raw\+\_\+data\+:\+:Wave\+File\+Data\+Source$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1raw__data_1_1WaveFileDataSource}\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source$<$ Frame\+Type $>$@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Wave\+File\+Data\+Source.\+h$>$}
+
+Inheritance diagram for speech\+:\+:raw\+\_\+data\+:\+:Wave\+File\+Data\+Source$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1raw__data_1_1WaveFileDataSource}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_a9e8c4f283e57e77fbfb7d8e4c8112d92}{Wave\+File\+Data\+Source} (\hyperlink{structspeech_1_1raw__data_1_1wav__header}{wav\+\_\+header} \+\_\+meta\+\_\+data, int \hyperlink{classspeech_1_1raw__data_1_1DataSource_a6041f72109ebba9e84e49d71f626b8ea}{sample\+Length})
+\item 
+\hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_afd6dc224baa81131e0b09c18ecd42b07}{Wave\+File\+Data\+Source} (string \+\_\+file\+Name, int \hyperlink{classspeech_1_1raw__data_1_1DataSource_a6041f72109ebba9e84e49d71f626b8ea}{sample\+Length})
+\item 
+virtual \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_ace75bc6dfeb280651d4eaba46edfa922}{$\sim$\+Wave\+File\+Data\+Source} ()
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a62e606a02c1c1068c39cf56979d5943f}{void {\bfseries save\+To\+File} (string \+\_\+file\+Name)}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a62e606a02c1c1068c39cf56979d5943f}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a2dca62bfd4d14b853400269a70d5dd0d}{virtual \hyperlink{structspeech_1_1raw__data_1_1wav__header}{wav\+\_\+header} {\bfseries get\+Meta\+Data} ()}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a2dca62bfd4d14b853400269a70d5dd0d}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_aa89989745215224ceda8c39fe23d6751}{virtual void {\bfseries add\+Sample} (\hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ sample)}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_aa89989745215224ceda8c39fe23d6751}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a79006acac0a4e1136ef140802e1c2c4d}{virtual void {\bfseries init} ()}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a79006acac0a4e1136ef140802e1c2c4d}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{structspeech_1_1raw__data_1_1wav__header}{wav\+\_\+header} \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_a473179ee3ccc9999017c87928df2a3a6}{create\+Pcm\+Wav\+Header} (short num\+Channels, int sample\+Rate, short bits\+Per\+Sample)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual unsigned int \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_ac88d8d6a4d6c1f5cf9031fc4d3153542}{get\+Data\+Sample\+Size} (int size\+In\+Milliseconds)
+\item 
+virtual unsigned int \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_a62bdc52d91ffeb282da46d42ad3d230c}{get\+Data\+Sample\+Length\+In\+Milliseconds} (int size)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_a28870da18426c9339b8f67eec21000be}{file\+Name}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source$<$ Frame\+Type $>$}
+
+This class represents the data source which reads the signal from standard W\+A\+V file 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a9e8c4f283e57e77fbfb7d8e4c8112d92}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!Wave\+File\+Data\+Source@{Wave\+File\+Data\+Source}}
+\index{Wave\+File\+Data\+Source@{Wave\+File\+Data\+Source}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{Wave\+File\+Data\+Source}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::{\bf Wave\+File\+Data\+Source} (
+\begin{DoxyParamCaption}
+\item[{{\bf wav\+\_\+header}}]{\+\_\+meta\+\_\+data, }
+\item[{int}]{sample\+Length}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a9e8c4f283e57e77fbfb7d8e4c8112d92}
+Construct an empty file with given W\+A\+V file header and length of one \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample} used in sampling.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+meta\+\_\+data} & W\+A\+V file header \\
+\hline
+{\em sample\+Length} & length of a single sample in milliseconds \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_afd6dc224baa81131e0b09c18ecd42b07}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!Wave\+File\+Data\+Source@{Wave\+File\+Data\+Source}}
+\index{Wave\+File\+Data\+Source@{Wave\+File\+Data\+Source}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{Wave\+File\+Data\+Source}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::{\bf Wave\+File\+Data\+Source} (
+\begin{DoxyParamCaption}
+\item[{string}]{\+\_\+file\+Name, }
+\item[{int}]{sample\+Length}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_afd6dc224baa81131e0b09c18ecd42b07}
+Construct a file using a file from provided path and length of one \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample} used in sampling.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+file\+Name} & path to W\+A\+V file \\
+\hline
+{\em sample\+Length} & length of a single sample in milliseconds \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_ace75bc6dfeb280651d4eaba46edfa922}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!````~Wave\+File\+Data\+Source@{$\sim$\+Wave\+File\+Data\+Source}}
+\index{````~Wave\+File\+Data\+Source@{$\sim$\+Wave\+File\+Data\+Source}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{$\sim$\+Wave\+File\+Data\+Source}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::$\sim${\bf Wave\+File\+Data\+Source} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_ace75bc6dfeb280651d4eaba46edfa922}
+Destructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a473179ee3ccc9999017c87928df2a3a6}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!create\+Pcm\+Wav\+Header@{create\+Pcm\+Wav\+Header}}
+\index{create\+Pcm\+Wav\+Header@{create\+Pcm\+Wav\+Header}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{create\+Pcm\+Wav\+Header}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::raw\+\_\+data\+::wav\+\_\+header} {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::create\+Pcm\+Wav\+Header (
+\begin{DoxyParamCaption}
+\item[{short}]{num\+Channels, }
+\item[{int}]{sample\+Rate, }
+\item[{short}]{bits\+Per\+Sample}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a473179ee3ccc9999017c87928df2a3a6}
+Creates wave header representing pcm wave file with empty data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Channels} & \\
+\hline
+{\em sample\+Rate} & \\
+\hline
+{\em bits\+Per\+Sample} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a62bdc52d91ffeb282da46d42ad3d230c}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!get\+Data\+Sample\+Length\+In\+Milliseconds@{get\+Data\+Sample\+Length\+In\+Milliseconds}}
+\index{get\+Data\+Sample\+Length\+In\+Milliseconds@{get\+Data\+Sample\+Length\+In\+Milliseconds}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{get\+Data\+Sample\+Length\+In\+Milliseconds}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ unsigned int {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::get\+Data\+Sample\+Length\+In\+Milliseconds (
+\begin{DoxyParamCaption}
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a62bdc52d91ffeb282da46d42ad3d230c}
+Returns length of sample with size 'size'. 
+
+Implements \hyperlink{classspeech_1_1raw__data_1_1DataSource_aa4157ef95d70d9c1babd2e9ead0d573a}{speech\+::raw\+\_\+data\+::\+Data\+Source$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_ac88d8d6a4d6c1f5cf9031fc4d3153542}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!get\+Data\+Sample\+Size@{get\+Data\+Sample\+Size}}
+\index{get\+Data\+Sample\+Size@{get\+Data\+Sample\+Size}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{get\+Data\+Sample\+Size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ unsigned int {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::get\+Data\+Sample\+Size (
+\begin{DoxyParamCaption}
+\item[{int}]{size\+In\+Milliseconds}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_ac88d8d6a4d6c1f5cf9031fc4d3153542}
+Returns size of single sample with length 'size\+In\+Milliseconds'. 
+
+Implements \hyperlink{classspeech_1_1raw__data_1_1DataSource_ab4d9cfbe2d556e6d587e25e4b3074d5f}{speech\+::raw\+\_\+data\+::\+Data\+Source$<$ Frame\+Type $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1WaveFileDataSource_a28870da18426c9339b8f67eec21000be}{\index{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}!file\+Name@{file\+Name}}
+\index{file\+Name@{file\+Name}!speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}}
+\subsubsection[{file\+Name}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ string {\bf speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source}$<$ Frame\+Type $>$\+::file\+Name\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1raw__data_1_1WaveFileDataSource_a28870da18426c9339b8f67eec21000be}
+Path to the W\+A\+V file 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/Wave\+File\+Data\+Source.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/Wave\+File\+Data\+Source.\+cpp\end{DoxyCompactItemize}

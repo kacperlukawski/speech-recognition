@@ -1,0 +1,109 @@
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum}{\section{speech\+:\+:raw\+\_\+data\+:\+:Spectrum Class Reference}
+\label{classspeech_1_1raw__data_1_1Spectrum}\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+}
+
+
+{\ttfamily \#include $<$Spectrum.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Frame\+Type $>$ }\\\hyperlink{classspeech_1_1raw__data_1_1Spectrum_a4a08dc8f79816c923ce2bb27c87ab4cf}{Spectrum} (const \hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample)
+\item 
+virtual \hyperlink{classspeech_1_1raw__data_1_1Spectrum_ac7ad7ef0a8311a2977c2ba3cdbb6af10}{$\sim$\+Spectrum} ()
+\item 
+std\+::valarray$<$ double $>$ \& \hyperlink{classspeech_1_1raw__data_1_1Spectrum_ace0941220cc60817990d8fbff08e4ba2}{get\+Values} ()
+\item 
+int \hyperlink{classspeech_1_1raw__data_1_1Spectrum_a32139a1fb7e069a9c906fc2f32b815cf}{get\+Index\+By\+Frequency} (double frequency) const 
+\item 
+double \hyperlink{classspeech_1_1raw__data_1_1Spectrum_a1833b3262d635ffd6cebd7a8b6ebb0ad}{get\+Index\+Frequency} (int index) const 
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::valarray$<$ double $>$ \hyperlink{classspeech_1_1raw__data_1_1Spectrum_a8c1ec60def3d84bf834c0fbc3fa44481}{values}
+\item 
+double \hyperlink{classspeech_1_1raw__data_1_1Spectrum_aa6105ce4e446b344a979dff6980d2d99}{basic\+Frequency}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classspeech_1_1raw__data_1_1Spectrum}{Spectrum} of the sound sample 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum_a4a08dc8f79816c923ce2bb27c87ab4cf}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!Spectrum@{Spectrum}}
+\index{Spectrum@{Spectrum}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{Spectrum}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ speech\+::raw\+\_\+data\+::\+Spectrum\+::\+Spectrum (
+\begin{DoxyParamCaption}
+\item[{const {\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1raw__data_1_1Spectrum_a4a08dc8f79816c923ce2bb27c87ab4cf}
+Constructs a spectrum of given sample 
+\begin{DoxyParams}{Parameters}
+{\em sample} & sound sample in frequency domain \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum_ac7ad7ef0a8311a2977c2ba3cdbb6af10}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!````~Spectrum@{$\sim$\+Spectrum}}
+\index{````~Spectrum@{$\sim$\+Spectrum}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{$\sim$\+Spectrum}]{\setlength{\rightskip}{0pt plus 5cm}virtual speech\+::raw\+\_\+data\+::\+Spectrum\+::$\sim$\+Spectrum (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classspeech_1_1raw__data_1_1Spectrum_ac7ad7ef0a8311a2977c2ba3cdbb6af10}
+Destructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum_a32139a1fb7e069a9c906fc2f32b815cf}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!get\+Index\+By\+Frequency@{get\+Index\+By\+Frequency}}
+\index{get\+Index\+By\+Frequency@{get\+Index\+By\+Frequency}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{get\+Index\+By\+Frequency}]{\setlength{\rightskip}{0pt plus 5cm}int speech\+::raw\+\_\+data\+::\+Spectrum\+::get\+Index\+By\+Frequency (
+\begin{DoxyParamCaption}
+\item[{double}]{frequency}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1raw__data_1_1Spectrum_a32139a1fb7e069a9c906fc2f32b815cf}
+Gets the index of cell containing the value of frequency closest to given frequency 
+\begin{DoxyParams}{Parameters}
+{\em frequency} & frequency in Herzs \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+index containg this value 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum_a1833b3262d635ffd6cebd7a8b6ebb0ad}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!get\+Index\+Frequency@{get\+Index\+Frequency}}
+\index{get\+Index\+Frequency@{get\+Index\+Frequency}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{get\+Index\+Frequency}]{\setlength{\rightskip}{0pt plus 5cm}double speech\+::raw\+\_\+data\+::\+Spectrum\+::get\+Index\+Frequency (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1raw__data_1_1Spectrum_a1833b3262d635ffd6cebd7a8b6ebb0ad}
+Gets the frequency stored in the given index 
+\begin{DoxyParams}{Parameters}
+{\em index} & index to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+frequency in given index in Herzs 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum_ace0941220cc60817990d8fbff08e4ba2}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!get\+Values@{get\+Values}}
+\index{get\+Values@{get\+Values}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{get\+Values}]{\setlength{\rightskip}{0pt plus 5cm}std\+::valarray$<$double$>$\& speech\+::raw\+\_\+data\+::\+Spectrum\+::get\+Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1raw__data_1_1Spectrum_ace0941220cc60817990d8fbff08e4ba2}
+Returns values of the spectrum for given sample \begin{DoxyReturn}{Returns}
+spectrum values 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1Spectrum_aa6105ce4e446b344a979dff6980d2d99}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!basic\+Frequency@{basic\+Frequency}}
+\index{basic\+Frequency@{basic\+Frequency}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{basic\+Frequency}]{\setlength{\rightskip}{0pt plus 5cm}double speech\+::raw\+\_\+data\+::\+Spectrum\+::basic\+Frequency\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1raw__data_1_1Spectrum_aa6105ce4e446b344a979dff6980d2d99}
+A frequency of the first amplitude \hypertarget{classspeech_1_1raw__data_1_1Spectrum_a8c1ec60def3d84bf834c0fbc3fa44481}{\index{speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}!values@{values}}
+\index{values@{values}!speech\+::raw\+\_\+data\+::\+Spectrum@{speech\+::raw\+\_\+data\+::\+Spectrum}}
+\subsubsection[{values}]{\setlength{\rightskip}{0pt plus 5cm}std\+::valarray$<$double$>$ speech\+::raw\+\_\+data\+::\+Spectrum\+::values\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1raw__data_1_1Spectrum_a8c1ec60def3d84bf834c0fbc3fa44481}
+Squared magnitude (amplitude) of given sample 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/Spectrum.\+h\end{DoxyCompactItemize}

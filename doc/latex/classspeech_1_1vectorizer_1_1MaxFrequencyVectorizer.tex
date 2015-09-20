@@ -1,0 +1,102 @@
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer}{\section{speech\+:\+:vectorizer\+:\+:Max\+Frequency\+Vectorizer$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer}\index{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer$<$ Frame\+Type $>$@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Max\+Frequency\+Vectorizer.\+h$>$}
+
+Inheritance diagram for speech\+:\+:vectorizer\+:\+:Max\+Frequency\+Vectorizer$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a5f2209fb1be3ddfa5786678154156b83}{{\bfseries Max\+Frequency\+Vectorizer} (int n)}\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a5f2209fb1be3ddfa5786678154156b83}
+
+\item 
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a516e583601993b370f6a65b0adc4603f}{{\bfseries Max\+Frequency\+Vectorizer} (std\+::istream \&in)}\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a516e583601993b370f6a65b0adc4603f}
+
+\item 
+virtual std\+::valarray$<$ double $>$ \hyperlink{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a9463cc7d335fdc5d181d2dffbd488a12}{vectorize} (\hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample) override
+\item 
+virtual void \hyperlink{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a1fdb7b7544a6386e64e8df49b644a13c}{serialize} (std\+::ostream \&out) const override
+\item 
+virtual int \hyperlink{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_af92f2750d71a14cbc74d8508f8dbb354}{get\+Vector\+Size} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_aac82e0f57f615cafb37845b5a023f699}{static const uint32\+\_\+t {\bfseries T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R} = 0x00100001}\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_aac82e0f57f615cafb37845b5a023f699}
+
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer$<$ Frame\+Type $>$}
+
+Vectorizer converting raw signal into vectors of fixed size containing frequencies with maximal amplitude. \begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000002}{Deprecated}]\end{DoxyRefDesc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_af92f2750d71a14cbc74d8508f8dbb354}{\index{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}!get\+Vector\+Size@{get\+Vector\+Size}}
+\index{get\+Vector\+Size@{get\+Vector\+Size}!speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}}
+\subsubsection[{get\+Vector\+Size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ int {\bf speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}$<$ Frame\+Type $>$\+::get\+Vector\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_af92f2750d71a14cbc74d8508f8dbb354}
+Gets the size of the output vector produced by the vectorizer.
+
+\begin{DoxyReturn}{Returns}
+size of the produced vector 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_abe20529a1586c072783f42476ad7ab69}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a1fdb7b7544a6386e64e8df49b644a13c}{\index{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ void {\bf speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}$<$ Frame\+Type $>$\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a1fdb7b7544a6386e64e8df49b644a13c}
+Serializes the vectorizer into given stream. 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_aa8285bbd275c31ae1ce48d294400dea9}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a9463cc7d335fdc5d181d2dffbd488a12}{\index{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}!vectorize@{vectorize}}
+\index{vectorize@{vectorize}!speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer@{speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}}
+\subsubsection[{vectorize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::valarray$<$ double $>$ {\bf speech\+::vectorizer\+::\+Max\+Frequency\+Vectorizer}$<$ Frame\+Type $>$\+::vectorize (
+\begin{DoxyParamCaption}
+\item[{{\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MaxFrequencyVectorizer_a9463cc7d335fdc5d181d2dffbd488a12}
+Projects given sample into feature space. Each vector needs to have exactly same size. 
+\begin{DoxyParams}{Parameters}
+{\em sample} & single sample to be vectorized\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the projection of vector in a feature space 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_a00d2ba71ec5c447780ffb0a29bfc9085}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/Max\+Frequency\+Vectorizer.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/Max\+Frequency\+Vectorizer.\+cpp\end{DoxyCompactItemize}

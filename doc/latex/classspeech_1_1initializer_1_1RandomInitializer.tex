@@ -1,0 +1,55 @@
+\hypertarget{classspeech_1_1initializer_1_1RandomInitializer}{\section{speech\+:\+:initializer\+:\+:Random\+Initializer Class Reference}
+\label{classspeech_1_1initializer_1_1RandomInitializer}\index{speech\+::initializer\+::\+Random\+Initializer@{speech\+::initializer\+::\+Random\+Initializer}}
+}
+Inheritance diagram for speech\+:\+:initializer\+:\+:Random\+Initializer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1initializer_1_1RandomInitializer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classspeech_1_1initializer_1_1RandomInitializer_a62c031971e30c4c99516a20268511963}{initialize} (\hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM}{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M} \&gaussian\+H\+M\+M)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1initializer_1_1RandomInitializer_a8c6b73ee9352b17f057064471f5fc10e}{unsigned int {\bfseries count\+Observations} (std\+::vector$<$ H\+M\+M\+Lexicon\+::\+Observation $>$ $\ast$utterances)}\label{classspeech_1_1initializer_1_1RandomInitializer_a8c6b73ee9352b17f057064471f5fc10e}
+
+\item 
+\hypertarget{classspeech_1_1initializer_1_1RandomInitializer_a111717598877c98b52fe656fe0e89057}{std\+::valarray$<$ double $>$ {\bfseries calculate\+Mean} (std\+::vector$<$ H\+M\+M\+Lexicon\+::\+Observation $>$ $\ast$utterances, int dimensionality, int observations\+Nb)}\label{classspeech_1_1initializer_1_1RandomInitializer_a111717598877c98b52fe656fe0e89057}
+
+\item 
+\hypertarget{classspeech_1_1initializer_1_1RandomInitializer_aad1a53176bb36eeb7d99fd56b9eec5ac}{std\+::valarray$<$ double $>$ {\bfseries calculate\+Variance} (std\+::vector$<$ H\+M\+M\+Lexicon\+::\+Observation $>$ $\ast$utterances, int dimensionality, int observations\+Nb)}\label{classspeech_1_1initializer_1_1RandomInitializer_aad1a53176bb36eeb7d99fd56b9eec5ac}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1initializer_1_1RandomInitializer_a62c031971e30c4c99516a20268511963}{\index{speech\+::initializer\+::\+Random\+Initializer@{speech\+::initializer\+::\+Random\+Initializer}!initialize@{initialize}}
+\index{initialize@{initialize}!speech\+::initializer\+::\+Random\+Initializer@{speech\+::initializer\+::\+Random\+Initializer}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::initializer\+::\+Random\+Initializer\+::initialize (
+\begin{DoxyParamCaption}
+\item[{{\bf speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M} \&}]{gaussian\+H\+M\+M}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1initializer_1_1RandomInitializer_a62c031971e30c4c99516a20268511963}
+Initializes the Gaussians of given H\+M\+M with means and variances 
+\begin{DoxyParams}{Parameters}
+{\em gaussian\+Hmm} & instance of Gaussian H\+M\+M \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1initializer_1_1AbstractGaussianInitializer_aa32dc879803a574a9bbd04b9f09f9f79}{speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer}.
+
+
+
+Reimplemented in \hyperlink{classspeech_1_1initializer_1_1KMeansInitializer_a300e51ef3bca3d566bffb12f2c6f5924}{speech\+::initializer\+::\+K\+Means\+Initializer}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/initializer/Random\+Initializer.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/initializer/Random\+Initializer.\+cpp\end{DoxyCompactItemize}

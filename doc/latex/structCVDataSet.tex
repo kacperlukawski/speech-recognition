@@ -1,0 +1,67 @@
+\hypertarget{structCVDataSet}{\section{C\+V\+Data\+Set Struct Reference}
+\label{structCVDataSet}\index{C\+V\+Data\+Set@{C\+V\+Data\+Set}}
+}
+
+
+{\ttfamily \#include $<$C\+V\+Data\+Set.\+hpp$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::multimap\\*
+$<$ std\+::string, std\+::string $>$ \hyperlink{structCVDataSet_a1a8ca580cc2dde6a91fb66c82e00b747}{Utterances\+Set}
+\item 
+typedef std\+::pair$<$ std\+::string, \\*
+std\+::string $>$ \hyperlink{structCVDataSet_a39298839ccc861d9828d8fe2d1915110}{Utterance\+Pair}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structCVDataSet_a336a218fba202ee0e0fc55f9bba02f60}{{\bfseries C\+V\+Data\+Set} (const Json\+::\+Value \&root)}\label{structCVDataSet_a336a218fba202ee0e0fc55f9bba02f60}
+
+\item 
+\hypertarget{structCVDataSet_a95ee808ec80b03fdee185ac91de59d5a}{void {\bfseries add\+Training\+Utterance} (std\+::string utterance, std\+::string file)}\label{structCVDataSet_a95ee808ec80b03fdee185ac91de59d5a}
+
+\item 
+\hypertarget{structCVDataSet_a7050c41cc41f6d9b2a080461c1d049b9}{void {\bfseries add\+Test\+Utterance} (std\+::string utterance, std\+::string file)}\label{structCVDataSet_a7050c41cc41f6d9b2a080461c1d049b9}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structCVDataSet_a1a8ca580cc2dde6a91fb66c82e00b747}{Utterances\+Set} \hyperlink{structCVDataSet_ada9a89e03d407ce7e7164ea1327e6f67}{training\+Files}
+\item 
+\hyperlink{structCVDataSet_a1a8ca580cc2dde6a91fb66c82e00b747}{Utterances\+Set} \hyperlink{structCVDataSet_ad1c35b1bb525b6237f8e15d1f044cd30}{test\+Files}
+\item 
+std\+::shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1HMMLexicon}{speech\+::\+H\+M\+M\+Lexicon} $>$ \hyperlink{structCVDataSet_a662cfb97a8b9fbfb9fd7ee1624f418d1}{hmm\+Lexicon}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A collection of utterances to be used in a cross-\/validation procedure. It is built from a collection of training and test utterances. 
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structCVDataSet_a39298839ccc861d9828d8fe2d1915110}{\index{C\+V\+Data\+Set@{C\+V\+Data\+Set}!Utterance\+Pair@{Utterance\+Pair}}
+\index{Utterance\+Pair@{Utterance\+Pair}!C\+V\+Data\+Set@{C\+V\+Data\+Set}}
+\subsubsection[{Utterance\+Pair}]{\setlength{\rightskip}{0pt plus 5cm}typedef std\+::pair$<$std\+::string, std\+::string$>$ {\bf C\+V\+Data\+Set\+::\+Utterance\+Pair}}}\label{structCVDataSet_a39298839ccc861d9828d8fe2d1915110}
+Single utterance file \hypertarget{structCVDataSet_a1a8ca580cc2dde6a91fb66c82e00b747}{\index{C\+V\+Data\+Set@{C\+V\+Data\+Set}!Utterances\+Set@{Utterances\+Set}}
+\index{Utterances\+Set@{Utterances\+Set}!C\+V\+Data\+Set@{C\+V\+Data\+Set}}
+\subsubsection[{Utterances\+Set}]{\setlength{\rightskip}{0pt plus 5cm}typedef std\+::multimap$<$std\+::string, std\+::string$>$ {\bf C\+V\+Data\+Set\+::\+Utterances\+Set}}}\label{structCVDataSet_a1a8ca580cc2dde6a91fb66c82e00b747}
+Collection of utterances 
+
+\subsection{Member Data Documentation}
+\hypertarget{structCVDataSet_a662cfb97a8b9fbfb9fd7ee1624f418d1}{\index{C\+V\+Data\+Set@{C\+V\+Data\+Set}!hmm\+Lexicon@{hmm\+Lexicon}}
+\index{hmm\+Lexicon@{hmm\+Lexicon}!C\+V\+Data\+Set@{C\+V\+Data\+Set}}
+\subsubsection[{hmm\+Lexicon}]{\setlength{\rightskip}{0pt plus 5cm}std\+::shared\+\_\+ptr$<${\bf speech\+::\+H\+M\+M\+Lexicon}$>$ C\+V\+Data\+Set\+::hmm\+Lexicon}}\label{structCVDataSet_a662cfb97a8b9fbfb9fd7ee1624f418d1}
+Model created using the training set \hypertarget{structCVDataSet_ad1c35b1bb525b6237f8e15d1f044cd30}{\index{C\+V\+Data\+Set@{C\+V\+Data\+Set}!test\+Files@{test\+Files}}
+\index{test\+Files@{test\+Files}!C\+V\+Data\+Set@{C\+V\+Data\+Set}}
+\subsubsection[{test\+Files}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Utterances\+Set} C\+V\+Data\+Set\+::test\+Files}}\label{structCVDataSet_ad1c35b1bb525b6237f8e15d1f044cd30}
+Utterances used in a test phase \hypertarget{structCVDataSet_ada9a89e03d407ce7e7164ea1327e6f67}{\index{C\+V\+Data\+Set@{C\+V\+Data\+Set}!training\+Files@{training\+Files}}
+\index{training\+Files@{training\+Files}!C\+V\+Data\+Set@{C\+V\+Data\+Set}}
+\subsubsection[{training\+Files}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Utterances\+Set} C\+V\+Data\+Set\+::training\+Files}}\label{structCVDataSet_ada9a89e03d407ce7e7164ea1327e6f67}
+Utterances used in a training phase 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/C\+V\+Data\+Set.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,113 @@
+\hypertarget{classspeech_1_1spelling_1_1HMM}{\section{speech\+:\+:spelling\+:\+:H\+M\+M Class Reference}
+\label{classspeech_1_1spelling_1_1HMM}\index{speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}}
+}
+Inheritance diagram for speech\+:\+:spelling\+:\+:H\+M\+M\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1spelling_1_1HMM}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_ab6f28924b586c22b958bfac269b10f8b}{{\bfseries H\+M\+M} (int \+\_\+number\+Of\+Observations, int \+\_\+number\+Of\+States)}\label{classspeech_1_1spelling_1_1HMM_ab6f28924b586c22b958bfac269b10f8b}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a2165a35f20a11ff5942480a75471cafd}{{\bfseries H\+M\+M} (std\+::istream \&in)}\label{classspeech_1_1spelling_1_1HMM_a2165a35f20a11ff5942480a75471cafd}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_ab7deb7571c4544319d268de72bfaa599}{{\bfseries H\+M\+M} (const std\+::vector$<$ int $>$ \&\+\_\+observations, const std\+::vector$<$ char $>$ \&\+\_\+states)}\label{classspeech_1_1spelling_1_1HMM_ab7deb7571c4544319d268de72bfaa599}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a84914784a009bf5ae2729afce623a770}{{\bfseries H\+M\+M} (int \+\_\+number\+Of\+Observations, const std\+::vector$<$ char $>$ \&\+\_\+states)}\label{classspeech_1_1spelling_1_1HMM_a84914784a009bf5ae2729afce623a770}
+
+\item 
+virtual void \hyperlink{classspeech_1_1spelling_1_1HMM_ae8a7d3797ef1f8d8ac3966db5500c552}{fit} (std\+::vector$<$ int $>$ \&phonems, const std\+::string \&spelling)
+\item 
+virtual std\+::string \hyperlink{classspeech_1_1spelling_1_1HMM_a01f7b06d7868bb526ca74526570dce21}{predict} (std\+::vector$<$ int $>$ phonems)
+\item 
+virtual void \hyperlink{classspeech_1_1spelling_1_1HMM_a225d39c70f721195c184e8af00ec3651}{serialize} (std\+::ostream \&out) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_af7d3303cd177e967b5820abee20e924e}{static const uint32\+\_\+t {\bfseries T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R} = 0x01000001}\label{classspeech_1_1spelling_1_1HMM_af7d3303cd177e967b5820abee20e924e}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a9a4067ac48b36326872616ef255d59b6}{int {\bfseries number\+Of\+Observations}}\label{classspeech_1_1spelling_1_1HMM_a9a4067ac48b36326872616ef255d59b6}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a1305b5ef325a521fc952c1d364d24bb8}{int {\bfseries number\+Of\+States}}\label{classspeech_1_1spelling_1_1HMM_a1305b5ef325a521fc952c1d364d24bb8}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a9730a77b166fbd1f676e3f9682d4026f}{std\+::vector$<$ int $>$ $\ast$ {\bfseries observations}}\label{classspeech_1_1spelling_1_1HMM_a9730a77b166fbd1f676e3f9682d4026f}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a28f1957d3c50355e6b5ad346b055c34c}{std\+::vector$<$ char $>$ $\ast$ {\bfseries states}}\label{classspeech_1_1spelling_1_1HMM_a28f1957d3c50355e6b5ad346b055c34c}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a81be786e67fdbff7acd61e36c86b2871}{shared\+\_\+ptr$<$ arma\+::mat $>$ {\bfseries transmission}}\label{classspeech_1_1spelling_1_1HMM_a81be786e67fdbff7acd61e36c86b2871}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_afd8de0031aa51c58de818a6d25f96800}{shared\+\_\+ptr$<$ arma\+::mat $>$ {\bfseries emission}}\label{classspeech_1_1spelling_1_1HMM_afd8de0031aa51c58de818a6d25f96800}
+
+\item 
+\hypertarget{classspeech_1_1spelling_1_1HMM_a8bcb334bda85869b1b37b2a0a0a2185a}{shared\+\_\+ptr$<$ arma\+::vec $>$ {\bfseries pi}}\label{classspeech_1_1spelling_1_1HMM_a8bcb334bda85869b1b37b2a0a0a2185a}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1spelling_1_1HMM_ae8a7d3797ef1f8d8ac3966db5500c552}{\index{speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}!fit@{fit}}
+\index{fit@{fit}!speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}}
+\subsubsection[{fit}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::spelling\+::\+H\+M\+M\+::fit (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ int $>$ \&}]{phonems, }
+\item[{const std\+::string \&}]{spelling}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1spelling_1_1HMM_ae8a7d3797ef1f8d8ac3966db5500c552}
+Add next example of the training data -\/ connections between sequence of phonems and sequence of letters. 
+
+Implements \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription}{speech\+::spelling\+::\+I\+Spelling\+Transcription}.
+
+\hypertarget{classspeech_1_1spelling_1_1HMM_a01f7b06d7868bb526ca74526570dce21}{\index{speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}!predict@{predict}}
+\index{predict@{predict}!speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}}
+\subsubsection[{predict}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string speech\+::spelling\+::\+H\+M\+M\+::predict (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ int $>$}]{phonems}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1spelling_1_1HMM_a01f7b06d7868bb526ca74526570dce21}
+Perform a Viterbi algorithm to find most likely sequence of states which led to given observation. Phonems are considered to be observations, while letters of an alphabet are hidden states.
+
+\begin{DoxyReturn}{Returns}
+sequence of letters 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription}{speech\+::spelling\+::\+I\+Spelling\+Transcription}.
+
+\hypertarget{classspeech_1_1spelling_1_1HMM_a225d39c70f721195c184e8af00ec3651}{\index{speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::spelling\+::\+H\+M\+M@{speech\+::spelling\+::\+H\+M\+M}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::spelling\+::\+H\+M\+M\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1spelling_1_1HMM_a225d39c70f721195c184e8af00ec3651}
+Writes an object to given stream 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1spelling_1_1ISpellingTranscription_a2ebd3da352eac002869c2f29ad890b16}{speech\+::spelling\+::\+I\+Spelling\+Transcription}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/spelling/H\+M\+M.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/spelling/H\+M\+M.\+cpp\end{DoxyCompactItemize}

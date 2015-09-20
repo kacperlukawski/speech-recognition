@@ -1,0 +1,48 @@
+\hypertarget{classspeech_1_1detector_1_1NaiveSilenceDetector}{\section{speech\+:\+:detector\+:\+:Naive\+Silence\+Detector$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1detector_1_1NaiveSilenceDetector}\index{speech\+::detector\+::\+Naive\+Silence\+Detector$<$ Frame\+Type $>$@{speech\+::detector\+::\+Naive\+Silence\+Detector$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Naive\+Silence\+Detector.\+h$>$}
+
+Inheritance diagram for speech\+:\+:detector\+:\+:Naive\+Silence\+Detector$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1detector_1_1NaiveSilenceDetector}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classspeech_1_1detector_1_1NaiveSilenceDetector_a5d2bc90b3012c10496b557a96a71aa68}{detected} (\hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::detector\+::\+Naive\+Silence\+Detector$<$ Frame\+Type $>$}
+
+The detector of silence based on some intuitions only. It checks the mean and standard deviation of the signal amplitude with thresholding. Silence tends to use some high frequencies (noise) and using this intution we try to detect it. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1detector_1_1NaiveSilenceDetector_a5d2bc90b3012c10496b557a96a71aa68}{\index{speech\+::detector\+::\+Naive\+Silence\+Detector@{speech\+::detector\+::\+Naive\+Silence\+Detector}!detected@{detected}}
+\index{detected@{detected}!speech\+::detector\+::\+Naive\+Silence\+Detector@{speech\+::detector\+::\+Naive\+Silence\+Detector}}
+\subsubsection[{detected}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ bool {\bf speech\+::detector\+::\+Naive\+Silence\+Detector}$<$ Frame\+Type $>$\+::detected (
+\begin{DoxyParamCaption}
+\item[{{\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1detector_1_1NaiveSilenceDetector_a5d2bc90b3012c10496b557a96a71aa68}
+Checks the condition of the particular detector, and returns T\+R\+U\+E if the condition was met, F\+A\+L\+S\+E otherwise.
+
+\begin{DoxyReturn}{Returns}
+T\+R\+U\+E -\/ if detected the pattern, F\+A\+L\+S\+E otherwise 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1detector_1_1IDetector_a351b24904f920bc42cdcfa1f1c91f479}{speech\+::detector\+::\+I\+Detector$<$ Frame\+Type $>$}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/detector/Naive\+Silence\+Detector.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/detector/Naive\+Silence\+Detector.\+cpp\end{DoxyCompactItemize}

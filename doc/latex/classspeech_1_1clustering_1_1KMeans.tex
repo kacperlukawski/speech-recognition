@@ -1,0 +1,148 @@
+\hypertarget{classspeech_1_1clustering_1_1KMeans}{\section{speech\+:\+:clustering\+:\+:K\+Means Class Reference}
+\label{classspeech_1_1clustering_1_1KMeans}\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+}
+
+
+{\ttfamily \#include $<$K\+Means.\+h$>$}
+
+Inheritance diagram for speech\+:\+:clustering\+:\+:K\+Means\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1clustering_1_1KMeans}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1clustering_1_1KMeans_a24b819b6569e1b2228d4ff1b7a8dde40}{K\+Means} (std\+::istream \&in)
+\item 
+\hyperlink{classspeech_1_1clustering_1_1KMeans_a22d1f19adeed74ce6452aec02addd1ae}{K\+Means} (unsigned int \+\_\+k, unsigned int \+\_\+dim)
+\item 
+virtual \hyperlink{classspeech_1_1clustering_1_1KMeans_aaac97c4e9820cb0f3525b4a13a73ad30}{$\sim$\+K\+Means} ()
+\item 
+virtual void \hyperlink{classspeech_1_1clustering_1_1KMeans_a53a00478141ceee40366602a85e31ff4}{fit} (vector$<$ valarray$<$ double $>$$>$ \&vectors)
+\item 
+virtual int \hyperlink{classspeech_1_1clustering_1_1KMeans_a6b87bc8e097b0933220b7083ec846325}{predict} (const valarray$<$ double $>$ \&vector)
+\item 
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a31e5171317f951f8138ff39b920b8807}{std\+::vector$<$ std\+::valarray\\*
+$<$ double $>$ $>$ $\ast$ {\bfseries get\+Centroids} () const }\label{classspeech_1_1clustering_1_1KMeans_a31e5171317f951f8138ff39b920b8807}
+
+\item 
+virtual void \hyperlink{classspeech_1_1clustering_1_1KMeans_a47ba455f6996f45a1f61cde7e736e254}{serialize} (std\+::ostream \&out) const 
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a23ff9ad53e6d3db5d933ca6369d36ebe}{const unsigned int {\bfseries M\+A\+X\+\_\+\+I\+T\+E\+R\+A\+T\+I\+O\+N\+S} = 100000}\label{classspeech_1_1clustering_1_1KMeans_a23ff9ad53e6d3db5d933ca6369d36ebe}
+
+\item 
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a51592e6258feb92faf71ed61a083596a}{const double {\bfseries E\+P\+S} = 10e-\/64}\label{classspeech_1_1clustering_1_1KMeans_a51592e6258feb92faf71ed61a083596a}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a2643066179760a8455dc118e860a9c5d}{static const uint32\+\_\+t {\bfseries T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R} = 0x00000001}\label{classspeech_1_1clustering_1_1KMeans_a2643066179760a8455dc118e860a9c5d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is an implementation of \hyperlink{classspeech_1_1clustering_1_1KMeans}{K\+Means} algorithm. \begin{DoxySeeAlso}{See also}
+\href{http://en.wikipedia.org/wiki/K-means_clustering}{\tt http\+://en.\+wikipedia.\+org/wiki/\+K-\/means\+\_\+clustering} 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a24b819b6569e1b2228d4ff1b7a8dde40}{\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}!K\+Means@{K\+Means}}
+\index{K\+Means@{K\+Means}!speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+\subsubsection[{K\+Means}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::clustering\+::\+K\+Means\+::\+K\+Means (
+\begin{DoxyParamCaption}
+\item[{std\+::istream \&}]{in}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1clustering_1_1KMeans_a24b819b6569e1b2228d4ff1b7a8dde40}
+Construct a clustering method from a stream. 
+\begin{DoxyParams}{Parameters}
+{\em in} & stream containing serialized model \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a22d1f19adeed74ce6452aec02addd1ae}{\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}!K\+Means@{K\+Means}}
+\index{K\+Means@{K\+Means}!speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+\subsubsection[{K\+Means}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::clustering\+::\+K\+Means\+::\+K\+Means (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{\+\_\+k, }
+\item[{unsigned int}]{\+\_\+dim}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1clustering_1_1KMeans_a22d1f19adeed74ce6452aec02addd1ae}
+Construct a clustering method with given parameters. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+k} & number of clusters \\
+\hline
+{\em \+\_\+dim} & dimension of a single vector \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1clustering_1_1KMeans_aaac97c4e9820cb0f3525b4a13a73ad30}{\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}!````~K\+Means@{$\sim$\+K\+Means}}
+\index{````~K\+Means@{$\sim$\+K\+Means}!speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+\subsubsection[{$\sim$\+K\+Means}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::clustering\+::\+K\+Means\+::$\sim$\+K\+Means (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1clustering_1_1KMeans_aaac97c4e9820cb0f3525b4a13a73ad30}
+Destructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a53a00478141ceee40366602a85e31ff4}{\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}!fit@{fit}}
+\index{fit@{fit}!speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+\subsubsection[{fit}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::clustering\+::\+K\+Means\+::fit (
+\begin{DoxyParamCaption}
+\item[{vector$<$ valarray$<$ double $>$$>$ \&}]{vectors}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1clustering_1_1KMeans_a53a00478141ceee40366602a85e31ff4}
+Fit the \hyperlink{classspeech_1_1clustering_1_1KMeans}{K\+Means} model using standard algorithm\+:
+\begin{DoxyEnumerate}
+\item Randomly choose k centroids from given vectors' set
+\item In each iteration assign all vectors into the nearest centroid
+\item Update each centroid to be a mean of the all vectors belonging to this particular group
+\item Stop when nothing changed in an iteration or after maximum number of iterations 
+\end{DoxyEnumerate}
+
+Implements \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_ab9ec001a1f76be4793086cd8548ac886}{speech\+::clustering\+::\+I\+Clustering\+Method}.
+
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a6b87bc8e097b0933220b7083ec846325}{\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}!predict@{predict}}
+\index{predict@{predict}!speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+\subsubsection[{predict}]{\setlength{\rightskip}{0pt plus 5cm}int speech\+::clustering\+::\+K\+Means\+::predict (
+\begin{DoxyParamCaption}
+\item[{const valarray$<$ double $>$ \&}]{vector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1clustering_1_1KMeans_a6b87bc8e097b0933220b7083ec846325}
+Select the most probable label for the given vector. Label is a position of the closest centroid.
+
+\begin{DoxyReturn}{Returns}
+predicted label 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_a47be2ed9fbe6792dcebc8fdcee7fa76e}{speech\+::clustering\+::\+I\+Clustering\+Method}.
+
+\hypertarget{classspeech_1_1clustering_1_1KMeans_a47ba455f6996f45a1f61cde7e736e254}{\index{speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::clustering\+::\+K\+Means@{speech\+::clustering\+::\+K\+Means}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::clustering\+::\+K\+Means\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1clustering_1_1KMeans_a47ba455f6996f45a1f61cde7e736e254}
+Serialize a model into given stream. 
+\begin{DoxyParams}{Parameters}
+{\em out} & stream to serialize the model into \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_a9676e73a7c47d5383e9359850086249c}{speech\+::clustering\+::\+I\+Clustering\+Method}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/clustering/K\+Means.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/clustering/K\+Means.\+cpp\end{DoxyCompactItemize}

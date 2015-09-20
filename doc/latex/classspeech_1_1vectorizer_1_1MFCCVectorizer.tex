@@ -1,0 +1,294 @@
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer}{\section{speech\+:\+:vectorizer\+:\+:M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1vectorizer_1_1MFCCVectorizer}\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$M\+F\+C\+C\+Vectorizer.\+h$>$}
+
+Inheritance diagram for speech\+:\+:vectorizer\+:\+:M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1vectorizer_1_1MFCCVectorizer}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter}{Mel\+Filter}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_ababa626e7d260bdd7d3afb9694efe6a6}{M\+F\+C\+C\+Vectorizer} (std\+::istream \&in)
+\item 
+\hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a84a36ac3b636e9f3460ba5bb0cb524e7}{M\+F\+C\+C\+Vectorizer} (int \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a179a54e359180354c417f980b222f1eb}{bins}, int \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f5083150768e6c9aad1777502e59a58}{cepstral\+Coefficients\+Number}, double min\+Frequency=64.\+0, double max\+Frequency=16000.\+0, int window\+Ms\+Size=20, int offset\+Ms\+Size=10, double emphasis\+Factor=0.\+97)
+\item 
+virtual std\+::valarray$<$ double $>$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_ad494d113915e9a5d0bbecda045cf8799}{vectorize} (\hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample)
+\item 
+virtual std\+::vector\\*
+$<$ std\+::valarray$<$ double $>$ $>$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a21a1862ff866a77c540943f48a6511d2}{vectorize} (std\+::vector$<$ \hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$$>$ \&samples) override
+\item 
+virtual std\+::vector\\*
+$<$ std\+::valarray$<$ double $>$ $>$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a7faab008b85e4fd817a04194b6470e88}{vectorize} (\hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$ \&data\+Source) override
+\item 
+virtual void \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f266d0fc3ab4dd89a1d701531818930}{serialize} (std\+::ostream \&out) const 
+\item 
+virtual int \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a47475baa543b7fe77f227d1e0288b99d}{get\+Vector\+Size} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const uint32\+\_\+t \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a43112849b3a53dcdeec39a9721e11364}{T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R} = 0x00100004
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_ac519c16aa05a93d8c9cfbeec6d90f9d9}{herz\+To\+Mel} (double frequency)
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_ab92ba6f1f5e52befdbb6ce5d6e37b870}{mel\+To\+Herz} (double mels)
+\item 
+std\+::valarray$<$ double $>$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a2ef3bd222534d0b5f9b79d146de969af}{calculate\+Cepstrum\+Coefficients} (const \hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a179a54e359180354c417f980b222f1eb}{bins}
+\item 
+int \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f5083150768e6c9aad1777502e59a58}{cepstral\+Coefficients\+Number}
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_aa457579c8cac5d821a9cc6881d08124b}{min\+Cepstrum\+Frequency}
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a50431c541e9cba136395055ffd076c70}{max\+Cepstrum\+Frequency}
+\item 
+\hyperlink{classspeech_1_1transform_1_1IFrequencyTransform}{I\+Frequency\+Transform}$<$ Frame\+Type $>$ $\ast$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_ac63aa92505370502b5e7c456bf8a8255}{frequency\+Transform} = new \hyperlink{classspeech_1_1transform_1_1FastFourierTransform}{Fast\+Fourier\+Transform}$<$Frame\+Type$>$()
+\item 
+std\+::vector$<$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_1_1MelFilter}{Mel\+Filter} $>$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_ab24511b7854870d534bdc408ddaf43bb}{filter\+Bank}
+\item 
+\hyperlink{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter}{Emphasis\+Filter}$<$ Frame\+Type $>$ $\ast$ \hyperlink{classspeech_1_1vectorizer_1_1MFCCVectorizer_a36f6a48cc775f2b7d12f8fbfc103c448}{emphasis\+Filter}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer$<$ Frame\+Type $>$}
+
+Vectorizer using Mel Frequency Capstral Coefficients to describe a sound sample. \begin{DoxySeeAlso}{See also}
+\href{http://webapp.etsi.org/workprogram/Report_WorkItem.asp?wki_id=18820}{\tt http\+://webapp.\+etsi.\+org/workprogram/\+Report\+\_\+\+Work\+Item.\+asp?wki\+\_\+id=18820} 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_ababa626e7d260bdd7d3afb9694efe6a6}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!M\+F\+C\+C\+Vectorizer@{M\+F\+C\+C\+Vectorizer}}
+\index{M\+F\+C\+C\+Vectorizer@{M\+F\+C\+C\+Vectorizer}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{M\+F\+C\+C\+Vectorizer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::{\bf M\+F\+C\+C\+Vectorizer} (
+\begin{DoxyParamCaption}
+\item[{std\+::istream \&}]{in}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_ababa626e7d260bdd7d3afb9694efe6a6}
+Construct the vectorizer from a data stream containing serialized vectorizer 
+\begin{DoxyParams}{Parameters}
+{\em in} & input data stream \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a84a36ac3b636e9f3460ba5bb0cb524e7}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!M\+F\+C\+C\+Vectorizer@{M\+F\+C\+C\+Vectorizer}}
+\index{M\+F\+C\+C\+Vectorizer@{M\+F\+C\+C\+Vectorizer}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{M\+F\+C\+C\+Vectorizer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::{\bf M\+F\+C\+C\+Vectorizer} (
+\begin{DoxyParamCaption}
+\item[{int}]{bins, }
+\item[{int}]{cepstral\+Coefficients\+Number, }
+\item[{double}]{min\+Frequency = {\ttfamily 64.0}, }
+\item[{double}]{max\+Frequency = {\ttfamily 16000.0}, }
+\item[{int}]{window\+Ms\+Size = {\ttfamily 20}, }
+\item[{int}]{offset\+Ms\+Size = {\ttfamily 10}, }
+\item[{double}]{emphasis\+Factor = {\ttfamily 0.97}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a84a36ac3b636e9f3460ba5bb0cb524e7}
+Construct the vectorizer using given number of bins and cepstral coefficients 
+\begin{DoxyParams}{Parameters}
+{\em bins} & number of bins \\
+\hline
+{\em cepstral\+Coefficients\+Number} & number of cepstral coefficients \\
+\hline
+{\em min\+Frequency} & \\
+\hline
+{\em max\+Frequency} & \\
+\hline
+{\em window\+Ms\+Size} & \\
+\hline
+{\em offset\+Ms\+Size} & \\
+\hline
+{\em emphasis\+Factor} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a2ef3bd222534d0b5f9b79d146de969af}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!calculate\+Cepstrum\+Coefficients@{calculate\+Cepstrum\+Coefficients}}
+\index{calculate\+Cepstrum\+Coefficients@{calculate\+Cepstrum\+Coefficients}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{calculate\+Cepstrum\+Coefficients}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::valarray$<$ double $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::calculate\+Cepstrum\+Coefficients (
+\begin{DoxyParamCaption}
+\item[{const {\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a2ef3bd222534d0b5f9b79d146de969af}
+Calculates the cepstrum of the given sample \begin{DoxySeeAlso}{See also}
+\href{http://www.phon.ucl.ac.uk/courses/spsci/matlab/lect10.html}{\tt http\+://www.\+phon.\+ucl.\+ac.\+uk/courses/spsci/matlab/lect10.\+html} 
+\end{DoxySeeAlso}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a47475baa543b7fe77f227d1e0288b99d}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!get\+Vector\+Size@{get\+Vector\+Size}}
+\index{get\+Vector\+Size@{get\+Vector\+Size}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{get\+Vector\+Size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ int {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::get\+Vector\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a47475baa543b7fe77f227d1e0288b99d}
+Gets the size of the output vector produced by the vectorizer.
+
+\begin{DoxyReturn}{Returns}
+size of the produced vector 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_abe20529a1586c072783f42476ad7ab69}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_ac519c16aa05a93d8c9cfbeec6d90f9d9}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!herz\+To\+Mel@{herz\+To\+Mel}}
+\index{herz\+To\+Mel@{herz\+To\+Mel}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{herz\+To\+Mel}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::herz\+To\+Mel (
+\begin{DoxyParamCaption}
+\item[{double}]{frequency}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_ac519c16aa05a93d8c9cfbeec6d90f9d9}
+Calculates the frequency on mel scale \begin{DoxySeeAlso}{See also}
+\href{http://en.wikipedia.org/wiki/Mel_scale}{\tt http\+://en.\+wikipedia.\+org/wiki/\+Mel\+\_\+scale} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em frequency} & frequency in Hz\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+frequency in mels 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_ab92ba6f1f5e52befdbb6ce5d6e37b870}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!mel\+To\+Herz@{mel\+To\+Herz}}
+\index{mel\+To\+Herz@{mel\+To\+Herz}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{mel\+To\+Herz}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::mel\+To\+Herz (
+\begin{DoxyParamCaption}
+\item[{double}]{mels}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_ab92ba6f1f5e52befdbb6ce5d6e37b870}
+Converts mels into Hz \begin{DoxySeeAlso}{See also}
+\href{http://en.wikipedia.org/wiki/Mel_scale}{\tt http\+://en.\+wikipedia.\+org/wiki/\+Mel\+\_\+scale} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em mels} & frequency in mels\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+frequency in Hz 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f266d0fc3ab4dd89a1d701531818930}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ void {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f266d0fc3ab4dd89a1d701531818930}
+Serializes the vectorizer into given stream. 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_aa8285bbd275c31ae1ce48d294400dea9}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_ad494d113915e9a5d0bbecda045cf8799}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!vectorize@{vectorize}}
+\index{vectorize@{vectorize}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{vectorize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::valarray$<$ double $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::vectorize (
+\begin{DoxyParamCaption}
+\item[{{\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_ad494d113915e9a5d0bbecda045cf8799}
+Projects given sample into feature space. Each vector needs to have exactly same size. 
+\begin{DoxyParams}{Parameters}
+{\em sample} & single sample to be vectorized\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the projection of vector in a feature space 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_a00d2ba71ec5c447780ffb0a29bfc9085}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a21a1862ff866a77c540943f48a6511d2}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!vectorize@{vectorize}}
+\index{vectorize@{vectorize}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{vectorize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::vector$<$ std\+::valarray$<$ double $>$ $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::vectorize (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ {\bf Frequency\+Sample}$<$ Frame\+Type $>$$>$ \&}]{samples}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a21a1862ff866a77c540943f48a6511d2}
+Projects all samples from given collection into feature space. Each vector needs to have the same dimension. 
+\begin{DoxyParams}{Parameters}
+{\em samples} & a collection of frequency domain samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]pass the data source instead \begin{DoxyReturn}{Returns}
+the projection of all vectors from given collection 
+\end{DoxyReturn}
+\end{DoxyRefDesc}
+
+
+Reimplemented from \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_a63f089697df0617f89e762582e0daef5}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a7faab008b85e4fd817a04194b6470e88}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!vectorize@{vectorize}}
+\index{vectorize@{vectorize}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{vectorize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::vector$<$ std\+::valarray$<$ double $>$ $>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::vectorize (
+\begin{DoxyParamCaption}
+\item[{{\bf Data\+Source}$<$ Frame\+Type $>$ \&}]{data\+Source}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a7faab008b85e4fd817a04194b6470e88}
+Projects all samples from given data source into feature space. 
+\begin{DoxyParams}{Parameters}
+{\em data\+Source} & data source containing the samples\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+collection of all vectorized samples 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_a2607a7ea800c639136c0ffb38f6aece4}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a179a54e359180354c417f980b222f1eb}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!bins@{bins}}
+\index{bins@{bins}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{bins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ int {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::bins\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a179a54e359180354c417f980b222f1eb}
+Number of mel frequency bins \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f5083150768e6c9aad1777502e59a58}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!cepstral\+Coefficients\+Number@{cepstral\+Coefficients\+Number}}
+\index{cepstral\+Coefficients\+Number@{cepstral\+Coefficients\+Number}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{cepstral\+Coefficients\+Number}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ int {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::cepstral\+Coefficients\+Number\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a5f5083150768e6c9aad1777502e59a58}
+Number of used cepstral coefficients \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a36f6a48cc775f2b7d12f8fbfc103c448}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!emphasis\+Filter@{emphasis\+Filter}}
+\index{emphasis\+Filter@{emphasis\+Filter}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{emphasis\+Filter}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf Emphasis\+Filter}$<$Frame\+Type$>$$\ast$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::emphasis\+Filter\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a36f6a48cc775f2b7d12f8fbfc103c448}
+Emphasis filter \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_ab24511b7854870d534bdc408ddaf43bb}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!filter\+Bank@{filter\+Bank}}
+\index{filter\+Bank@{filter\+Bank}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{filter\+Bank}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::vector$<${\bf Mel\+Filter}$>$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::filter\+Bank\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_ab24511b7854870d534bdc408ddaf43bb}
+Bank of Mel filters \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_ac63aa92505370502b5e7c456bf8a8255}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!frequency\+Transform@{frequency\+Transform}}
+\index{frequency\+Transform@{frequency\+Transform}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{frequency\+Transform}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf I\+Frequency\+Transform}$<$Frame\+Type$>$$\ast$ {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::frequency\+Transform = new {\bf Fast\+Fourier\+Transform}$<$Frame\+Type$>$()\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_ac63aa92505370502b5e7c456bf8a8255}
+Transform between time and frequency domain \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a50431c541e9cba136395055ffd076c70}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!max\+Cepstrum\+Frequency@{max\+Cepstrum\+Frequency}}
+\index{max\+Cepstrum\+Frequency@{max\+Cepstrum\+Frequency}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{max\+Cepstrum\+Frequency}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::max\+Cepstrum\+Frequency\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a50431c541e9cba136395055ffd076c70}
+Maximal frequency in cepstrum calculating \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_aa457579c8cac5d821a9cc6881d08124b}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!min\+Cepstrum\+Frequency@{min\+Cepstrum\+Frequency}}
+\index{min\+Cepstrum\+Frequency@{min\+Cepstrum\+Frequency}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{min\+Cepstrum\+Frequency}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::min\+Cepstrum\+Frequency\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_aa457579c8cac5d821a9cc6881d08124b}
+Minimal frequency in cepstrum calculating \hypertarget{classspeech_1_1vectorizer_1_1MFCCVectorizer_a43112849b3a53dcdeec39a9721e11364}{\index{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}!T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R@{T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R}}
+\index{T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R@{T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R}!speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer@{speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}}
+\subsubsection[{T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ const uint32\+\_\+t {\bf speech\+::vectorizer\+::\+M\+F\+C\+C\+Vectorizer}$<$ Frame\+Type $>$\+::T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R = 0x00100004\hspace{0.3cm}{\ttfamily [static]}}}\label{classspeech_1_1vectorizer_1_1MFCCVectorizer_a43112849b3a53dcdeec39a9721e11364}
+Globally unique type identifier of this vectorizer 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/M\+F\+C\+C\+Vectorizer.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/M\+F\+C\+C\+Vectorizer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,38 @@
+\hypertarget{classspeech_1_1detector_1_1IDetector}{\section{speech\+:\+:detector\+:\+:I\+Detector$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1detector_1_1IDetector}\index{speech\+::detector\+::\+I\+Detector$<$ Frame\+Type $>$@{speech\+::detector\+::\+I\+Detector$<$ Frame\+Type $>$}}
+}
+Inheritance diagram for speech\+:\+:detector\+:\+:I\+Detector$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1detector_1_1IDetector}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classspeech_1_1detector_1_1IDetector_a351b24904f920bc42cdcfa1f1c91f479}{detected} (\hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample) const =0
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1detector_1_1IDetector_a351b24904f920bc42cdcfa1f1c91f479}{\index{speech\+::detector\+::\+I\+Detector@{speech\+::detector\+::\+I\+Detector}!detected@{detected}}
+\index{detected@{detected}!speech\+::detector\+::\+I\+Detector@{speech\+::detector\+::\+I\+Detector}}
+\subsubsection[{detected}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ virtual bool {\bf speech\+::detector\+::\+I\+Detector}$<$ Frame\+Type $>$\+::detected (
+\begin{DoxyParamCaption}
+\item[{{\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classspeech_1_1detector_1_1IDetector_a351b24904f920bc42cdcfa1f1c91f479}
+Checks the condition of the particular detector, and returns T\+R\+U\+E if the condition was met, F\+A\+L\+S\+E otherwise.
+
+\begin{DoxyReturn}{Returns}
+T\+R\+U\+E -\/ if detected the pattern, F\+A\+L\+S\+E otherwise 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classspeech_1_1detector_1_1NaiveSilenceDetector_a5d2bc90b3012c10496b557a96a71aa68}{speech\+::detector\+::\+Naive\+Silence\+Detector$<$ Frame\+Type $>$}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/detector/I\+Detector.\+h\end{DoxyCompactItemize}

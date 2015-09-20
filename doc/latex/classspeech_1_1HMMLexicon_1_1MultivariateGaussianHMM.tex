@@ -1,0 +1,249 @@
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM}{\section{speech\+:\+:H\+M\+M\+Lexicon\+:\+:Multivariate\+Gaussian\+H\+M\+M Class Reference}
+\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM}\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+}
+
+
+{\ttfamily \#include $<$H\+M\+M\+Lexicon.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6ca2f6c60881319eace485c5143c19fb}{Multivariate\+Gaussian\+H\+M\+M} (unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa88d45cf1e299711ed0764166bb70bf1}{dimensionality}, unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a229cdec64f3eb25b3dc21aa32995ecd8}{states}, unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6895e59700c70169286b362532cf3a37}{M}, std\+::shared\+\_\+ptr$<$ \hyperlink{classspeech_1_1initializer_1_1AbstractGaussianInitializer}{speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer} $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac83431423d755d272ebb0c4a82c03940}{initializer}, unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_adeadeddbbd4e05647b52357572d9cc94}{max\+Iterations})
+\item 
+virtual \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_af266fe9f23af1d1d9070bb612bad8743}{$\sim$\+Multivariate\+Gaussian\+H\+M\+M} ()
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa2947c26ab150841cbc12b2baa0f41b5}{add\+Utterance} (const Observation \&utterance)
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a7700484ac8675c53d148a3919f736005}{fit} ()
+\item 
+double \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a65a8308757f5e7c69f7e24b68f842975}{predict} (const Observation \&utterance)
+\item 
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a4eb615a1cbd99e33272de124951b4d53}{unsigned int {\bfseries get\+Dimensionality} () const }\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a4eb615a1cbd99e33272de124951b4d53}
+
+\item 
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a80bcb1783824e8cb7308a50e429bd8e7}{unsigned int {\bfseries get\+States} () const }\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a80bcb1783824e8cb7308a50e429bd8e7}
+
+\item 
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a17115c85e8c7fcd54c3c63ee3f2d6f1a}{unsigned int {\bfseries get\+Number\+Of\+Mixtures} () const }\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a17115c85e8c7fcd54c3c63ee3f2d6f1a}
+
+\item 
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a427975ea95c2b02619e532f685b9d65d}{vector$<$ Observation $>$ $\ast$ {\bfseries get\+Utterances} () const }\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a427975ea95c2b02619e532f685b9d65d}
+
+\item 
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa5da3fde3793582a817be5d2b16ee29d}{\hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction}{G\+M\+M\+Likelihood\+Function} \& {\bfseries get\+Hidden\+State} (int n)}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa5da3fde3793582a817be5d2b16ee29d}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a3f0b164425f6aaff583b732a6c43fd76}{initialize\+Mixtures} ()
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a1b1f0ff3758589fc4c3b02edcb61f8fa}{initialize\+Model} ()
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ae7f252a513057ace52a1f15f4eb6c608}{display\+Hidden\+States} () const 
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab84609dea2c481615cc2ff2c2d138f78}{display\+Transitions\+Matrix} () const 
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a06c6da67bd596f06d8c930c9468621fd}{display\+Pi} () const 
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a9c023c2366a39b51fee449fbd9273ed2}{normalize\+Transitions\+Matrix} ()
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab6ef6908676327b67ab30806ec1f7752}{normalize\+Pi} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa88d45cf1e299711ed0764166bb70bf1}{dimensionality}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a229cdec64f3eb25b3dc21aa32995ecd8}{states}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6895e59700c70169286b362532cf3a37}{M}
+\item 
+std\+::shared\+\_\+ptr\\*
+$<$ \hyperlink{classspeech_1_1initializer_1_1AbstractGaussianInitializer}{speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer} $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac83431423d755d272ebb0c4a82c03940}{initializer}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_adeadeddbbd4e05647b52357572d9cc94}{max\+Iterations}
+\item 
+vector$<$ Observation $>$ $\ast$ \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a8344a96832f52f9691933109e253308e}{utterances}
+\item 
+vector$<$ \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction}{G\+M\+M\+Likelihood\+Function} $>$ $\ast$ \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ad8e2f5c818a425e7885f0cfb473048c3}{hidden\+States}
+\item 
+double $\ast$ \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab552472450cc99bcf62b9bf03c3956ec}{pi}
+\item 
+double $\ast$$\ast$ \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac5608b1ed95966bfd53854a7bcfe79f7}{transition}
+\item 
+bool \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_abc3ea4480cc25466e1eb6244231301ec}{fitted} = false
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr double \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_af30991f897f10c8f6fc70b969656e6cb}{E\+P\+S} = 1e-\/256
+\item 
+static constexpr double \hyperlink{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a4dbea35483d7d57afc4dd1ef90e25599}{M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E} = 1e-\/256
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A continuous H\+M\+M aproximating the likelihood of being in a partcular state with multivariate Gaussians. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6ca2f6c60881319eace485c5143c19fb}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!Multivariate\+Gaussian\+H\+M\+M@{Multivariate\+Gaussian\+H\+M\+M}}
+\index{Multivariate\+Gaussian\+H\+M\+M@{Multivariate\+Gaussian\+H\+M\+M}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{Multivariate\+Gaussian\+H\+M\+M}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::\+Multivariate\+Gaussian\+H\+M\+M (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{dimensionality, }
+\item[{unsigned int}]{states, }
+\item[{unsigned int}]{M, }
+\item[{std\+::shared\+\_\+ptr$<$ {\bf speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer} $>$}]{initializer, }
+\item[{unsigned int}]{max\+Iterations}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6ca2f6c60881319eace485c5143c19fb}
+Construct an H\+M\+M model with given number of observations and hidden states. The probability of being in a particular state at the fixed time is approximated using Gaussian mixtures. 
+\begin{DoxyParams}{Parameters}
+{\em dimensionality} & size of a input vector \\
+\hline
+{\em states} & number of hidden states \\
+\hline
+{\em M} & number of Gaussian in each G\+M\+M \\
+\hline
+{\em initializer} & an instance of the Gaussian initializer \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_af266fe9f23af1d1d9070bb612bad8743}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!````~Multivariate\+Gaussian\+H\+M\+M@{$\sim$\+Multivariate\+Gaussian\+H\+M\+M}}
+\index{````~Multivariate\+Gaussian\+H\+M\+M@{$\sim$\+Multivariate\+Gaussian\+H\+M\+M}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{$\sim$\+Multivariate\+Gaussian\+H\+M\+M}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::$\sim$\+Multivariate\+Gaussian\+H\+M\+M (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_af266fe9f23af1d1d9070bb612bad8743}
+Destructs the object 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa2947c26ab150841cbc12b2baa0f41b5}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!add\+Utterance@{add\+Utterance}}
+\index{add\+Utterance@{add\+Utterance}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{add\+Utterance}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::add\+Utterance (
+\begin{DoxyParamCaption}
+\item[{const Observation \&}]{utterance}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa2947c26ab150841cbc12b2baa0f41b5}
+Adds an observation of the language unit that this H\+M\+M is created for 
+\begin{DoxyParams}{Parameters}
+{\em utterance} & observed sequence of vectors \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ae7f252a513057ace52a1f15f4eb6c608}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!display\+Hidden\+States@{display\+Hidden\+States}}
+\index{display\+Hidden\+States@{display\+Hidden\+States}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{display\+Hidden\+States}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::display\+Hidden\+States (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ae7f252a513057ace52a1f15f4eb6c608}
+Displays Gaussians \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a06c6da67bd596f06d8c930c9468621fd}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!display\+Pi@{display\+Pi}}
+\index{display\+Pi@{display\+Pi}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{display\+Pi}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::display\+Pi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a06c6da67bd596f06d8c930c9468621fd}
+Displays the intial probabilities vector \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab84609dea2c481615cc2ff2c2d138f78}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!display\+Transitions\+Matrix@{display\+Transitions\+Matrix}}
+\index{display\+Transitions\+Matrix@{display\+Transitions\+Matrix}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{display\+Transitions\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::display\+Transitions\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab84609dea2c481615cc2ff2c2d138f78}
+Displays the transition matrix \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a7700484ac8675c53d148a3919f736005}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!fit@{fit}}
+\index{fit@{fit}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{fit}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::fit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a7700484ac8675c53d148a3919f736005}
+Fits the model using set of previously provided observations. Fitting process is done using forward-\/backward Baum-\/\+Welch algortihm \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a3f0b164425f6aaff583b732a6c43fd76}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!initialize\+Mixtures@{initialize\+Mixtures}}
+\index{initialize\+Mixtures@{initialize\+Mixtures}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{initialize\+Mixtures}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::initialize\+Mixtures (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a3f0b164425f6aaff583b732a6c43fd76}
+Initializes the mixtures using random values, but based on the dataset \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a1b1f0ff3758589fc4c3b02edcb61f8fa}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!initialize\+Model@{initialize\+Model}}
+\index{initialize\+Model@{initialize\+Model}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{initialize\+Model}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::initialize\+Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a1b1f0ff3758589fc4c3b02edcb61f8fa}
+Initializes model configuration (initial probabilities and transitions matrix) \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab6ef6908676327b67ab30806ec1f7752}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!normalize\+Pi@{normalize\+Pi}}
+\index{normalize\+Pi@{normalize\+Pi}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{normalize\+Pi}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::normalize\+Pi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab6ef6908676327b67ab30806ec1f7752}
+Normalizes a vector of initial probabilities of being in different states \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a9c023c2366a39b51fee449fbd9273ed2}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!normalize\+Transitions\+Matrix@{normalize\+Transitions\+Matrix}}
+\index{normalize\+Transitions\+Matrix@{normalize\+Transitions\+Matrix}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{normalize\+Transitions\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::normalize\+Transitions\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a9c023c2366a39b51fee449fbd9273ed2}
+Normalizes transitions matrix. Numbers calculated by the Baum-\/\+Welch algorithm are just expected numbers of transitions from state i to state j relative to the expected total number of transitions away from state i. \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a65a8308757f5e7c69f7e24b68f842975}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!predict@{predict}}
+\index{predict@{predict}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{predict}]{\setlength{\rightskip}{0pt plus 5cm}double speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::predict (
+\begin{DoxyParamCaption}
+\item[{const Observation \&}]{utterance}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a65a8308757f5e7c69f7e24b68f842975}
+Calculates a log-\/likelihood that given utterance is a language unit described by this model. 
+\begin{DoxyParams}{Parameters}
+{\em utterance} & observed sequence of vectors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+likelihood of being this language word 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa88d45cf1e299711ed0764166bb70bf1}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!dimensionality@{dimensionality}}
+\index{dimensionality@{dimensionality}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{dimensionality}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::dimensionality\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_aa88d45cf1e299711ed0764166bb70bf1}
+Dimensionality of a single input vector \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_af30991f897f10c8f6fc70b969656e6cb}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!E\+P\+S@{E\+P\+S}}
+\index{E\+P\+S@{E\+P\+S}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{E\+P\+S}]{\setlength{\rightskip}{0pt plus 5cm}constexpr double speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::\+E\+P\+S = 1e-\/256\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_af30991f897f10c8f6fc70b969656e6cb}
+Low value used to avoid mathematical errors \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_abc3ea4480cc25466e1eb6244231301ec}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!fitted@{fitted}}
+\index{fitted@{fitted}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{fitted}]{\setlength{\rightskip}{0pt plus 5cm}bool speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::fitted = false\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_abc3ea4480cc25466e1eb6244231301ec}
+Determines if a model has been already fitted \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ad8e2f5c818a425e7885f0cfb473048c3}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!hidden\+States@{hidden\+States}}
+\index{hidden\+States@{hidden\+States}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{hidden\+States}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf G\+M\+M\+Likelihood\+Function}$>$$\ast$ speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::hidden\+States\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ad8e2f5c818a425e7885f0cfb473048c3}
+Probability distributions of the emiting hidden states \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac83431423d755d272ebb0c4a82c03940}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!initializer@{initializer}}
+\index{initializer@{initializer}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{initializer}]{\setlength{\rightskip}{0pt plus 5cm}std\+::shared\+\_\+ptr$<${\bf speech\+::initializer\+::\+Abstract\+Gaussian\+Initializer}$>$ speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::initializer\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac83431423d755d272ebb0c4a82c03940}
+Initializer of the Gaussians \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6895e59700c70169286b362532cf3a37}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!M@{M}}
+\index{M@{M}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{M}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::\+M\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a6895e59700c70169286b362532cf3a37}
+Number of Gaussians used to approximate the distribution \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_adeadeddbbd4e05647b52357572d9cc94}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!max\+Iterations@{max\+Iterations}}
+\index{max\+Iterations@{max\+Iterations}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{max\+Iterations}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::max\+Iterations\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_adeadeddbbd4e05647b52357572d9cc94}
+Max iterations in a fitting phase \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a4dbea35483d7d57afc4dd1ef90e25599}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E@{M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E}}
+\index{M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E@{M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E}]{\setlength{\rightskip}{0pt plus 5cm}constexpr double speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::\+M\+I\+N\+\_\+\+V\+A\+R\+I\+A\+N\+C\+E = 1e-\/256\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a4dbea35483d7d57afc4dd1ef90e25599}
+Minimal variance of a single dimension in the Gaussian mixture \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab552472450cc99bcf62b9bf03c3956ec}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!pi@{pi}}
+\index{pi@{pi}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{pi}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::pi\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ab552472450cc99bcf62b9bf03c3956ec}
+Initial states probability \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a229cdec64f3eb25b3dc21aa32995ecd8}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!states@{states}}
+\index{states@{states}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{states}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::states\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a229cdec64f3eb25b3dc21aa32995ecd8}
+Number of hidden states (language units, like phones) \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac5608b1ed95966bfd53854a7bcfe79f7}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!transition@{transition}}
+\index{transition@{transition}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{transition}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::transition\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_ac5608b1ed95966bfd53854a7bcfe79f7}
+Probabilities of transition from state X to Y \hypertarget{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a8344a96832f52f9691933109e253308e}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}!utterances@{utterances}}
+\index{utterances@{utterances}!speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M@{speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M}}
+\subsubsection[{utterances}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$Observation$>$$\ast$ speech\+::\+H\+M\+M\+Lexicon\+::\+Multivariate\+Gaussian\+H\+M\+M\+::utterances\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1MultivariateGaussianHMM_a8344a96832f52f9691933109e253308e}
+Collection of observed vectors of this language unit 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/H\+M\+M\+Lexicon.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/H\+M\+M\+Lexicon.\+cpp\end{DoxyCompactItemize}

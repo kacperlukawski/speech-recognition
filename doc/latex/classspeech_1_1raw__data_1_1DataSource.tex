@@ -1,0 +1,120 @@
+\hypertarget{classspeech_1_1raw__data_1_1DataSource}{\section{speech\+:\+:raw\+\_\+data\+:\+:Data\+Source$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1raw__data_1_1DataSource}\index{speech\+::raw\+\_\+data\+::\+Data\+Source$<$ Frame\+Type $>$@{speech\+::raw\+\_\+data\+::\+Data\+Source$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Data\+Source.\+h$>$}
+
+Inheritance diagram for speech\+:\+:raw\+\_\+data\+:\+:Data\+Source$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1raw__data_1_1DataSource}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1dataSourceIterator}{data\+Source\+Iterator}
+\item 
+class \hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1normalIterator}{normal\+Iterator}
+\item 
+class \hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1offsetIterator}{offset\+Iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1raw__data_1_1DataSource_a5828f533581fe29765e094dcb2ca6fd5}{Data\+Source} ()
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_ad31cd6f9f9e6527243261bce9255550b}{{\bfseries Data\+Source} (int \hyperlink{classspeech_1_1raw__data_1_1DataSource_a6041f72109ebba9e84e49d71f626b8ea}{sample\+Length})}\label{classspeech_1_1raw__data_1_1DataSource_ad31cd6f9f9e6527243261bce9255550b}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a9eaf6b2fb4e0a08be1c755413fce79fa}{virtual void {\bfseries init} ()}\label{classspeech_1_1raw__data_1_1DataSource_a9eaf6b2fb4e0a08be1c755413fce79fa}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a87049484c5bdaed0a3cbb744156dc4cc}{virtual void {\bfseries add\+Sample} (\hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ sample)}\label{classspeech_1_1raw__data_1_1DataSource_a87049484c5bdaed0a3cbb744156dc4cc}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a3ec31b1ab7642b5cb9db18ca92837e60}{virtual \hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$\\*
+\+::\hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1normalIterator}{normal\+Iterator} {\bfseries get\+Samples\+Iterator\+Begin} ()}\label{classspeech_1_1raw__data_1_1DataSource_a3ec31b1ab7642b5cb9db18ca92837e60}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_ae0c3a519998215818bc7ae4d03d964db}{virtual \hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$\\*
+\+::\hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1normalIterator}{normal\+Iterator} {\bfseries get\+Samples\+Iterator\+End} ()}\label{classspeech_1_1raw__data_1_1DataSource_ae0c3a519998215818bc7ae4d03d964db}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a7cf64445102aa54a7a5e3a3323843cc3}{virtual \hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$\\*
+\+::\hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1offsetIterator}{offset\+Iterator} {\bfseries get\+Offset\+Iterator\+Begin} (int window\+Size\+In\+Milliseconds, int offset\+In\+Milliseconds)}\label{classspeech_1_1raw__data_1_1DataSource_a7cf64445102aa54a7a5e3a3323843cc3}
+
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a7dd82ecfd29d317f25f6bf4a032d49b9}{virtual \hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source}$<$ Frame\+Type $>$\\*
+\+::\hyperlink{classspeech_1_1raw__data_1_1DataSource_1_1offsetIterator}{offset\+Iterator} {\bfseries get\+Offset\+Iterator\+End} ()}\label{classspeech_1_1raw__data_1_1DataSource_a7dd82ecfd29d317f25f6bf4a032d49b9}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual unsigned int \hyperlink{classspeech_1_1raw__data_1_1DataSource_ab4d9cfbe2d556e6d587e25e4b3074d5f}{get\+Data\+Sample\+Size} (int size\+In\+Milliseconds)=0
+\item 
+virtual unsigned int \hyperlink{classspeech_1_1raw__data_1_1DataSource_aa4157ef95d70d9c1babd2e9ead0d573a}{get\+Data\+Sample\+Length\+In\+Milliseconds} (int size)=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a726a703fbc183408d8d1c3e21c3e042c}{std\+::shared\+\_\+ptr$<$ list\\*
+$<$ \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ $>$ $>$ {\bfseries samples}}\label{classspeech_1_1raw__data_1_1DataSource_a726a703fbc183408d8d1c3e21c3e042c}
+
+\item 
+int \hyperlink{classspeech_1_1raw__data_1_1DataSource_a6041f72109ebba9e84e49d71f626b8ea}{sample\+Length}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::raw\+\_\+data\+::\+Data\+Source$<$ Frame\+Type $>$}
+
+This abstract class is a base for all data sources used in the application. By data source we define the source of the audio signal. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a5828f533581fe29765e094dcb2ca6fd5}{\index{speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}!Data\+Source@{Data\+Source}}
+\index{Data\+Source@{Data\+Source}!speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}}
+\subsubsection[{Data\+Source}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type$>$ {\bf speech\+::raw\+\_\+data\+::\+Data\+Source}$<$ Frame\+Type $>$\+::{\bf Data\+Source} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1raw__data_1_1DataSource_a5828f533581fe29765e094dcb2ca6fd5}
+The default constructor of \hyperlink{classspeech_1_1raw__data_1_1DataSource}{Data\+Source} is here just to have a possibility to declare arrays of such objects 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_aa4157ef95d70d9c1babd2e9ead0d573a}{\index{speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}!get\+Data\+Sample\+Length\+In\+Milliseconds@{get\+Data\+Sample\+Length\+In\+Milliseconds}}
+\index{get\+Data\+Sample\+Length\+In\+Milliseconds@{get\+Data\+Sample\+Length\+In\+Milliseconds}!speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}}
+\subsubsection[{get\+Data\+Sample\+Length\+In\+Milliseconds}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type$>$ virtual unsigned int {\bf speech\+::raw\+\_\+data\+::\+Data\+Source}$<$ Frame\+Type $>$\+::get\+Data\+Sample\+Length\+In\+Milliseconds (
+\begin{DoxyParamCaption}
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classspeech_1_1raw__data_1_1DataSource_aa4157ef95d70d9c1babd2e9ead0d573a}
+Returns length of sample with size 'size'. 
+
+Implemented in \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_a62bdc52d91ffeb282da46d42ad3d230c}{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_ab4d9cfbe2d556e6d587e25e4b3074d5f}{\index{speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}!get\+Data\+Sample\+Size@{get\+Data\+Sample\+Size}}
+\index{get\+Data\+Sample\+Size@{get\+Data\+Sample\+Size}!speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}}
+\subsubsection[{get\+Data\+Sample\+Size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type$>$ virtual unsigned int {\bf speech\+::raw\+\_\+data\+::\+Data\+Source}$<$ Frame\+Type $>$\+::get\+Data\+Sample\+Size (
+\begin{DoxyParamCaption}
+\item[{int}]{size\+In\+Milliseconds}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}}\label{classspeech_1_1raw__data_1_1DataSource_ab4d9cfbe2d556e6d587e25e4b3074d5f}
+Returns size of single sample with length 'size\+In\+Milliseconds'. 
+
+Implemented in \hyperlink{classspeech_1_1raw__data_1_1WaveFileDataSource_ac88d8d6a4d6c1f5cf9031fc4d3153542}{speech\+::raw\+\_\+data\+::\+Wave\+File\+Data\+Source$<$ Frame\+Type $>$}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1DataSource_a6041f72109ebba9e84e49d71f626b8ea}{\index{speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}!sample\+Length@{sample\+Length}}
+\index{sample\+Length@{sample\+Length}!speech\+::raw\+\_\+data\+::\+Data\+Source@{speech\+::raw\+\_\+data\+::\+Data\+Source}}
+\subsubsection[{sample\+Length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type$>$ int {\bf speech\+::raw\+\_\+data\+::\+Data\+Source}$<$ Frame\+Type $>$\+::sample\+Length\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1raw__data_1_1DataSource_a6041f72109ebba9e84e49d71f626b8ea}
+Length of the single sample in milliseconds 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/Data\+Source.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/Data\+Source.\+cpp\end{DoxyCompactItemize}

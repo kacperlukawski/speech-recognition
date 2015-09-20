@@ -1,0 +1,105 @@
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer}{\section{speech\+:\+:vectorizer\+:\+:Thirds\+Power\+Vectorizer$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer}\index{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer$<$ Frame\+Type $>$@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer$<$ Frame\+Type $>$}}
+}
+Inheritance diagram for speech\+:\+:vectorizer\+:\+:Thirds\+Power\+Vectorizer$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a44431bd02c11d430a2206bcf4950008b}{{\bfseries Thirds\+Power\+Vectorizer} (std\+::istream \&istream)}\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a44431bd02c11d430a2206bcf4950008b}
+
+\item 
+virtual std\+::valarray$<$ double $>$ \hyperlink{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_aa43af654f25abdb9a1698815edaf900c}{vectorize} (\hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&sample)
+\item 
+virtual void \hyperlink{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_ab27c49171171fa2af908d9f3df0712db}{serialize} (std\+::ostream \&out) const 
+\item 
+virtual int \hyperlink{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a4680e178d5ef376cf2e4f6d47487e047}{get\+Vector\+Size} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a1390e6e6e099b5f573ec1f47b5d76f76}{static const uint32\+\_\+t {\bfseries T\+Y\+P\+E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R} = 0x00100003}\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a1390e6e6e099b5f573ec1f47b5d76f76}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_acf6519f34d3bd003d09a62ae0b42fcb9}{get\+Third\+Energy} (double $\ast$amplitude\+Ptr, int lower\+Index, int upper\+Index)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_acf6519f34d3bd003d09a62ae0b42fcb9}{\index{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}!get\+Third\+Energy@{get\+Third\+Energy}}
+\index{get\+Third\+Energy@{get\+Third\+Energy}!speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}}
+\subsubsection[{get\+Third\+Energy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ double {\bf speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}$<$ Frame\+Type $>$\+::get\+Third\+Energy (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{amplitude\+Ptr, }
+\item[{int}]{lower\+Index, }
+\item[{int}]{upper\+Index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_acf6519f34d3bd003d09a62ae0b42fcb9}
+Calculates an average energy of the third hidden behind given indexes \begin{DoxyReturn}{Returns}
+double 
+\end{DoxyReturn}
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a4680e178d5ef376cf2e4f6d47487e047}{\index{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}!get\+Vector\+Size@{get\+Vector\+Size}}
+\index{get\+Vector\+Size@{get\+Vector\+Size}!speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}}
+\subsubsection[{get\+Vector\+Size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ int {\bf speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}$<$ Frame\+Type $>$\+::get\+Vector\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_a4680e178d5ef376cf2e4f6d47487e047}
+Gets the size of the output vector produced by the vectorizer.
+
+\begin{DoxyReturn}{Returns}
+size of the produced vector 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_abe20529a1586c072783f42476ad7ab69}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_ab27c49171171fa2af908d9f3df0712db}{\index{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ void {\bf speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}$<$ Frame\+Type $>$\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_ab27c49171171fa2af908d9f3df0712db}
+Serializes the vectorizer into given stream. 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_aa8285bbd275c31ae1ce48d294400dea9}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+\hypertarget{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_aa43af654f25abdb9a1698815edaf900c}{\index{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}!vectorize@{vectorize}}
+\index{vectorize@{vectorize}!speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer@{speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}}
+\subsubsection[{vectorize}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ std\+::valarray$<$ double $>$ {\bf speech\+::vectorizer\+::\+Thirds\+Power\+Vectorizer}$<$ Frame\+Type $>$\+::vectorize (
+\begin{DoxyParamCaption}
+\item[{{\bf Frequency\+Sample}$<$ Frame\+Type $>$ \&}]{sample}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classspeech_1_1vectorizer_1_1ThirdsPowerVectorizer_aa43af654f25abdb9a1698815edaf900c}
+Projects given sample into feature space. Each vector needs to have exactly same size. 
+\begin{DoxyParams}{Parameters}
+{\em sample} & single sample to be vectorized\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the projection of vector in a feature space 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classspeech_1_1vectorizer_1_1IVectorizer_a00d2ba71ec5c447780ffb0a29bfc9085}{speech\+::vectorizer\+::\+I\+Vectorizer$<$ Frame\+Type $>$}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/Thirds\+Power\+Vectorizer.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/vectorizer/Thirds\+Power\+Vectorizer.\+cpp\end{DoxyCompactItemize}

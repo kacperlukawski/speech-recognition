@@ -2,6 +2,10 @@ Struktura katalogów oraz autorzy poszczególnych części biblioteki
 =================================================================
 |- dataset/          - zbiór danych zgromadzony na potrzeby pracy
 |                      magisterskiej
+|- doc/              - dokumentacja techniczna kodu źródłowego
+|                      biblioteki
+|--- html/           - wersja HTML
+|--- latex/          - wersja TeX
 |- lib/              - zewnętrzne biblioteki, z których
 |                      skorzystano podczas implementacji
 |- src/              - pliki źródłowe biblioteki
@@ -22,3 +26,8 @@ Program główny należy uruchamiać przekazując ścieżkę do pliku
 w formacie JSON, zawierającego konfigurację modelu. Plik
 lexicon_conf.example.json zawiera konfigurację wykorzystującą
 cały zbiór danych, w sposób opisany w pracy.
+
+Dokumentacja techniczna kodu
+=================================================================
+Do wygenerowania dokumentacji został wykorzystany program doxygen
+(http://www.stack.nl/~dimitri/doxygen/). 

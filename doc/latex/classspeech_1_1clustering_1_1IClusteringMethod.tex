@@ -1,0 +1,85 @@
+\hypertarget{classspeech_1_1clustering_1_1IClusteringMethod}{\section{speech\+:\+:clustering\+:\+:I\+Clustering\+Method Class Reference}
+\label{classspeech_1_1clustering_1_1IClusteringMethod}\index{speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}}
+}
+
+
+{\ttfamily \#include $<$I\+Clustering\+Method.\+h$>$}
+
+Inheritance diagram for speech\+:\+:clustering\+:\+:I\+Clustering\+Method\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classspeech_1_1clustering_1_1IClusteringMethod}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_ab9ec001a1f76be4793086cd8548ac886}{fit} (vector$<$ valarray$<$ double $>$$>$ \&vectors)=0
+\item 
+virtual int \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_a47be2ed9fbe6792dcebc8fdcee7fa76e}{predict} (const valarray$<$ double $>$ \&vector)=0
+\item 
+virtual void \hyperlink{classspeech_1_1clustering_1_1IClusteringMethod_a9676e73a7c47d5383e9359850086249c}{serialize} (std\+::ostream \&out) const =0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is an interface for all clustering methods 
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1clustering_1_1IClusteringMethod_ab9ec001a1f76be4793086cd8548ac886}{\index{speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}!fit@{fit}}
+\index{fit@{fit}!speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}}
+\subsubsection[{fit}]{\setlength{\rightskip}{0pt plus 5cm}virtual void speech\+::clustering\+::\+I\+Clustering\+Method\+::fit (
+\begin{DoxyParamCaption}
+\item[{vector$<$ valarray$<$ double $>$$>$ \&}]{vectors}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classspeech_1_1clustering_1_1IClusteringMethod_ab9ec001a1f76be4793086cd8548ac886}
+Trains the classifier using provided set of vectors 
+\begin{DoxyParams}{Parameters}
+{\em vectors} & collection of vectors used in a training phase \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classspeech_1_1clustering_1_1KMeans_a53a00478141ceee40366602a85e31ff4}{speech\+::clustering\+::\+K\+Means}, and \hyperlink{classspeech_1_1clustering_1_1GaussianMixtureModel_ab14e1843eb9412b32f918c909e19d1c5}{speech\+::clustering\+::\+Gaussian\+Mixture\+Model}.
+
+\hypertarget{classspeech_1_1clustering_1_1IClusteringMethod_a47be2ed9fbe6792dcebc8fdcee7fa76e}{\index{speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}!predict@{predict}}
+\index{predict@{predict}!speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}}
+\subsubsection[{predict}]{\setlength{\rightskip}{0pt plus 5cm}virtual int speech\+::clustering\+::\+I\+Clustering\+Method\+::predict (
+\begin{DoxyParamCaption}
+\item[{const valarray$<$ double $>$ \&}]{vector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classspeech_1_1clustering_1_1IClusteringMethod_a47be2ed9fbe6792dcebc8fdcee7fa76e}
+Predicts a label of given vector. It can be used only after training the classifier using fit method. 
+\begin{DoxyParams}{Parameters}
+{\em vector} & vector to be classified \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classspeech_1_1clustering_1_1KMeans_a6b87bc8e097b0933220b7083ec846325}{speech\+::clustering\+::\+K\+Means}, and \hyperlink{classspeech_1_1clustering_1_1GaussianMixtureModel_a5ddd00a86bbc557b4beaf13760dc222f}{speech\+::clustering\+::\+Gaussian\+Mixture\+Model}.
+
+\hypertarget{classspeech_1_1clustering_1_1IClusteringMethod_a9676e73a7c47d5383e9359850086249c}{\index{speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}!serialize@{serialize}}
+\index{serialize@{serialize}!speech\+::clustering\+::\+I\+Clustering\+Method@{speech\+::clustering\+::\+I\+Clustering\+Method}}
+\subsubsection[{serialize}]{\setlength{\rightskip}{0pt plus 5cm}virtual void speech\+::clustering\+::\+I\+Clustering\+Method\+::serialize (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classspeech_1_1clustering_1_1IClusteringMethod_a9676e73a7c47d5383e9359850086249c}
+Writes an object to given stream 
+\begin{DoxyParams}{Parameters}
+{\em out} & output stream \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classspeech_1_1IStreamSerializable_a891561ebe3e4eb5411e613b28bc2c982}{speech\+::\+I\+Stream\+Serializable}.
+
+
+
+Implemented in \hyperlink{classspeech_1_1clustering_1_1KMeans_a47ba455f6996f45a1f61cde7e736e254}{speech\+::clustering\+::\+K\+Means}, and \hyperlink{classspeech_1_1clustering_1_1GaussianMixtureModel_a51a73a7818e57e5b9e2ff6fbd25188f6}{speech\+::clustering\+::\+Gaussian\+Mixture\+Model}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/clustering/I\+Clustering\+Method.\+h\end{DoxyCompactItemize}

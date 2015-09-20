@@ -1,0 +1,47 @@
+\hypertarget{classspeech_1_1transform_1_1FastFourierTransform}{\section{speech\+:\+:transform\+:\+:Fast\+Fourier\+Transform$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1transform_1_1FastFourierTransform}\index{speech\+::transform\+::\+Fast\+Fourier\+Transform$<$ Frame\+Type $>$@{speech\+::transform\+::\+Fast\+Fourier\+Transform$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Fast\+Fourier\+Transform.\+h$>$}
+
+Inheritance diagram for speech\+:\+:transform\+:\+:Fast\+Fourier\+Transform$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1transform_1_1FastFourierTransform}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1transform_1_1FastFourierTransform_ae41aa58b3e4791f5ad8301c766d49d07}{virtual \hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}\\*
+$<$ Frame\+Type $>$ {\bfseries transform} (const \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ \&vector)}\label{classspeech_1_1transform_1_1FastFourierTransform_ae41aa58b3e4791f5ad8301c766d49d07}
+
+\item 
+\hypertarget{classspeech_1_1transform_1_1FastFourierTransform_a34e2dfc18a51fd33a807b8f8c829d912}{virtual \hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}\\*
+$<$ Frame\+Type $>$ {\bfseries transform} (const \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ \&vector, \hyperlink{classspeech_1_1transform_1_1window_1_1Window}{Window} $\ast$window)}\label{classspeech_1_1transform_1_1FastFourierTransform_a34e2dfc18a51fd33a807b8f8c829d912}
+
+\item 
+\hypertarget{classspeech_1_1transform_1_1FastFourierTransform_a0d6f84abf032495e9bbade561b3e8c5f}{virtual \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ {\bfseries reverse\+Transform} (const \hyperlink{classspeech_1_1raw__data_1_1FrequencySample}{Frequency\+Sample}$<$ Frame\+Type $>$ \&vector)}\label{classspeech_1_1transform_1_1FastFourierTransform_a0d6f84abf032495e9bbade561b3e8c5f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classspeech_1_1transform_1_1FastFourierTransform_acddbd44871c490f772dce7fb93037a21}{void {\bfseries fft} (valarray$<$ complex$<$ double $>$$>$ \&x)}\label{classspeech_1_1transform_1_1FastFourierTransform_acddbd44871c490f772dce7fb93037a21}
+
+\item 
+\hypertarget{classspeech_1_1transform_1_1FastFourierTransform_aac095c5a293ee3c3072e1cabf17ceaac}{void {\bfseries ifft} (valarray$<$ complex$<$ double $>$$>$ \&x)}\label{classspeech_1_1transform_1_1FastFourierTransform_aac095c5a293ee3c3072e1cabf17ceaac}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::transform\+::\+Fast\+Fourier\+Transform$<$ Frame\+Type $>$}
+
+This is an interface for all transforms which converts raw signal into frequency domain. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/transform/Fast\+Fourier\+Transform.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/transform/Fast\+Fourier\+Transform.\+cpp\end{DoxyCompactItemize}

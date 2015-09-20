@@ -1,0 +1,278 @@
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction}{\section{speech\+:\+:H\+M\+M\+Lexicon\+:\+:G\+M\+M\+Likelihood\+Function Class Reference}
+\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction}\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+}
+
+
+{\ttfamily \#include $<$H\+M\+M\+Lexicon.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a0398223855932fab00cce6ed3c7c9044}{G\+M\+M\+Likelihood\+Function} (unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa163286d0699faf1dd14b01b6e118c13}{M}, unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a94b3da253b242046d0999c6138306fb3}{D})
+\item 
+double \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a5f0bbd3150c1540c0fa12642890db2be}{operator()} (const valarray$<$ double $>$ \&observation)
+\item 
+double \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aff059a88e4cd71d3c1e4aa2cba6d292d}{operator()} (unsigned int k, const valarray$<$ double $>$ \&observation)
+\item 
+const double \& \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a7333805192ae53f09bb38978f9670a21}{get\+Weight} (unsigned int k) const 
+\item 
+const valarray$<$ double $>$ \& \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a1d311f247c4b83d5f04ca7a4ed9a8ff0}{get\+Means} (unsigned int k) const 
+\item 
+const valarray$<$ double $>$ \& \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9ad16b9c22994013463956d647bd7d98}{get\+Variances} (unsigned int k) const 
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ac5ee1801bfb91e86a2fa1526bb4d6c31}{set\+Weight} (int mixture, double weight)
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ae7de73b5ab1d8082773450aeb012a56a}{set\+Mean} (int mixture, int dimension, double mean)
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa7dde74f2d993c09c649fb98294e300b}{set\+Means} (int mixture, valarray$<$ double $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a81095daa04f62f40f9096c3f05bbedd7}{means})
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ad0ea26f1757fc88599a91b42ce52d7f2}{set\+Variance} (int mixture, int dimension, double variance)
+\item 
+void \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa83c7519bd307ea5c47dcbdff381b602}{set\+Variances} (int mixture, valarray$<$ double $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9e996ef1a355aafa7143b5e5d2bf6b8a}{variances})
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa163286d0699faf1dd14b01b6e118c13}{M}
+\item 
+unsigned int \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a94b3da253b242046d0999c6138306fb3}{D}
+\item 
+valarray$<$ double $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa3511faf53d4e9209d46a4af968ae4a7}{weights}
+\item 
+vector$<$ valarray$<$ double $>$ $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a81095daa04f62f40f9096c3f05bbedd7}{means}
+\item 
+vector$<$ valarray$<$ double $>$ $>$ \hyperlink{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9e996ef1a355aafa7143b5e5d2bf6b8a}{variances}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Function of a likelihood approximating the distribution using Gaussian mixture model. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a0398223855932fab00cce6ed3c7c9044}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!G\+M\+M\+Likelihood\+Function@{G\+M\+M\+Likelihood\+Function}}
+\index{G\+M\+M\+Likelihood\+Function@{G\+M\+M\+Likelihood\+Function}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{G\+M\+M\+Likelihood\+Function}]{\setlength{\rightskip}{0pt plus 5cm}speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::\+G\+M\+M\+Likelihood\+Function (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{M, }
+\item[{unsigned int}]{D}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a0398223855932fab00cce6ed3c7c9044}
+Constructs an object representing function built from given number of multivariate Gaussians. 
+\begin{DoxyParams}{Parameters}
+{\em M} & number of Gaussians \\
+\hline
+{\em D} & dimensionality of a single input vector \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a1d311f247c4b83d5f04ca7a4ed9a8ff0}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!get\+Means@{get\+Means}}
+\index{get\+Means@{get\+Means}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{get\+Means}]{\setlength{\rightskip}{0pt plus 5cm}const valarray$<$double$>$\& speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::get\+Means (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{k}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a1d311f247c4b83d5f04ca7a4ed9a8ff0}
+Get means of selected mixture 
+\begin{DoxyParams}{Parameters}
+{\em k} & mixture number \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9ad16b9c22994013463956d647bd7d98}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!get\+Variances@{get\+Variances}}
+\index{get\+Variances@{get\+Variances}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{get\+Variances}]{\setlength{\rightskip}{0pt plus 5cm}const valarray$<$double$>$\& speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::get\+Variances (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{k}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9ad16b9c22994013463956d647bd7d98}
+Get variances of selected mixture 
+\begin{DoxyParams}{Parameters}
+{\em k} & mixture number \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a7333805192ae53f09bb38978f9670a21}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!get\+Weight@{get\+Weight}}
+\index{get\+Weight@{get\+Weight}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{get\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}const double\& speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::get\+Weight (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{k}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a7333805192ae53f09bb38978f9670a21}
+Gets a weight of selected mixture 
+\begin{DoxyParams}{Parameters}
+{\em k} & mixture number \\
+\hline
+\end{DoxyParams}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a5f0bbd3150c1540c0fa12642890db2be}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!operator()@{operator()}}
+\index{operator()@{operator()}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}double speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::operator() (
+\begin{DoxyParamCaption}
+\item[{const valarray$<$ double $>$ \&}]{observation}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a5f0bbd3150c1540c0fa12642890db2be}
+Calculates the probability of being in the state modelled by this likelihood function, when given vector was observed. 
+\begin{DoxyParams}{Parameters}
+{\em observation} & observed acoustic vector \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+probability of being in this state 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when given vector size is wrong \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aff059a88e4cd71d3c1e4aa2cba6d292d}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!operator()@{operator()}}
+\index{operator()@{operator()}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{operator()}]{\setlength{\rightskip}{0pt plus 5cm}double speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::operator() (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{k, }
+\item[{const valarray$<$ double $>$ \&}]{observation}
+\end{DoxyParamCaption}
+)}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aff059a88e4cd71d3c1e4aa2cba6d292d}
+Calculates the probability of being in the state modelled by the k-\/th component of this likelihood function, when given vector was observed. 
+\begin{DoxyParams}{Parameters}
+{\em k} & mixture \\
+\hline
+{\em observation} & observed acoustic vector \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+probability of being in this state 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when given vector size is wrong \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ae7de73b5ab1d8082773450aeb012a56a}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!set\+Mean@{set\+Mean}}
+\index{set\+Mean@{set\+Mean}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{set\+Mean}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::set\+Mean (
+\begin{DoxyParamCaption}
+\item[{int}]{mixture, }
+\item[{int}]{dimension, }
+\item[{double}]{mean}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ae7de73b5ab1d8082773450aeb012a56a}
+Sets new mean of the selected Gaussian mixture and dimension 
+\begin{DoxyParams}{Parameters}
+{\em mixture} & \\
+\hline
+{\em dimension} & \\
+\hline
+{\em mean} & new mean \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when selected dimension does not exist \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa7dde74f2d993c09c649fb98294e300b}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!set\+Means@{set\+Means}}
+\index{set\+Means@{set\+Means}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{set\+Means}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::set\+Means (
+\begin{DoxyParamCaption}
+\item[{int}]{mixture, }
+\item[{valarray$<$ double $>$}]{means}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa7dde74f2d993c09c649fb98294e300b}
+Sets new means of the selected Gaussian mixture 
+\begin{DoxyParams}{Parameters}
+{\em mixture} & \\
+\hline
+{\em means} & new means \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when given vector has wrong size \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ad0ea26f1757fc88599a91b42ce52d7f2}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!set\+Variance@{set\+Variance}}
+\index{set\+Variance@{set\+Variance}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{set\+Variance}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::set\+Variance (
+\begin{DoxyParamCaption}
+\item[{int}]{mixture, }
+\item[{int}]{dimension, }
+\item[{double}]{variance}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ad0ea26f1757fc88599a91b42ce52d7f2}
+Sets new variance of the selected Gaussian mixture and dimension 
+\begin{DoxyParams}{Parameters}
+{\em mixture} & \\
+\hline
+{\em dimension} & \\
+\hline
+{\em variance} & new variance \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when selected dimension does not exist \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa83c7519bd307ea5c47dcbdff381b602}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!set\+Variances@{set\+Variances}}
+\index{set\+Variances@{set\+Variances}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{set\+Variances}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::set\+Variances (
+\begin{DoxyParamCaption}
+\item[{int}]{mixture, }
+\item[{valarray$<$ double $>$}]{variances}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa83c7519bd307ea5c47dcbdff381b602}
+Sets new variances of the selected Gaussian mixture 
+\begin{DoxyParams}{Parameters}
+{\em mixture} & \\
+\hline
+{\em variances} & new variances \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when selected dimension does not exist \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ac5ee1801bfb91e86a2fa1526bb4d6c31}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!set\+Weight@{set\+Weight}}
+\index{set\+Weight@{set\+Weight}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{set\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}void speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::set\+Weight (
+\begin{DoxyParamCaption}
+\item[{int}]{mixture, }
+\item[{double}]{weight}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_ac5ee1801bfb91e86a2fa1526bb4d6c31}
+Sets new weight of the selected Gaussian mixture 
+\begin{DoxyParams}{Parameters}
+{\em mixture} & \\
+\hline
+{\em weight} & new weight \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & when selected dimension does not exist \\
+\hline
+\end{DoxyExceptions}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a94b3da253b242046d0999c6138306fb3}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!D@{D}}
+\index{D@{D}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{D}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::\+D\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a94b3da253b242046d0999c6138306fb3}
+Dimensionality of an acoustic input vector \hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa163286d0699faf1dd14b01b6e118c13}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!M@{M}}
+\index{M@{M}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{M}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::\+M\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa163286d0699faf1dd14b01b6e118c13}
+Number of mixtures \hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a81095daa04f62f40f9096c3f05bbedd7}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!means@{means}}
+\index{means@{means}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{means}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$valarray$<$double$>$ $>$ speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::means\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a81095daa04f62f40f9096c3f05bbedd7}
+Means of mixtures (M x D) \hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9e996ef1a355aafa7143b5e5d2bf6b8a}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!variances@{variances}}
+\index{variances@{variances}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{variances}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$valarray$<$double$>$ $>$ speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::variances\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_a9e996ef1a355aafa7143b5e5d2bf6b8a}
+Variances of mixtures (M x D) (could be matrices of covariances -\/ M x (D x D)) \hypertarget{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa3511faf53d4e9209d46a4af968ae4a7}{\index{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}!weights@{weights}}
+\index{weights@{weights}!speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function@{speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function}}
+\subsubsection[{weights}]{\setlength{\rightskip}{0pt plus 5cm}valarray$<$double$>$ speech\+::\+H\+M\+M\+Lexicon\+::\+G\+M\+M\+Likelihood\+Function\+::weights\hspace{0.3cm}{\ttfamily [protected]}}}\label{classspeech_1_1HMMLexicon_1_1GMMLikelihoodFunction_aa3511faf53d4e9209d46a4af968ae4a7}
+Mixtures' weights (M) 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/H\+M\+M\+Lexicon.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/H\+M\+M\+Lexicon.\+cpp\end{DoxyCompactItemize}

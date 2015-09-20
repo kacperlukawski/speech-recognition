@@ -1,0 +1,50 @@
+\hypertarget{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter}{\section{speech\+:\+:raw\+\_\+data\+:\+:filtering\+:\+:Emphasis\+Filter$<$ Frame\+Type $>$ Class Template Reference}
+\label{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter}\index{speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter$<$ Frame\+Type $>$@{speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter$<$ Frame\+Type $>$}}
+}
+
+
+{\ttfamily \#include $<$Emphasis\+Filter.\+h$>$}
+
+Inheritance diagram for speech\+:\+:raw\+\_\+data\+:\+:filtering\+:\+:Emphasis\+Filter$<$ Frame\+Type $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter_a128b508047206178272d05d8e834bbef}{Emphasis\+Filter} (double alpha)
+\item 
+\hypertarget{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter_a822e28df9a52d5dea97a1f27eabfd7d1}{virtual \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ {\bfseries filter} (const \hyperlink{classspeech_1_1raw__data_1_1DataSample}{Data\+Sample}$<$ Frame\+Type $>$ \&sample)}\label{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter_a822e28df9a52d5dea97a1f27eabfd7d1}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Frame\+Type$>$class speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter$<$ Frame\+Type $>$}
+
+This filter boosts the amount of energy in the high frequencies. \begin{DoxySeeAlso}{See also}
+\href{http://webapp.etsi.org/workprogram/Report_WorkItem.asp?wki_id=18820}{\tt http\+://webapp.\+etsi.\+org/workprogram/\+Report\+\_\+\+Work\+Item.\+asp?wki\+\_\+id=18820} 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter_a128b508047206178272d05d8e834bbef}{\index{speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter@{speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter}!Emphasis\+Filter@{Emphasis\+Filter}}
+\index{Emphasis\+Filter@{Emphasis\+Filter}!speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter@{speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter}}
+\subsubsection[{Emphasis\+Filter}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Frame\+Type $>$ {\bf speech\+::raw\+\_\+data\+::filtering\+::\+Emphasis\+Filter}$<$ Frame\+Type $>$\+::{\bf Emphasis\+Filter} (
+\begin{DoxyParamCaption}
+\item[{double}]{alpha}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classspeech_1_1raw__data_1_1filtering_1_1EmphasisFilter_a128b508047206178272d05d8e834bbef}
+Creates a filter instance with provided weight of the each previous sample, which will be substracted from current sample to emphasise the difference between them\+: u\mbox{[}n\mbox{]} = u\mbox{[}n\mbox{]} -\/ alpha $\ast$ u\mbox{[}n-\/1\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em alpha} & weight of the previous sample \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/filtering/Emphasis\+Filter.\+h\item 
+/home/kacper/\+Projects/speech-\/recognition/src/speech/raw\+\_\+data/filtering/Emphasis\+Filter.\+cpp\end{DoxyCompactItemize}

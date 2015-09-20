@@ -52,6 +52,7 @@ int main(int argc, char **argv) {
     IFrequencyTransform<short> *fft = new FastFourierTransform<short>();
     WaveFileDataSource<short> *dataSourcePtr = new WaveFileDataSource<short>("/home/kacper/voice/samogloski.wav",
                                                                              singleSampleLength);
+    dataSourcePtr->init();
     IVectorizer<short> *vectorizer = new MaxFrequencyVectorizer<short>(10);
     IFrequencySampleFilter<short> *filter = new MaxFrequenciesFilter<short>(20);
 
@@ -61,7 +62,7 @@ int main(int argc, char **argv) {
     std::vector<FrequencySample<short> *> frequencySamples;
 
     int i = 0;
-    for (auto innerIt = begin; innerIt != end; innerIt++) {
+    for (auto innerIt = begin; innerIt != end; ++innerIt) {
         FrequencySample<short> frequencySample = fft->transform(*innerIt);
         frequencySamples.push_back(new FrequencySample<short>(frequencySample));
 

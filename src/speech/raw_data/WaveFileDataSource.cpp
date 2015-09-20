@@ -34,10 +34,6 @@ speech::raw_data::WaveFileDataSource<FrameType>::WaveFileDataSource(string _file
     this->fileName = _fileName;
     this->sampleLength = sampleLength;
     meta_data = new wav_header;
-    readFromFile(true);
-#ifdef SPEECH_VERBOSITY
-    showFileInfo();
-#endif
 }
 
 template<typename FrameType>
@@ -76,6 +72,14 @@ speech::raw_data::wav_header speech::raw_data::WaveFileDataSource<FrameType>::ge
 }
 
 template<typename FrameType>
+void speech::raw_data::WaveFileDataSource<FrameType>::init() {
+    readFromFile(true);
+#ifdef SPEECH_VERBOSITY
+    showFileInfo();
+#endif
+}
+
+template<typename FrameType>
 void speech::raw_data::WaveFileDataSource<FrameType>::saveToFile(string _fileName) {
     FILE *outfile = fopen(_fileName.c_str(), "wb");
 
@@ -83,7 +87,7 @@ void speech::raw_data::WaveFileDataSource<FrameType>::saveToFile(string _fileNam
     fwrite(meta_data, 1, sizeof(*meta_data), outfile);
 
     for (auto it = this->getSamplesIteratorBegin(); it != this->getSamplesIteratorEnd(); ++it) {
-        fwrite(it->getValues().get(), 1, it->getSize() * sizeof(FrameType), outfile);
+        fwrite((*it).getValues().get(), 1, (*it).getSize() * sizeof(FrameType), outfile);
     }
     fclose(outfile);
 }
@@ -148,7 +152,7 @@ pair<shared_ptr<FrameType>, int> speech::raw_data::WaveFileDataSource<FrameType>
     std::shared_ptr<FrameType> monoBuffer(new FrameType[newSize], std::default_delete<FrameType[]>());
 
     int monoBufferIndex = 0;
-    for (int i = 0; monoBufferIndex < newSize ; i += num_channels) {
+    for (int i = 0; monoBufferIndex < newSize; i += num_channels) {
         monoBuffer.get()[monoBufferIndex] = arithemticMean<FrameType>(buffer, i, i + num_channels);
         ++monoBufferIndex;
     }

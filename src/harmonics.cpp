@@ -56,6 +56,7 @@ int main(int argc, char **argv) {
     const double MFCC_MAX_FREQUENCY = 16000.0;
 
     WaveFileDataSource<short int> dataSource("/home/kacper/Projects/mfcc-features-check/dzianina.wav", WINDOW_SIZE);
+    dataSource.init();
 
     FastFourierTransform<short int> fft;
     MFCCVectorizer<short int> mfcc(MFCC_BINS, MFCC_COEFFS, MFCC_MIN_FREQUENCY, MFCC_MAX_FREQUENCY, WINDOW_SIZE, WINDOW_OFFSET);

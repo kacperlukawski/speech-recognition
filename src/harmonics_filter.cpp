@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
     char *outputFilename = "/home/kacper/voice/record_17_filtered.wav";
 
     WaveFileDataSource<short> dataSource(inputFilename, sampleLength);
+    dataSource.init();
     MaxFrequenciesFilter<short> maxFrequenciesFilter(maxFrequencies);
     EmphasisFilter<short> emphasisFilter(0.97);
     FastFourierTransform<short> fft;
@@ -25,7 +26,7 @@ int main(int argc, char** argv) {
     auto metadata = dataSource.getMetaData();
     WaveFileDataSource<short> output(metadata, sampleLength);
 
-    for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); it++) {
+    for (auto it = dataSource.getSamplesIteratorBegin(); it != dataSource.getSamplesIteratorEnd(); ++it) {
 //        FrequencySample<short> frequencySample = fft.transform(*it);
 //        FrequencySample<short> filteredFrequencySample = maxFrequenciesFilter.filter(frequencySample);
 //        output.addSample(fft.reverseTransform(filteredFrequencySample));
